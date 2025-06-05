@@ -22,4 +22,8 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="src\resources\shaders\fragment.glsl" />
+    <None Include="src\resources\shaders\vertex.glsl" />
+  </ItemGroup>
 </Project>
