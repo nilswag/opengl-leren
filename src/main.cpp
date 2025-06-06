@@ -11,7 +11,7 @@ float positions[6] =
      0.5f, -0.5f
 };
 
-static std::string read_file(std::string path)
+static std::string read_file(const std::string& path)
 {
     std::ifstream file("src/resources/" + path);
     if (!file.is_open())
