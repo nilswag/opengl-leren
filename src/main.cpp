@@ -74,7 +74,7 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT);
 		glBindVertexArray(vao);
 		shader.use();
-		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
 		glfwSwapBuffers(window);
 	}
 

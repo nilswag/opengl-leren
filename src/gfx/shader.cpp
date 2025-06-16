@@ -50,8 +50,3 @@ gfx::Shader::Shader(const std::string& vertexSrc, const std::string& fragmentSrc
 	glDeleteShader(fragment);
 }
 
-void gfx::Shader::use()
-{
-	glUseProgram(id);
-}
-
