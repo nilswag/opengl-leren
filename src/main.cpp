@@ -90,6 +90,7 @@ int main()
 	}
 	stbi_image_free(data);
 
+	stbi_set_flip_vertically_on_load(true);
 	data = stbi_load("resources/awesomeface.png", &width, &height, &nrChannels, 0);
 	unsigned int texture1;
 	glGenTextures(1, &texture1);
