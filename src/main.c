@@ -3,6 +3,8 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#include "util/io.h"
+
 float vertices[] = {
     -0.5f, -0.5f,
      0.0f,  0.5f,
@@ -45,6 +47,12 @@ int main(void)
     glGenBuffers(1, &vbo);
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+    char* vertex_src = util_read_file("resources/shaders/basic/vertex.glsl");
+    char* fragment_src = util_read_file("resources/shaders/basic/fragment.glsl");
+    printf("%s\n\n%s\n", vertex_src, fragment_src);
+    free(vertex_src);
+    free(fragment_src);
 
     // ======================================
 

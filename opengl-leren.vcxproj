@@ -19,7 +19,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="deps\src\glad.c" />
     <ClCompile Include="src\main.c" />
+    <ClCompile Include="src\util\io.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\util\io.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\shaders\basic\fragment.glsl" />
+    <None Include="resources\shaders\basic\vertex.glsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
