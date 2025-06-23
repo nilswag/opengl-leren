@@ -14,7 +14,7 @@ char* util_read_file(const char* path)
 	fseek(file, 0, SEEK_END);
 	size_t length = ftell(file);
 	rewind(file);
-	char* buffer = (char*)malloc(length + 1);
+	char* buffer = malloc(length + 1);
 	if (buffer == NULL)
 	{
 		fprintf(stderr, "Failed to allocate buffer for file: %s\n", path);
