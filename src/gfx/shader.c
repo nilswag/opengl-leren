@@ -70,3 +70,20 @@ void gfx_shader_destroy(Shader* shader)
 	glDeleteShader(shader->fragment_id);
 	glDeleteProgram(shader->id);
 }
+
+void gfx_shader_set_int(Shader* shader, const char* name, int value)
+{
+	GLint location = glGetUniformLocation(shader->id, name);
+	glUniform1i(location, value);
+}
+
+void gfx_shader_set_float(Shader* shader, const char* name, float value)
+{
+	GLint location = glGetUniformLocation(shader->id, name);
+	glUniform1f(location, value);
+}
+
+void gfx_shader_set_bool(Shader* shader, const char* name, int value)
+{
+	gfx_shader_set_int(shader, name, value);
+}
