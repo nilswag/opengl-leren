@@ -27,9 +27,9 @@ static GLuint compile_shader(const char* shader_src, GLenum type)
 	return id;
 }
 
-Shader gfx_shader_init(const char* vertex_src, const char* fragment_src)
+shader_t gfx_shader_init(const char* vertex_src, const char* fragment_src)
 {
-	Shader s = { 0 };
+	shader_t s = { 0 };
 	s.id = glCreateProgram();
 	s.vertex_id = compile_shader(vertex_src, GL_VERTEX_SHADER);
 	s.fragment_id = compile_shader(fragment_src, GL_FRAGMENT_SHADER);
@@ -59,31 +59,31 @@ Shader gfx_shader_init(const char* vertex_src, const char* fragment_src)
 	return s;
 }
 
-void gfx_shader_use(Shader* shader)
+void gfx_shader_use(shader_t* shader)
 {
 	glUseProgram(shader->id);
 }
 
-void gfx_shader_destroy(Shader* shader)
+void gfx_shader_free(shader_t* shader)
 {
 	glDeleteShader(shader->vertex_id);
 	glDeleteShader(shader->fragment_id);
 	glDeleteProgram(shader->id);
 }
 
-void gfx_shader_set_int(Shader* shader, const char* name, int value)
+void gfx_shader_set_int(shader_t* shader, const char* name, int value)
 {
 	GLint location = glGetUniformLocation(shader->id, name);
 	glUniform1i(location, value);
 }
 
-void gfx_shader_set_float(Shader* shader, const char* name, float value)
+void gfx_shader_set_float(shader_t* shader, const char* name, float value)
 {
 	GLint location = glGetUniformLocation(shader->id, name);
 	glUniform1f(location, value);
 }
 
-void gfx_shader_set_bool(Shader* shader, const char* name, int value)
+void gfx_shader_set_bool(shader_t* shader, const char* name, int value)
 {
 	gfx_shader_set_int(shader, name, value);
 }

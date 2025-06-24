@@ -6,12 +6,12 @@ typedef struct
 	GLuint id;
 	GLuint vertex_id;
 	GLuint fragment_id;
-} Shader;
+} shader_t;
 
-Shader gfx_shader_init(const char* vertex_src, const char* fragment_src);
-void gfx_shader_use(Shader* shader);
-void gfx_shader_destroy(Shader* shader);
+shader_t gfx_shader_init(const char* vertex_src, const char* fragment_src);
+void gfx_shader_use(shader_t* shader);
+void gfx_shader_free(shader_t* shader);
 
-void gfx_shader_set_int(Shader* shader, const char* name, int value);
-void gfx_shader_set_float(Shader* shader, const char* name, float value);
-void gfx_shader_set_bool(Shader* shader, const char* name, int value);
+void gfx_shader_set_int(shader_t* shader, const char* name, int value);
+void gfx_shader_set_float(shader_t* shader, const char* name, float value);
+void gfx_shader_set_bool(shader_t* shader, const char* name, int value);
