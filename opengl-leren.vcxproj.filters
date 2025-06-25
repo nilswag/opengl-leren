@@ -27,6 +27,9 @@
     <ClCompile Include="src\gfx\shader.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\util\util.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\util\io.h">
@@ -36,6 +39,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\gfx\mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\util.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
