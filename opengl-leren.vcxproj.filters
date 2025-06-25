@@ -30,6 +30,9 @@
     <ClCompile Include="src\util\util.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\gfx\map.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\util\io.h">
@@ -38,10 +41,10 @@
     <ClInclude Include="include\gfx\shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\gfx\mesh.h">
+    <ClInclude Include="include\util\util.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\util\util.h">
+    <ClInclude Include="include\gfx\map.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

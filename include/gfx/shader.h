@@ -1,34 +1,14 @@
 #pragma once
 #include <glad/glad.h>
 
-typedef struct entry_t
-{
-    const char* key;
-    GLint value;
-    struct entry_t* next;
-} entry_t;
-
-typedef struct
-{
-    size_t size;
-    size_t capacity;
-    entry_t** entries;
-} uniform_map_t;
-
-uniform_map_t* gfx_uniform_map_init(void);
-void gfx_uniform_map_free(uniform_map_t* map);
-void gfx_uniform_map_put(uniform_map_t* map, const char* key, GLint value);
-GLint gfx_uniform_map_get(uniform_map_t* map, const char* key);
-void gfx_uniform_map_remove(uniform_map_t* map, const char* key);
-void gfx_uniform_map_clear(uniform_map_t* map);
-
+#include "gfx/map.h"
 
 typedef struct
 {
     GLuint id;
     GLuint vertex_id;
     GLuint fragment_id;
-    uniform_map_t* uniform_map;
+    map_t* uniform_map;
 } shader_t;
 
 shader_t gfx_shader_init(const char* vertex_src, const char* fragment_src);

@@ -8,5 +8,5 @@ uniform float multiplier;
 
 void main(void)
 {
-	_color = vec4(multiplier * color, 1.0f);
+	_color = vec4(multiplier * multiplier * color, 1.0f);
 }
