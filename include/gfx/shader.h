@@ -35,4 +35,5 @@ uniform_map_t* gfx_uniform_map_init(void);
 void gfx_uniform_map_free(uniform_map_t* map);
 void gfx_uniform_map_put(uniform_map_t* map, const char* key, GLint value);
 GLint gfx_uniform_map_get(uniform_map_t* map, const char* key);
-void gfx_uniform_map_drop(uniform_map_t* map);
+void gfx_uniform_map_remove(uniform_map_t* map, const char* key);
+void gfx_uniform_map_clear(uniform_map_t* map);

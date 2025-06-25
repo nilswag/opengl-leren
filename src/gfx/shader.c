@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <string.h>
 #include <glad/glad.h>
 
 #include "util/util.h"
@@ -110,8 +111,7 @@ uniform_map_t* gfx_uniform_map_init(void)
 
 static void uniform_map_resize(uniform_map_t* map, size_t new_capacity)
 {
-    new_capacity = new_capacity < 1 ? 1 : new_capacity;
-
+    if (new_capacity < 1) return;
     entry_t** tmp = calloc(new_capacity, sizeof(entry_t*));
     if (!tmp)
     {
@@ -166,11 +166,53 @@ void gfx_uniform_map_put(uniform_map_t* map, const char* key, GLint value)
 
 GLint gfx_uniform_map_get(uniform_map_t* map, const char* key)
 {
-    if ((float)map->size / map->capacity < 0.25f) uniform_map_resize(map, map->capacity / 2);
+    if (map->size < 1) return 0;
+    unsigned long hash = util_fnv1a_hash(key);
+    size_t index = hash % map->capacity;
+
+    entry_t* current = map->entries[index];
+    while (current)
+    {
+        if (strcmp(current->key, key) == 0) return current->value;
+        current = current->next;
+    }
+
+    return 0;
 }
 
-void gfx_uniform_map_drop(uniform_map_t* map)
+void gfx_uniform_map_remove(uniform_map_t* map, const char* key)
 {
-    for (int i = 0; i < map->size; i++)
+    if (map->size < 1)
+    {
+        fputs("Cannot remove entry from uniform map because it is empty.", stderr);
+        return;
+    }
+    if ((float)map->size / map->capacity < 0.25f) uniform_map_resize(map, map->capacity / 2);
+
+    unsigned long hash = util_fnv1a_hash(key);
+    size_t index = hash % map->capacity;
+
+    entry_t* current = map->entries[index];
+    entry_t* prev = NULL;
+    while (current)
+    {
+        if (strcmp(current->key, key) == 0)
+        {
+            if (prev == NULL) map->entries[index] = current->next;
+            else prev->next = current->next;
+
+            free(current);
+            map->size--;
+            return;
+        }
+
+        prev = current;
+        current = current->next;
+    }
+}
+
+void gfx_uniform_map_clear(uniform_map_t* map)
+{
+    for (int i = 0; i < map->capacity; i++)
         map->entries[i] = NULL;
 }
