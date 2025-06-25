@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -79,6 +80,9 @@ int main(void)
     while (!glfwWindowShouldClose(window))
     {
         glfwPollEvents();
+
+        gfx_shader_set_float(&shader, "multiplier", sin(glfwGetTime()));
+
         glClearColor(0.2f, 0.2f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
