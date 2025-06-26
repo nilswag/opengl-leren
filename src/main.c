@@ -7,16 +7,7 @@
 #include "util/io.h"
 #include "gfx/shader.h"
 #include "gfx/map.h"
-
-float vertices[] = {
-    -0.5f, -0.5f, 0.0f,     1.0f, 0.0f, 0.0f,
-     0.0f,  0.5f, 0.0f,     0.0f, 1.0f, 0.0f,
-     0.5f, -0.5f, 0.0f,     0.0f, 0.0f, 1.0f
-};
-
-unsigned int indices[] = {
-    0, 1, 2
-};
+#include "gfx/mesh.h"
 
 int main(void)
 {
@@ -50,19 +41,6 @@ int main(void)
 
     // ======================================
 
-    GLuint vao;
-    glGenVertexArrays(1, &vao);
-    glBindVertexArray(vao);
-
-    GLuint vbo;
-    glGenBuffers(1, &vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-    GLuint ebo;
-    glGenBuffers(1, &ebo);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
     char* vertex_src = util_read_file("resources/shaders/basic/vertex.glsl");
     char* fragment_src = util_read_file("resources/shaders/basic/fragment.glsl");
@@ -71,10 +49,18 @@ int main(void)
     free(vertex_src);
     free(fragment_src);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), 3 * sizeof(float));
-    glEnableVertexAttribArray(0);
-    glEnableVertexAttribArray(1);
+    float vertices[] = {
+    -0.5f, -0.5f, 0.0f,
+     0.0f,  0.5f, 0.0f,
+     0.5f, -0.5f, 0.0f,
+    };
+
+    unsigned int indices[] = {
+        0, 1, 2
+    };
+
+    mesh_t mesh = { 0 };
+    gfx_mesh_init(&mesh, vertices, 9, indices, 3);
 
     // ======================================
 
@@ -82,14 +68,15 @@ int main(void)
     {
         glfwPollEvents();
 
-        gfx_shader_set_float(&shader, "multiplier", sin(glfwGetTime()));
-
         glClearColor(0.2f, 0.2f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
-        glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
+        gfx_mesh_render(&mesh);
         glfwSwapBuffers(window);
     }
 
+    // ======================================
+
+    gfx_mesh_free(&mesh);
     gfx_shader_free(&shader);
 
     glfwDestroyWindow(window);

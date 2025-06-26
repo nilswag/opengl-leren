@@ -20,15 +20,20 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="deps\src\glad.c" />
+    <ClCompile Include="deps\src\stb_image.c" />
     <ClCompile Include="src\gfx\map.c" />
+    <ClCompile Include="src\gfx\mesh.c" />
     <ClCompile Include="src\gfx\shader.c" />
     <ClCompile Include="src\main.c" />
     <ClCompile Include="src\util\io.c" />
     <ClCompile Include="src\util\util.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="deps\include\stb_image.h" />
     <ClInclude Include="include\gfx\map.h" />
+    <ClInclude Include="include\gfx\mesh.h" />
     <ClInclude Include="include\gfx\shader.h" />
+    <ClInclude Include="include\gfx\texture.h" />
     <ClInclude Include="include\util\io.h" />
     <ClInclude Include="include\util\util.h" />
   </ItemGroup>

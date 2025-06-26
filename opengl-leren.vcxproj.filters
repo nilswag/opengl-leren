@@ -33,6 +33,12 @@
     <ClCompile Include="src\gfx\map.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\gfx\mesh.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="deps\src\stb_image.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\util\io.h">
@@ -45,6 +51,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\gfx\map.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gfx\mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="deps\include\stb_image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gfx\texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

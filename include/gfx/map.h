@@ -5,7 +5,7 @@
 typedef struct entry_t
 {
     const char* key;
-    GLint value;
+    GLuint value;
     struct entry_t* next;
 } entry_t;
 
@@ -18,7 +18,7 @@ typedef struct
 
 map_t* gfx_uniform_map_init(void);
 void gfx_uniform_map_free(map_t* map);
-void gfx_uniform_map_put(map_t* map, const char* key, GLint value);
-GLint gfx_uniform_map_get(map_t* map, const char* key);
+void gfx_uniform_map_put(map_t* map, const char* key, GLuint value);
+GLuint gfx_uniform_map_get(map_t* map, const char* key);
 void gfx_uniform_map_remove(map_t* map, const char* key);
 void gfx_uniform_map_clear(map_t* map);

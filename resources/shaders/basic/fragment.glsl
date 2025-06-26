@@ -1,12 +1,8 @@
 #version 460 core
 
-in vec3 color;
-
-out vec4 _color;
-
-uniform float multiplier;
+out vec4 color;
 
 void main(void)
 {
-	_color = vec4(multiplier * multiplier * color, 1.0f);
+	color = vec4(0.5f, 0.3f, 0.1f, 1.0f);
 }

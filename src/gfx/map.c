@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
+#include "util/util.h"
 #include "gfx/map.h"
 
 static void uniform_map_resize(map_t* map, size_t new_capacity)
@@ -54,7 +56,7 @@ void gfx_uniform_map_free(map_t* map)
     free(map);
 }
 
-void gfx_uniform_map_put(map_t* map, const char* key, GLint value)
+void gfx_uniform_map_put(map_t* map, const char* key, GLuint value)
 {
     if ((float)(map->size + 1) / map->capacity > 0.75f) uniform_map_resize(map, map->capacity * 2);
     unsigned long hash = util_fnv1a_hash(key);
@@ -74,9 +76,9 @@ void gfx_uniform_map_put(map_t* map, const char* key, GLint value)
     map->size++;
 }
 
-GLint gfx_uniform_map_get(map_t* map, const char* key)
+GLuint gfx_uniform_map_get(map_t* map, const char* key)
 {
-    if (map->size < 1) return 0;
+    if (map->size < 1) return NULL;
     unsigned long hash = util_fnv1a_hash(key);
     size_t index = hash % map->capacity;
 
