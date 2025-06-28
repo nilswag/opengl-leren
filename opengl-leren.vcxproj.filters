@@ -39,6 +39,9 @@
     <ClCompile Include="deps\src\stb_image.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\math\matrix.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\util\io.h">
@@ -59,7 +62,7 @@
     <ClInclude Include="deps\include\stb_image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\gfx\texture.h">
+    <ClInclude Include="include\math\matrix.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

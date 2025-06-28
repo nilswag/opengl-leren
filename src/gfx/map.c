@@ -78,7 +78,7 @@ void gfx_uniform_map_put(map_t* map, const char* key, GLuint value)
 
 GLuint gfx_uniform_map_get(map_t* map, const char* key)
 {
-    if (map->size < 1) return NULL;
+    if (map->size < 1) return -1;
     unsigned long hash = util_fnv1a_hash(key);
     size_t index = hash % map->capacity;
 

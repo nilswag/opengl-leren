@@ -8,6 +8,7 @@
 #include "gfx/shader.h"
 #include "gfx/map.h"
 #include "gfx/mesh.h"
+#include "math/matrix.h"
 
 int main(void)
 {
@@ -49,6 +50,13 @@ int main(void)
     free(vertex_src);
     free(fragment_src);
 
+    float a[] = {
+        1.0f, 0.0f, 0.0f, 0.0f,
+        0.0f, 1.0f, 0.0f, 0.0f,
+        0.0f, 0.0f, 1.0f, 0.0f,
+        0.0f, 0.0f, 0.0f, 1.0f
+    };
+
     float vertices[] = {
     -0.5f, -0.5f, 0.0f,
      0.0f,  0.5f, 0.0f,
@@ -63,15 +71,30 @@ int main(void)
     gfx_mesh_init(&mesh, vertices, 9, indices, 3);
 
     // ======================================
+    double max_frame_time = 1.0 / 1.0;
+    double accumulator = 0.0;
+    double last = glfwGetTime();
 
     while (!glfwWindowShouldClose(window))
     {
         glfwPollEvents();
+        double now = glfwGetTime();
+        double delta = now - last;
+        accumulator += delta;
+
+        while (accumulator >= max_frame_time)
+        {
+            accumulator -= max_frame_time;
+            math_matrix_translate(a, 0.1f, 0.0f, 0.0f);
+            gfx_shader_set_matrix4fv(&shader, "transform", a);
+        }
 
         glClearColor(0.2f, 0.2f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         gfx_mesh_render(&mesh);
         glfwSwapBuffers(window);
+
+        last = now;
     }
 
     // ======================================

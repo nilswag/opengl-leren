@@ -72,7 +72,7 @@ shader_t gfx_shader_init(const char* vertex_src, const char* fragment_src)
         glGetActiveUniform(s.id, i, uniform_max_length, NULL, &size, &type, name);
         GLint location = glGetUniformLocation(s.id, name);
         gfx_uniform_map_put(s.uniform_map, name, location);
-        //printf("name: %s\n", name);
+        printf("name: %s\n", name);
     }
 
     return s;
@@ -93,9 +93,8 @@ void gfx_shader_free(shader_t* shader)
 
 void gfx_shader_set_int(shader_t* shader, const char* name, int value)
 {
-    entry_t* entry = gfx_uniform_map_get(shader->uniform_map, name);
     gfx_shader_use(shader);
-    glUniform1i(entry->value, value);
+    glUniform1i(gfx_uniform_map_get(shader->uniform_map, name), value);
 }
 
 void gfx_shader_set_float(shader_t* shader, const char* name, float value)
@@ -107,4 +106,10 @@ void gfx_shader_set_float(shader_t* shader, const char* name, float value)
 void gfx_shader_set_bool(shader_t* shader, const char* name, int value)
 {
     gfx_shader_set_int(shader, name, value);
+}
+
+void gfx_shader_set_matrix4fv(shader_t* shader, const char* name, float* value)
+{
+    gfx_shader_use(shader);
+    glUniformMatrix4fv(gfx_uniform_map_get(shader->uniform_map, name), 1, GL_TRUE, value);
 }
