@@ -50,12 +50,7 @@ int main(void)
     free(vertex_src);
     free(fragment_src);
 
-    float a[] = {
-        1.0f, 0.0f, 0.0f, 0.0f,
-        0.0f, 1.0f, 0.0f, 0.0f,
-        0.0f, 0.0f, 1.0f, 0.0f,
-        0.0f, 0.0f, 0.0f, 1.0f
-    };
+    float identity[] = MATH_IDENTITY_MATRIX_4x4;
 
     float vertices[] = {
     -0.5f, -0.5f, 0.0f,
@@ -82,8 +77,8 @@ int main(void)
         double delta = now - last;
         last = now;
 
-        math_matrix_translate(a, 0.05f * (float)delta, 0.0f, 0.0f);
-        gfx_shader_set_matrix4fv(&shader, "transform", a);
+        math_matrix_translate(identity, 0.05f * (float)delta, 0.0f, 0.0f);
+        gfx_shader_set_matrix4fv(&shader, "transform", identity);
 
         glClearColor(0.2f, 0.2f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
