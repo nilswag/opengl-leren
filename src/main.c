@@ -80,21 +80,15 @@ int main(void)
         glfwPollEvents();
         double now = glfwGetTime();
         double delta = now - last;
-        accumulator += delta;
+        last = now;
 
-        while (accumulator >= max_frame_time)
-        {
-            accumulator -= max_frame_time;
-            math_matrix_translate(a, 0.1f, 0.0f, 0.0f);
-            gfx_shader_set_matrix4fv(&shader, "transform", a);
-        }
+        math_matrix_translate(a, 0.05f * (float)delta, 0.0f, 0.0f);
+        gfx_shader_set_matrix4fv(&shader, "transform", a);
 
         glClearColor(0.2f, 0.2f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         gfx_mesh_render(&mesh);
         glfwSwapBuffers(window);
-
-        last = now;
     }
 
     // ======================================
