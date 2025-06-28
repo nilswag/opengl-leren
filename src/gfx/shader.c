@@ -72,7 +72,7 @@ shader_t gfx_shader_init(const char* vertex_src, const char* fragment_src)
         glGetActiveUniform(s.id, i, uniform_max_length, NULL, &size, &type, name);
         GLint location = glGetUniformLocation(s.id, name);
         gfx_uniform_map_put(s.uniform_map, name, location);
-        printf("name: %s\n", name);
+        // printf("name: %s\n", name);
     }
 
     return s;

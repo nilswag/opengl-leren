@@ -77,6 +77,7 @@ int main(void)
         double delta = now - last;
         last = now;
 
+        math_matrix_translate(identity, 1.0f * delta, 0.0f, 0.0f);
         math_matrix_rotate(identity, 100.0f * delta, 0.0f, 0.0f);
         gfx_shader_set_matrix4fv(&shader, "transform", identity);
 

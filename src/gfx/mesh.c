@@ -15,6 +15,7 @@ void gfx_mesh_init(mesh_t* mesh, float* vertices, size_t vertex_count, unsigned 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->ebo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * index_count, indices, GL_STATIC_DRAW);
 
+    // TODO: Add support for dynamic vertex attributes.
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, (void*)0);
     glEnableVertexAttribArray(0);
 
