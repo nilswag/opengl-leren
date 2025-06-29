@@ -66,18 +66,28 @@ int main(void)
     gfx_mesh_init(&mesh, vertices, 9, indices, 3);
 
     // ======================================
-    double max_frame_time = 1.0 / 1.0;
-    double accumulator = 0.0;
-    double last = glfwGetTime();
+    float max_frame_time = 1.0f / 1.0f;
+    float accumulator = 0.0f;
+    float last = (float)glfwGetTime();
 
     while (!glfwWindowShouldClose(window))
     {
         glfwPollEvents();
-        double now = glfwGetTime();
-        double delta = now - last;
+        float now = (float)glfwGetTime();
+        float delta = now - last;
         last = now;
+        accumulator += delta;
 
-        math_matrix_translate(identity, 1.0f * delta, 0.0f, 0.0f);
+        if (accumulator >= 0.25f)
+        {
+            accumulator = 0;
+            int fps = (int)(1 / delta);
+            char buffer[100];
+            sprintf_s(buffer, sizeof(buffer), "%d FPS", fps);
+            glfwSetWindowTitle(window, buffer);
+        }
+
+        //math_matrix_translate(identity, 1.0f * delta, 0.0f, 0.0f);
         math_matrix_rotate(identity, 100.0f * delta, 0.0f, 0.0f);
         gfx_shader_set_matrix4fv(&shader, "transform", identity);
 
