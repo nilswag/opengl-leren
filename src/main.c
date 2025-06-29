@@ -52,18 +52,24 @@ int main(void)
 
     float identity[] = MATH_IDENTITY_MATRIX_4x4;
 
-    float vertices[] = {
-    -0.5f, -0.5f, 0.0f,
-     0.0f,  0.5f, 0.0f,
-     0.5f, -0.5f, 0.0f,
+    mesh_t mesh = { 0 };
+
+    float vertex_data[] = {
+        -0.5f, -0.5f, 0.0f,     1.0f, 0.0f, 0.0f,
+         0.0f,  0.5f, 0.0f,     0.0f, 1.0f, 0.0f,
+         0.5f, -0.5f, 0.0f,     0.0f, 0.0f, 1.0f
+    };
+
+    vertex_attribute_t vertex_attributes[] = {
+        { .size = 3, .type = GL_FLOAT, .normalized = GL_FALSE, .offset = 0.0f },
+        { .size = 3, .type = GL_FLOAT, .normalized = GL_FALSE, .offset = 3 * sizeof(float) }
     };
 
     unsigned int indices[] = {
         0, 1, 2
     };
 
-    mesh_t mesh = { 0 };
-    gfx_mesh_init(&mesh, vertices, 9, indices, 3);
+    gfx_mesh_init(&mesh, indices, 3, vertex_attributes, 2, vertex_data, 3, 6 * sizeof(float));
 
     // ======================================
     float last = (float)glfwGetTime();
@@ -86,7 +92,6 @@ int main(void)
             glfwSetWindowTitle(window, buffer);
         }
 
-        //math_matrix_translate(identity, 1.0f * delta, 0.0f, 0.0f);
         math_matrix_rotate_y(identity, 100.0f * delta);
         gfx_shader_set_matrix4fv(&shader, "transform", identity);
 

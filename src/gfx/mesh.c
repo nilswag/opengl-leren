@@ -1,7 +1,10 @@
 #include <stdlib.h>
+#include <stddef.h>
+#include <glad/glad.h>
+
 #include "gfx/mesh.h"
 
-void gfx_mesh_init(mesh_t* mesh, float* vertices, size_t vertex_count, unsigned int* indices, size_t index_count)
+void gfx_mesh_init(mesh_t* mesh, unsigned int* indices, GLsizei index_count, vertex_attribute_t* attributes, size_t attribute_count, float* vertex_data, size_t vertex_count, GLsizei stride)
 {
     glGenVertexArrays(1, &mesh->vao);
     glGenBuffers(1, &mesh->vbo);
@@ -9,15 +12,18 @@ void gfx_mesh_init(mesh_t* mesh, float* vertices, size_t vertex_count, unsigned 
 
     glBindVertexArray(mesh->vao);
 
-    glBindBuffer(GL_ARRAY_BUFFER, mesh->vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertex_count, vertices, GL_STATIC_DRAW);
-
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->ebo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * index_count, indices, GL_STATIC_DRAW);
 
-    // TODO: Add support for dynamic vertex attributes.
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, (void*)0);
-    glEnableVertexAttribArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, mesh->vbo);
+    glBufferData(GL_ARRAY_BUFFER, vertex_count * stride, vertex_data, GL_STATIC_DRAW);
+
+    for (int i = 0; i < attribute_count; i++)
+    {
+        vertex_attribute_t a = attributes[i];
+        glEnableVertexAttribArray(i);
+        glVertexAttribPointer(i, a.size, a.type, a.normalized, stride, (const void*)a.offset);
+    }
 
     glBindVertexArray(0);
 
@@ -27,7 +33,7 @@ void gfx_mesh_init(mesh_t* mesh, float* vertices, size_t vertex_count, unsigned 
 void gfx_mesh_render(mesh_t* mesh)
 {
     glBindVertexArray(mesh->vao);
-    glDrawElements(GL_TRIANGLES, mesh->index_count, GL_UNSIGNED_INT, (void*)0);
+    glDrawElements(GL_TRIANGLES, mesh->index_count, GL_UNSIGNED_INT, (const void*)0);
     glBindVertexArray(0);
 }
 
