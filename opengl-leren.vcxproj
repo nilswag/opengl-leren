@@ -34,6 +34,7 @@
     <ClInclude Include="include\gfx\map.h" />
     <ClInclude Include="include\gfx\mesh.h" />
     <ClInclude Include="include\gfx\shader.h" />
+    <ClInclude Include="include\math\math.h" />
     <ClInclude Include="include\math\matrix.h" />
     <ClInclude Include="include\util\io.h" />
     <ClInclude Include="include\util\util.h" />

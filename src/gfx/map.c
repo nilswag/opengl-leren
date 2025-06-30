@@ -5,6 +5,7 @@
 #include "util/util.h"
 #include "gfx/map.h"
 
+
 static void uniform_map_resize(map_t* map, size_t new_capacity)
 {
     if (new_capacity < 1) return;
@@ -34,6 +35,7 @@ static void uniform_map_resize(map_t* map, size_t new_capacity)
     map->capacity = new_capacity;
 }
 
+
 map_t* gfx_uniform_map_init(void)
 {
     map_t* map = malloc(sizeof(map_t));
@@ -50,11 +52,13 @@ map_t* gfx_uniform_map_init(void)
     return map;
 }
 
+
 void gfx_uniform_map_free(map_t* map)
 {
     free(map->entries);
     free(map);
 }
+
 
 void gfx_uniform_map_put(map_t* map, const char* key, GLuint value)
 {
@@ -76,6 +80,7 @@ void gfx_uniform_map_put(map_t* map, const char* key, GLuint value)
     map->size++;
 }
 
+
 GLuint gfx_uniform_map_get(map_t* map, const char* key)
 {
     if (map->size < 1) return -1;
@@ -91,6 +96,7 @@ GLuint gfx_uniform_map_get(map_t* map, const char* key)
 
     return 0;
 }
+
 
 void gfx_uniform_map_remove(map_t* map, const char* key)
 {
@@ -122,6 +128,7 @@ void gfx_uniform_map_remove(map_t* map, const char* key)
         current = current->next;
     }
 }
+
 
 void gfx_uniform_map_clear(map_t* map)
 {

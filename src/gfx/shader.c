@@ -7,6 +7,7 @@
 #include "util/util.h"
 #include "gfx/shader.h"
 
+
 static GLuint compile_shader(const char* shader_src, GLenum type)
 {
     GLuint id = glCreateShader(type);
@@ -29,6 +30,7 @@ static GLuint compile_shader(const char* shader_src, GLenum type)
 
     return id;
 }
+
 
 shader_t gfx_shader_init(const char* vertex_src, const char* fragment_src)
 {
@@ -78,10 +80,12 @@ shader_t gfx_shader_init(const char* vertex_src, const char* fragment_src)
     return s;
 }
 
+
 void gfx_shader_use(shader_t* shader)
 {
     glUseProgram(shader->id);
 }
+
 
 void gfx_shader_free(shader_t* shader)
 {
@@ -91,11 +95,13 @@ void gfx_shader_free(shader_t* shader)
     gfx_uniform_map_free(shader->uniform_map);
 }
 
+
 void gfx_shader_set_int(shader_t* shader, const char* name, int value)
 {
     gfx_shader_use(shader);
     glUniform1i(gfx_uniform_map_get(shader->uniform_map, name), value);
 }
+
 
 void gfx_shader_set_float(shader_t* shader, const char* name, float value)
 {
@@ -103,10 +109,12 @@ void gfx_shader_set_float(shader_t* shader, const char* name, float value)
     glUniform1f(gfx_uniform_map_get(shader->uniform_map, name), value);
 }
 
+
 void gfx_shader_set_bool(shader_t* shader, const char* name, int value)
 {
     gfx_shader_set_int(shader, name, value);
 }
+
 
 void gfx_shader_set_matrix4fv(shader_t* shader, const char* name, float* value)
 {

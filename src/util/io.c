@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 char* util_read_file(const char* path)
 {
 	FILE* file = fopen(path, "rb");

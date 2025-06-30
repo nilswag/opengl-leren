@@ -10,6 +10,7 @@
 #include "gfx/mesh.h"
 #include "math/matrix.h"
 
+
 int main(void)
 {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -49,7 +50,7 @@ int main(void)
     gfx_shader_use(&shader);
     free(vertex_src);
     free(fragment_src);
-
+    
     float identity[] = MATH_IDENTITY_MATRIX_4x4;
 
     mesh_t mesh = { 0 };

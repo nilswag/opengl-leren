@@ -2,6 +2,7 @@
 
 #include "util/util.h"
 
+
 unsigned long util_fnv1a_hash(const char* key)
 {
     unsigned long hash = FNV_OFFSET_BASIS;
