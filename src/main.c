@@ -51,7 +51,7 @@ int main(void)
     free(vertex_src);
     free(fragment_src);
     
-    float identity[] = MATH_IDENTITY_MATRIX_4x4;
+    float identity[] = MATH_MATRIX_IDENTITY;
 
     mesh_t mesh = { 0 };
 

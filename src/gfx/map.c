@@ -22,7 +22,7 @@ static void uniform_map_resize(map_t* map, size_t new_capacity)
         while (current)
         {
             entry_t* next = current->next;
-            unsigned long hash = util_fnv1a_hash(current->key);
+            unsigned long long hash = util_fnv1a_hash(current->key);
             size_t index = hash % new_capacity;
             current->next = tmp[index];
             tmp[index] = current;
@@ -63,7 +63,7 @@ void gfx_uniform_map_free(map_t* map)
 void gfx_uniform_map_put(map_t* map, const char* key, GLuint value)
 {
     if ((float)(map->size + 1) / map->capacity > 0.75f) uniform_map_resize(map, map->capacity * 2);
-    unsigned long hash = util_fnv1a_hash(key);
+    unsigned long long hash = util_fnv1a_hash(key);
     size_t index = hash % map->capacity;
 
     entry_t* entry = calloc(1, sizeof(entry_t));
@@ -84,7 +84,7 @@ void gfx_uniform_map_put(map_t* map, const char* key, GLuint value)
 GLuint gfx_uniform_map_get(map_t* map, const char* key)
 {
     if (map->size < 1) return -1;
-    unsigned long hash = util_fnv1a_hash(key);
+    unsigned long long hash = util_fnv1a_hash(key);
     size_t index = hash % map->capacity;
 
     entry_t* current = map->entries[index];
@@ -107,7 +107,7 @@ void gfx_uniform_map_remove(map_t* map, const char* key)
     }
     if ((float)map->size / map->capacity < 0.25f) uniform_map_resize(map, map->capacity / 2);
 
-    unsigned long hash = util_fnv1a_hash(key);
+    unsigned long long hash = util_fnv1a_hash(key);
     size_t index = hash % map->capacity;
 
     entry_t* current = map->entries[index];
