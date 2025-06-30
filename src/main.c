@@ -61,7 +61,7 @@ int main(void)
     };
 
     vertex_attribute_t vertex_attributes[] = {
-        { .size = 3, .type = GL_FLOAT, .normalized = GL_FALSE, .offset = 0.0f },
+        { .size = 3, .type = GL_FLOAT, .normalized = GL_FALSE, .offset = 0 },
         { .size = 3, .type = GL_FLOAT, .normalized = GL_FALSE, .offset = 3 * sizeof(float) }
     };
 
