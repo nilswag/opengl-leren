@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <math.h>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -40,6 +41,7 @@ int main(void)
         return -1;
     }
     glViewport(0, 0, 1280, 720);
+    glEnable(GL_DEPTH_TEST);
 
     // ======================================
 
@@ -50,27 +52,51 @@ int main(void)
     gfx_shader_use(&shader);
     free(vertex_src);
     free(fragment_src);
-    
-    float identity[] = MATH_MATRIX_IDENTITY;
+
+    float transform[] = MATH_MATRIX_IDENTITY;
 
     mesh_t mesh = { 0 };
 
     float vertex_data[] = {
-        -0.5f, -0.5f, 0.0f,     1.0f, 0.0f, 0.0f,
-         0.0f,  0.5f, 0.0f,     0.0f, 1.0f, 0.0f,
-         0.5f, -0.5f, 0.0f,     0.0f, 0.0f, 1.0f
+        -0.5f, -0.5f, -0.5f,   1.0f, 0.0f, 1.0f,
+         0.5f, -0.5f, -0.5f,   0.0f, 1.0f, 0.0f,
+         0.5f,  0.5f, -0.5f,   0.0f, 0.0f, 1.0f,
+
+        -0.5f,  0.5f, -0.5f,   1.0f, 0.0f, 0.0f,
+        -0.5f, -0.5f,  0.5f,   0.0f, 1.0f, 0.0f,
+         0.5f, -0.5f,  0.5f,   0.0f, 0.0f, 1.0f,
+
+         0.5f,  0.5f,  0.5f,   1.0f, 0.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f,   1.0f, 1.0f, 0.0f
     };
+
+    unsigned int indices[] = {
+        0, 1, 2,
+        2, 3, 0,
+
+        4, 5, 6,
+        6, 7, 4,
+
+        4, 0, 3,
+        3, 7, 4,
+
+        1, 5, 6,
+        6, 2, 1,
+
+        4, 5, 1,
+        1, 0, 4,
+
+        3, 2, 6,
+        6, 7, 3
+    };
+
 
     vertex_attribute_t vertex_attributes[] = {
         { .size = 3, .type = GL_FLOAT, .normalized = GL_FALSE, .offset = 0 },
         { .size = 3, .type = GL_FLOAT, .normalized = GL_FALSE, .offset = 3 * sizeof(float) }
     };
 
-    unsigned int indices[] = {
-        0, 1, 2
-    };
-
-    gfx_mesh_init(&mesh, indices, 3, vertex_attributes, 2, vertex_data, 3, 6 * sizeof(float));
+    gfx_mesh_init(&mesh, indices, 36, vertex_attributes, 2, vertex_data, 8, 6 * sizeof(float));
 
     // ======================================
     float last = (float)glfwGetTime();
@@ -93,11 +119,17 @@ int main(void)
             glfwSetWindowTitle(window, buffer);
         }
 
-        math_matrix_rotate_y(identity, 100.0f * delta);
-        gfx_shader_set_matrix4fv(&shader, "transform", identity);
+        if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        else if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_RELEASE)
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+        math_matrix_rotate_x(transform, delta * 25.0f);
+        math_matrix_rotate_y(transform, delta * 90.0f);
+        gfx_shader_set_matrix4fv(&shader, "transform", transform);
 
         glClearColor(0.2f, 0.2f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         gfx_mesh_render(&mesh);
         glfwSwapBuffers(window);
     }
