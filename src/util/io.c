@@ -1,6 +1,7 @@
-#include "io.h"
 #include <stdio.h>
 #include <stdlib.h>
+
+#include "io.h"
 
 
 char* util_read_file(const char* path)
