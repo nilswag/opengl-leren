@@ -42,6 +42,9 @@
     <ClCompile Include="src\math\matrix.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\math\vector.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\util\io.h">

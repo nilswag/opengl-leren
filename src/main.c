@@ -60,7 +60,7 @@ int main(void)
         return -1;
     }
 
-    GLFWwindow* window = glfwCreateWindow(1280, 720, "glfw window", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(1280, 720, "0 FPS", NULL, NULL);
     if (window == NULL)
     {
         fputs("Failed to initialize GLFW window.", stderr);
@@ -68,6 +68,7 @@ int main(void)
         return -1;
     }
     glfwMakeContextCurrent(window);
+    glfwSwapInterval(1);
     
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
@@ -78,8 +79,8 @@ int main(void)
     glViewport(0, 0, 1280, 720);
     glEnable(GL_DEPTH_TEST);
 
-    // ======================================
 
+    // ======================================
 
     char* vertex_src = util_read_file("resources/shaders/basic/vertex.glsl");
     char* fragment_src = util_read_file("resources/shaders/basic/fragment.glsl");
@@ -88,7 +89,7 @@ int main(void)
     free(vertex_src);
     free(fragment_src);
 
-    float model[] = MATH_MATRIX_IDENTITY;
+    mat4x4f_t model = MATH_MATRIX_IDENTITY_4x4f;
 
     mesh_t mesh = { 0 };
 
@@ -100,8 +101,10 @@ int main(void)
     gfx_mesh_init(&mesh, indices, 36, vertex_attributes, 2, vertex_data, 8, 6 * sizeof(float));
 
     // ======================================
+
     float last = (float)glfwGetTime();
     float accumulator = 0.0f;
+    size_t frames = 0;
 
     while (!glfwWindowShouldClose(window))
     {
@@ -110,11 +113,13 @@ int main(void)
         float delta = now - last;
         last = now;
         accumulator += delta;
+        frames++;
 
-        if (accumulator >= 0.25f)
+        if (accumulator >= 0.5f)
         {
+            int fps = (int)(frames / accumulator);
+            frames = 0;
             accumulator = 0.0f;
-            int fps = (int)(1 / delta);
             char buffer[100];
             sprintf_s(buffer, sizeof(buffer), "%d FPS", fps);
             glfwSetWindowTitle(window, buffer);
@@ -125,8 +130,8 @@ int main(void)
         else if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_RELEASE)
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-        math_matrix_rotate_y(model, delta * 90.0f);
-        gfx_shader_set_matrix4fv(&shader, "model", model);
+        math_matrix_rotate4x4_y(&model, delta * 90.0f);
+        gfx_shader_set_matrix4fv(&shader, "model", &model);
 
         glClearColor(0.2f, 0.2f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

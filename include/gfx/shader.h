@@ -2,6 +2,7 @@
 #include <glad/glad.h>
 
 #include "gfx/map.h"
+#include "math/matrix.h"
 
 typedef struct
 {
@@ -18,4 +19,4 @@ void gfx_shader_free(shader_t* shader);
 void gfx_shader_set_int(shader_t* shader, const char* name, int value);
 void gfx_shader_set_float(shader_t* shader, const char* name, float value);
 void gfx_shader_set_bool(shader_t* shader, const char* name, int value);
-void gfx_shader_set_matrix4fv(shader_t* shader, const char* name, float* value);
+void gfx_shader_set_matrix4fv(shader_t* shader, const char* name, mat4x4f_t* value);

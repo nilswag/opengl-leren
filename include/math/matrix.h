@@ -1,26 +1,42 @@
 #pragma once
+#include "math/vector.h"
 
-#define MATH_MATRIX_IDENTITY { \
+#define MATH_MATRIX_IDENTITY_4x4f { \
     1.0f, 0.0f, 0.0f, 0.0f, \
     0.0f, 1.0f, 0.0f, 0.0f, \
     0.0f, 0.0f, 1.0f, 0.0f, \
     0.0f, 0.0f, 0.0f, 1.0f  \
 }
 
-void math_matrix_mult(float* a, size_t a_rows, size_t a_cols, float* b, size_t b_rows, size_t b_cols, float* c);
-void math_matrix_mult_4x4(float* a, float* b, float* c);
 
-void math_matrix_translate_x(float* a, float dx);
-void math_matrix_translate_y(float* a, float dy);
-void math_matrix_translate_z(float* a, float dz);
-void math_matrix_translate(float* a, float dx, float dy, float dz);
+typedef struct
+{
+    float* data;
+    size_t rows;
+    size_t cols;
+} matf_t;
 
-void math_matrix_rotate_x(float* a, float deg);
-void math_matrix_rotate_y(float* a, float deg);
-void math_matrix_rotate_z(float* a, float deg);
-void math_matrix_rotate(float* a, float degx, float degy, float degz);
 
-void math_matrix_scale_x(float* a, float x);
-void math_matrix_scale_y(float* a, float y);
-void math_matrix_scale_z(float* a, float z);
-void math_matrix_scale(float* a, float w);
+typedef struct
+{
+    float data[4 * 4];
+} mat4x4f_t;
+
+
+void math_matrix_mult(matf_t* a, matf_t* b, matf_t* c);
+void math_matrix_mult4x4(mat4x4f_t* a, mat4x4f_t* b, mat4x4f_t* c);
+
+void math_matrix_translate4x4_x(mat4x4f_t* a, float dx);
+void math_matrix_translate4x4_y(mat4x4f_t* a, float dy);
+void math_matrix_translate4x4_z(mat4x4f_t* a, float dz);
+void math_matrix_translate4x4(mat4x4f_t* a, float dx, float dy, float dz);
+
+void math_matrix_rotate4x4_x(mat4x4f_t* a, float deg);
+void math_matrix_rotate4x4_y(mat4x4f_t* a, float deg);
+void math_matrix_rotate4x4_z(mat4x4f_t* a, float deg);
+void math_matrix_rotate4x4(mat4x4f_t* a, float degx, float degy, float degz);
+
+void math_matrix_scale4x4_x(mat4x4f_t* a, float x);
+void math_matrix_scale4x4_y(mat4x4f_t* a, float y);
+void math_matrix_scale4x4_z(mat4x4f_t* a, float z);
+void math_matrix_scale4x4(mat4x4f_t* a, float w);

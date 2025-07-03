@@ -26,6 +26,7 @@
     <ClCompile Include="src\gfx\shader.c" />
     <ClCompile Include="src\main.c" />
     <ClCompile Include="src\math\matrix.c" />
+    <ClCompile Include="src\math\vector.c" />
     <ClCompile Include="src\util\io.c" />
     <ClCompile Include="src\util\util.c" />
   </ItemGroup>

@@ -116,8 +116,8 @@
     }
 
 
-    void gfx_shader_set_matrix4fv(shader_t* shader, const char* name, float* value)
+    void gfx_shader_set_matrix4fv(shader_t* shader, const char* name, mat4x4f_t* value)
     {
         gfx_shader_use(shader);
-        glUniformMatrix4fv(gfx_uniform_map_get(shader->uniform_map, name), 1, GL_TRUE, value);
+        glUniformMatrix4fv(gfx_uniform_map_get(shader->uniform_map, name), 1, GL_TRUE, value->data);
     }
