@@ -7,7 +7,8 @@
     0.0f, 0.0f, 0.0f, 1.0f  \
 }
 
-void math_matrix_mult(float* a, float* b, float* c);
+void math_matrix_mult(float* a, size_t a_rows, size_t a_cols, float* b, size_t b_rows, size_t b_cols, float* c);
+void math_matrix_mult_4x4(float* a, float* b, float* c);
 
 void math_matrix_translate_x(float* a, float dx);
 void math_matrix_translate_y(float* a, float dy);

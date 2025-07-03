@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <string.h>
 #include <math.h>
 
@@ -13,17 +14,32 @@ typedef enum
 } _axis_e;
 
 
-void math_matrix_mult(float* a, float* b, float* c)
+void math_matrix_mult(float* a, size_t a_rows, size_t a_cols, float* b, size_t b_rows, size_t b_cols, float* c)
 {
-    for (int i = 0; i < 4; i++)
+    if (a_cols != b_rows)
     {
-        for (int j = 0; j < 4; j++)
+        fputs("Incompatible matrix sizes.", stderr);
+        return;
+    }
+
+    for (size_t i = 0; i < a_rows; i++)
+    {
+        for (size_t j = 0; j < b_cols; j++)
         {
-            c[i * 4 + j] = 0;
-            for (int k = 0; k < 4; k++)
-                c[i * 4 + j] += a[i * 4 + k] * b[k * 4 + j];
+            c[i * b_cols + j] = 0;
+            for (size_t k = 0; k < a_cols; k++)
+            {
+                c[i * b_cols + j] += a[i * a_cols + k] * b[k * b_cols + j];
+            }
         }
     }
+}
+
+
+
+void math_matrix_mult_4x4(float* a, float* b, float* c)
+{
+    math_matrix_mult(a, 4, 4, b, 4, 4, c);
 }
 
 
@@ -49,7 +65,7 @@ static void _matrix_translate(float* a, float d, _axis_e axis)
     }
 
     float tmp[16];
-    math_matrix_mult(t, a, tmp);
+    math_matrix_mult_4x4(t, a, tmp);
     memcpy(a, tmp, 16 * sizeof(float));
 }
 
@@ -115,7 +131,7 @@ static void _matrix_rotate_plane(float* a, float deg, _axis_e axis)
     }
 
     float tmp[16];
-    math_matrix_mult(t, a, tmp);
+    math_matrix_mult_4x4(t, a, tmp);
     memcpy(a, tmp, 16 * sizeof(float));
 }
 
@@ -169,7 +185,7 @@ static void _matrix_scale(float* a, float w, _axis_e axis)
     }
 
     float tmp[16];
-    math_matrix_mult(t, a, tmp);
+    math_matrix_mult_4x4(t, a, tmp);
     memcpy(a, tmp, 16 * sizeof(float));
 }
 
@@ -202,6 +218,6 @@ void math_matrix_scale(float* a, float w)
     };
 
     float tmp[16];
-    math_matrix_mult(t, a, tmp);
+    math_matrix_mult_4x4(t, a, tmp);
     memcpy(a, tmp, 16 * sizeof(float));
 }

@@ -36,6 +36,7 @@
     <ClInclude Include="include\gfx\shader.h" />
     <ClInclude Include="include\math\math.h" />
     <ClInclude Include="include\math\matrix.h" />
+    <ClInclude Include="include\math\vector.h" />
     <ClInclude Include="include\util\io.h" />
     <ClInclude Include="include\util\util.h" />
   </ItemGroup>

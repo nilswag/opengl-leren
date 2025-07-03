@@ -12,6 +12,41 @@
 #include "math/matrix.h"
 
 
+float vertex_data[] = {
+    -0.5f, -0.5f, -0.5f,   1.0f, 0.0f, 1.0f,
+     0.5f, -0.5f, -0.5f,   0.0f, 1.0f, 0.0f,
+     0.5f,  0.5f, -0.5f,   0.0f, 0.0f, 1.0f,
+
+    -0.5f,  0.5f, -0.5f,   1.0f, 0.0f, 0.0f,
+    -0.5f, -0.5f,  0.5f,   0.0f, 1.0f, 0.0f,
+     0.5f, -0.5f,  0.5f,   0.0f, 0.0f, 1.0f,
+
+     0.5f,  0.5f,  0.5f,   1.0f, 0.0f, 0.0f,
+    -0.5f,  0.5f,  0.5f,   1.0f, 1.0f, 0.0f
+};
+
+
+unsigned int indices[] = {
+    0, 1, 2,
+    2, 3, 0,
+
+    4, 5, 6,
+    6, 7, 4,
+
+    4, 0, 3,
+    3, 7, 4,
+
+    1, 5, 6,
+    6, 2, 1,
+
+    4, 5, 1,
+    1, 0, 4,
+
+    3, 2, 6,
+    6, 7, 3
+};
+
+
 int main(void)
 {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -53,43 +88,9 @@ int main(void)
     free(vertex_src);
     free(fragment_src);
 
-    float transform[] = MATH_MATRIX_IDENTITY;
+    float model[] = MATH_MATRIX_IDENTITY;
 
     mesh_t mesh = { 0 };
-
-    float vertex_data[] = {
-        -0.5f, -0.5f, -0.5f,   1.0f, 0.0f, 1.0f,
-         0.5f, -0.5f, -0.5f,   0.0f, 1.0f, 0.0f,
-         0.5f,  0.5f, -0.5f,   0.0f, 0.0f, 1.0f,
-
-        -0.5f,  0.5f, -0.5f,   1.0f, 0.0f, 0.0f,
-        -0.5f, -0.5f,  0.5f,   0.0f, 1.0f, 0.0f,
-         0.5f, -0.5f,  0.5f,   0.0f, 0.0f, 1.0f,
-
-         0.5f,  0.5f,  0.5f,   1.0f, 0.0f, 0.0f,
-        -0.5f,  0.5f,  0.5f,   1.0f, 1.0f, 0.0f
-    };
-
-    unsigned int indices[] = {
-        0, 1, 2,
-        2, 3, 0,
-
-        4, 5, 6,
-        6, 7, 4,
-
-        4, 0, 3,
-        3, 7, 4,
-
-        1, 5, 6,
-        6, 2, 1,
-
-        4, 5, 1,
-        1, 0, 4,
-
-        3, 2, 6,
-        6, 7, 3
-    };
-
 
     vertex_attribute_t vertex_attributes[] = {
         { .size = 3, .type = GL_FLOAT, .normalized = GL_FALSE, .offset = 0 },
@@ -124,9 +125,8 @@ int main(void)
         else if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_RELEASE)
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-        math_matrix_rotate_x(transform, delta * 25.0f);
-        math_matrix_rotate_y(transform, delta * 90.0f);
-        gfx_shader_set_matrix4fv(&shader, "transform", transform);
+        math_matrix_rotate_y(model, delta * 90.0f);
+        gfx_shader_set_matrix4fv(&shader, "model", model);
 
         glClearColor(0.2f, 0.2f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
