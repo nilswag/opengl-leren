@@ -2,11 +2,11 @@
 #include <stddef.h>
 #include <glad/glad.h>
 
-typedef struct entry
+typedef struct Entry
 {
     const char* key;
     GLuint value;
-    struct entry_t* next;
+    struct Entry* next;
 } Entry;
 
 typedef struct
