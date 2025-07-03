@@ -4,8 +4,11 @@
 typedef struct
 {
     float x, y, z;
-} vec3f_t;
+} Vec3f;
 
 
-float math_vector_dot(vec3f_t* a, vec3f_t* b);
-vec3f_t math_vector_cross(vec3f_t* a, vec3f_t* b);
+Vec3f math_vector_add(Vec3f a, Vec3f b);
+Vec3f math_vector_sub(Vec3f a, Vec3f b);
+Vec3f math_vector_normalize(Vec3f a);
+float math_vector_dot(Vec3f a, Vec3f b);
+Vec3f math_vector_cross(Vec3f a, Vec3f b);

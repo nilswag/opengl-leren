@@ -1,17 +1,46 @@
+#include <math.h>
+
 #include "math/vector.h"
 
 
-float math_vector_dot(vec3f_t* a, vec3f_t* b)
+Vec3f math_vector_add(Vec3f a, Vec3f b)
 {
-    return a->x * b->x + a->y * b->y + a->z * b->z;
+    return (Vec3f) {
+        a.x + b.x,
+        a.y + b.y,
+        a.z + b.z
+    };
 }
 
 
-vec3f_t math_vector_cross(vec3f_t* a, vec3f_t* b)
+Vec3f math_vector_sub(Vec3f a, Vec3f b)
 {
-    return (vec3f_t) {
-        .x = a->y * b->z - a->z * b->y,
-        .y = a->z * b->x - a->x * b->z,
-        .z = a->x * b->y - a->y * b->x
+    return (Vec3f) {
+        a.x - b.x,
+        a.y - b.y,
+        a.z - b.z
+    };
+}
+
+
+Vec3f math_vector_normalize(Vec3f a)
+{
+    float magnitude = sqrtf(math_vector_dot(a, a));
+    return (Vec3f) { a.x / magnitude, a.y / magnitude, a.z / magnitude };
+}
+
+
+float math_vector_dot(Vec3f a, Vec3f b)
+{
+    return a.x * b.x + a.y * b.y + a.z * b.z;
+}
+
+
+Vec3f math_vector_cross(Vec3f a, Vec3f b)
+{
+    return (Vec3f) {
+        a.y * b.z - a.z * b.y,
+        a.z * b.x - a.x * b.z,
+        a.x * b.y - a.y * b.x
     };
 }

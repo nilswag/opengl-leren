@@ -14,7 +14,7 @@ typedef enum
 } _axis_e;
 
 
-void math_matrix_mult(matf_t* a, matf_t* b, matf_t* c)
+void math_matrix_mult(Matf* a, Matf* b, Matf* c)
 {
     if (a->cols != b->rows)
     {
@@ -36,27 +36,19 @@ void math_matrix_mult(matf_t* a, matf_t* b, matf_t* c)
 }
 
 
-void math_matrix_mult4x4(mat4x4f_t* a, mat4x4f_t* b, mat4x4f_t* c)
+void math_matrix_mult4x4(Matf4x4* a, Matf4x4* b, Matf4x4* c)
 {
-    matf_t _a = {
-        .data = a->data, .rows = 4, .cols = 4
-    };
-
-    matf_t _b = {
-        .data = b->data, .rows = 4, .cols = 4
-    };
-
-    matf_t _c = {
-        .data = c->data, .rows = 4, .cols = 4
-    };
+    Matf _a = { a->data, 4, 4 };
+    Matf _b = { b->data, 4, 4 };
+    Matf _c = { c->data, 4, 4 };
 
     math_matrix_mult(&_a, &_b, &_c);
 }
 
 
-static void _matrix_translate4x4(mat4x4f_t* a, float d, _axis_e axis)
+static void _matrix_translate4x4(Matf4x4* a, float d, _axis_e axis)
 {
-    mat4x4f_t t = MATH_MATRIX_IDENTITY_4x4f;
+    Matf4x4 t = MATH_MATRIX_IDENTITY_4x4f;
     switch (axis)
     {
     case AXIS_X:
@@ -75,31 +67,31 @@ static void _matrix_translate4x4(mat4x4f_t* a, float d, _axis_e axis)
         break;
     }
 
-    mat4x4f_t tmp = { 0 };
+    Matf4x4 tmp = { 0 };
     math_matrix_mult4x4(&t, a, &tmp);
     memcpy(a->data, tmp.data, 16 * sizeof(float));
 }
 
 
-void math_matrix_translate4x4_x(mat4x4f_t* a, float dx)
+void math_matrix_translate4x4_x(Matf4x4* a, float dx)
 {
     _matrix_translate4x4(a, dx, AXIS_X);
 }
 
 
-void math_matrix_translate4x4_y(mat4x4f_t* a, float dy)
+void math_matrix_translate4x4_y(Matf4x4* a, float dy)
 {
     _matrix_translate4x4(a, dy, AXIS_Y);
 }
 
 
-void math_matrix_translate4x4_z(mat4x4f_t* a, float dz)
+void math_matrix_translate4x4_z(Matf4x4* a, float dz)
 {
     _matrix_translate4x4(a, dz, AXIS_Z);
 }
 
 
-void math_matrix_translate4x4(mat4x4f_t* a, float dx, float dy, float dz)
+void math_matrix_translate4x4(Matf4x4* a, float dx, float dy, float dz)
 {
     math_matrix_translate4x4_x(a, dx);
     math_matrix_translate4x4_y(a, dy);
@@ -107,9 +99,9 @@ void math_matrix_translate4x4(mat4x4f_t* a, float dx, float dy, float dz)
 }
 
 
-static void _matrix_rotate_plane4x4(mat4x4f_t* a, float deg, _axis_e axis)
+static void _matrix_rotate_plane4x4(Matf4x4* a, float deg, _axis_e axis)
 {
-    mat4x4f_t t = MATH_MATRIX_IDENTITY_4x4f;
+    Matf4x4 t = MATH_MATRIX_IDENTITY_4x4f;
     float rad = MATH_DEGREE_TO_RADIAN(deg);
     float c = cosf(rad);
     float s = sinf(rad);
@@ -141,31 +133,31 @@ static void _matrix_rotate_plane4x4(mat4x4f_t* a, float deg, _axis_e axis)
         break;
     }
 
-    mat4x4f_t tmp = { 0 };
+    Matf4x4 tmp = { 0 };
     math_matrix_mult4x4(&t, a, &tmp);
     memcpy(a->data, tmp.data, 16 * sizeof(float));
 }
 
 
-void math_matrix_rotate4x4_x(mat4x4f_t* a, float deg)
+void math_matrix_rotate4x4_x(Matf4x4* a, float deg)
 {
     _matrix_rotate_plane4x4(a, deg, AXIS_X);
 }
 
 
-void math_matrix_rotate4x4_y(mat4x4f_t* a, float deg)
+void math_matrix_rotate4x4_y(Matf4x4* a, float deg)
 {
     _matrix_rotate_plane4x4(a, deg, AXIS_Y);
 }
 
  
-void math_matrix_rotate4x4_z(mat4x4f_t* a, float deg)
+void math_matrix_rotate4x4_z(Matf4x4* a, float deg)
 {
     _matrix_rotate_plane4x4(a, deg, AXIS_Z);
 }
 
 
-void math_matrix_rotate4x4(mat4x4f_t* a, float degx, float degy, float degz)
+void math_matrix_rotate4x4(Matf4x4* a, float degx, float degy, float degz)
 {
     math_matrix_rotate4x4_x(a, degx);
     math_matrix_rotate4x4_y(a, degy);
@@ -173,9 +165,9 @@ void math_matrix_rotate4x4(mat4x4f_t* a, float degx, float degy, float degz)
 }
 
 
-static void _matrix_scale4x4(mat4x4f_t* a, float w, _axis_e axis)
+static void _matrix_scale4x4(Matf4x4* a, float w, _axis_e axis)
 {
-    mat4x4f_t t = MATH_MATRIX_IDENTITY_4x4f;
+    Matf4x4 t = MATH_MATRIX_IDENTITY_4x4f;
 
     switch (axis)
     {
@@ -195,40 +187,56 @@ static void _matrix_scale4x4(mat4x4f_t* a, float w, _axis_e axis)
         break;
     }
 
-    mat4x4f_t tmp = { 0 };
+    Matf4x4 tmp = { 0 };
     math_matrix_mult4x4(&t, a, &tmp);
     memcpy(a->data, tmp.data, 16 * sizeof(float));
 }
 
 
-void math_matrix_scale4x4_x(mat4x4f_t* a, float x)
+void math_matrix_scale4x4_x(Matf4x4* a, float x)
 {
     _matrix_scale4x4(a, x, AXIS_X);
 }
 
 
-void math_matrix_scale4x4_y(mat4x4f_t* a, float y)
+void math_matrix_scale4x4_y(Matf4x4* a, float y)
 {
     _matrix_scale4x4(a, y, AXIS_Y);
 }
 
 
-void math_matrix_scale4x4_z(mat4x4f_t* a, float z)
+void math_matrix_scale4x4_z(Matf4x4* a, float z)
 {
     _matrix_scale4x4(a, z, AXIS_Z);
 }
 
 
-void math_matrix_scale4x4(mat4x4f_t* a, float w)
+void math_matrix_scale4x4(Matf4x4* a, float w)
 {
-    mat4x4f_t t = {
+    Matf4x4 t = {
         w, 0, 0, 0,
         0, w, 0, 0,
         0, 0, w, 0,
         0, 0, 0, 1
     };
 
-    mat4x4f_t tmp = { 0 };
+    Matf4x4 tmp = { 0 };
     math_matrix_mult4x4(&t, a, &tmp);
     memcpy(a->data, tmp.data, 16 * sizeof(float));
+}
+
+
+Matf4x4 math_matrix_lookat(Vec3f from, Vec3f to)
+{
+    Vec3f global_up = { 0.0f, 1.0f, 0.0f };
+    Vec3f f = math_vector_normalize(math_vector_sub(to, from));
+    Vec3f r = math_vector_normalize(math_vector_cross(global_up, f));
+    Vec3f u = math_vector_normalize(math_vector_cross(r, f));
+
+    return (Matf4x4) {
+        r.x, u.x, f.x, -math_vector_dot(r, from),
+        r.y, u.y, f.y, -math_vector_dot(u, from),
+        r.z, u.z, f.z, -math_vector_dot(f, from),
+        0,   0,   0,   1
+    };
 }

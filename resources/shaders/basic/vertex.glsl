@@ -6,9 +6,10 @@ layout (location = 1) in vec3 color;
 out vec3 _color;
 
 uniform mat4 model;
+uniform mat4 view;
 
 void main(void)
 {
-	gl_Position = model * vec4(pos, 1.0f);
+	gl_Position = view * model * vec4(pos, 1.0f);
     _color = color;
 }

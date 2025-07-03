@@ -84,16 +84,17 @@ int main(void)
 
     char* vertex_src = util_read_file("resources/shaders/basic/vertex.glsl");
     char* fragment_src = util_read_file("resources/shaders/basic/fragment.glsl");
-    shader_t shader = gfx_shader_init(vertex_src, fragment_src);
+    Shader shader = gfx_shader_init(vertex_src, fragment_src);
     gfx_shader_use(&shader);
     free(vertex_src);
     free(fragment_src);
 
-    mat4x4f_t model = MATH_MATRIX_IDENTITY_4x4f;
+    Matf4x4 model = MATH_MATRIX_IDENTITY_4x4f;
+    Matf4x4 view = math_matrix_lookat((Vec3f) { 0.0f, 0.5f, 0.5f }, (Vec3f) { 0.0f, 0.0f, 0.0f });
 
-    mesh_t mesh = { 0 };
+    Mesh mesh = { 0 };
 
-    vertex_attribute_t vertex_attributes[] = {
+    VertexAttribute vertex_attributes[] = {
         { .size = 3, .type = GL_FLOAT, .normalized = GL_FALSE, .offset = 0 },
         { .size = 3, .type = GL_FLOAT, .normalized = GL_FALSE, .offset = 3 * sizeof(float) }
     };
@@ -131,6 +132,7 @@ int main(void)
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
         math_matrix_rotate4x4_y(&model, delta * 90.0f);
+        gfx_shader_set_matrix4fv(&shader, "view", &view);
         gfx_shader_set_matrix4fv(&shader, "model", &model);
 
         glClearColor(0.2f, 0.2f, 0.3f, 1.0f);

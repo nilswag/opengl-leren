@@ -8,7 +8,7 @@ typedef struct
     GLenum type;
     GLboolean normalized;
     size_t offset;
-} vertex_attribute_t;
+} VertexAttribute;
 
 typedef struct
 {
@@ -16,8 +16,8 @@ typedef struct
     GLuint vbo;
     GLuint ebo;
     GLsizei index_count;
-} mesh_t;
+} Mesh;
 
-void gfx_mesh_init(mesh_t* mesh, unsigned int* indices, GLsizei index_count, vertex_attribute_t* attributes, size_t attribute_count, float* vertex_data, size_t vertex_count, GLsizei stride);
-void gfx_mesh_render(mesh_t* mesh);
-void gfx_mesh_free(mesh_t* mesh);
+void gfx_mesh_init(Mesh* mesh, unsigned int* indices, GLsizei index_count, VertexAttribute* attributes, size_t attribute_count, float* vertex_data, size_t vertex_count, GLsizei stride);
+void gfx_mesh_render(Mesh* mesh);
+void gfx_mesh_free(Mesh* mesh);

@@ -6,10 +6,10 @@
 #include "gfx/map.h"
 
 
-static void uniform_map_resize(map_t* map, size_t new_capacity)
+static void uniform_map_resize(Map* map, size_t new_capacity)
 {
     if (new_capacity < 1) return;
-    entry_t** tmp = calloc(new_capacity, sizeof(entry_t*));
+    Entry** tmp = calloc(new_capacity, sizeof(Entry*));
     if (!tmp)
     {
         fputs("Failed to allocate memory to resize uniform map.", stderr);
@@ -18,10 +18,10 @@ static void uniform_map_resize(map_t* map, size_t new_capacity)
 
     for (int i = 0; i < map->capacity; i++)
     {
-        entry_t* current = map->entries[i];
+        Entry* current = map->entries[i];
         while (current)
         {
-            entry_t* next = current->next;
+            Entry* next = current->next;
             unsigned long long hash = util_fnv1a_hash(current->key);
             size_t index = hash % new_capacity;
             current->next = tmp[index];
@@ -36,9 +36,9 @@ static void uniform_map_resize(map_t* map, size_t new_capacity)
 }
 
 
-map_t* gfx_uniform_map_init(void)
+Map* gfx_uniform_map_init(void)
 {
-    map_t* map = malloc(sizeof(map_t));
+    Map* map = malloc(sizeof(Map));
     if (map == NULL)
     {
         fputs("Failed to allocate memory for uniform map.", stderr);
@@ -47,26 +47,26 @@ map_t* gfx_uniform_map_init(void)
 
     map->size = 0;
     map->capacity = 100;
-    map->entries = calloc(map->capacity, sizeof(entry_t));
+    map->entries = calloc(map->capacity, sizeof(Entry));
 
     return map;
 }
 
 
-void gfx_uniform_map_free(map_t* map)
+void gfx_uniform_map_free(Map* map)
 {
     free(map->entries);
     free(map);
 }
 
 
-void gfx_uniform_map_put(map_t* map, const char* key, GLuint value)
+void gfx_uniform_map_put(Map* map, const char* key, GLuint value)
 {
     if ((float)(map->size + 1) / map->capacity > 0.75f) uniform_map_resize(map, map->capacity * 2);
     unsigned long long hash = util_fnv1a_hash(key);
     size_t index = hash % map->capacity;
 
-    entry_t* entry = calloc(1, sizeof(entry_t));
+    Entry* entry = calloc(1, sizeof(Entry));
     if (entry == NULL)
     {
         fputs("Failed to allocate memory for new map entry.", stderr);
@@ -81,13 +81,13 @@ void gfx_uniform_map_put(map_t* map, const char* key, GLuint value)
 }
 
 
-GLuint gfx_uniform_map_get(map_t* map, const char* key)
+GLuint gfx_uniform_map_get(Map* map, const char* key)
 {
     if (map->size < 1) return -1;
     unsigned long long hash = util_fnv1a_hash(key);
     size_t index = hash % map->capacity;
 
-    entry_t* current = map->entries[index];
+    Entry* current = map->entries[index];
     while (current)
     {
         if (strcmp(current->key, key) == 0) return current->value;
@@ -98,7 +98,7 @@ GLuint gfx_uniform_map_get(map_t* map, const char* key)
 }
 
 
-void gfx_uniform_map_remove(map_t* map, const char* key)
+void gfx_uniform_map_remove(Map* map, const char* key)
 {
     if (map->size < 1)
     {
@@ -110,8 +110,8 @@ void gfx_uniform_map_remove(map_t* map, const char* key)
     unsigned long long hash = util_fnv1a_hash(key);
     size_t index = hash % map->capacity;
 
-    entry_t* current = map->entries[index];
-    entry_t* prev = NULL;
+    Entry* current = map->entries[index];
+    Entry* prev = NULL;
     while (current)
     {
         if (strcmp(current->key, key) == 0)
@@ -130,7 +130,7 @@ void gfx_uniform_map_remove(map_t* map, const char* key)
 }
 
 
-void gfx_uniform_map_clear(map_t* map)
+void gfx_uniform_map_clear(Map* map)
 {
     for (int i = 0; i < map->capacity; i++)
         map->entries[i] = NULL;

@@ -32,9 +32,9 @@
     }
 
 
-    shader_t gfx_shader_init(const char* vertex_src, const char* fragment_src)
+    Shader gfx_shader_init(const char* vertex_src, const char* fragment_src)
     {
-        shader_t s = { 0 };
+        Shader s = { 0 };
         s.id = glCreateProgram();
         s.vertex_id = compile_shader(vertex_src, GL_VERTEX_SHADER);
         s.fragment_id = compile_shader(fragment_src, GL_FRAGMENT_SHADER);
@@ -81,13 +81,13 @@
     }
 
 
-    void gfx_shader_use(shader_t* shader)
+    void gfx_shader_use(Shader* shader)
     {
         glUseProgram(shader->id);
     }
 
 
-    void gfx_shader_free(shader_t* shader)
+    void gfx_shader_free(Shader* shader)
     {
         glDeleteShader(shader->vertex_id);
         glDeleteShader(shader->fragment_id);
@@ -96,27 +96,27 @@
     }
 
 
-    void gfx_shader_set_int(shader_t* shader, const char* name, int value)
+    void gfx_shader_set_int(Shader* shader, const char* name, int value)
     {
         gfx_shader_use(shader);
         glUniform1i(gfx_uniform_map_get(shader->uniform_map, name), value);
     }
 
 
-    void gfx_shader_set_float(shader_t* shader, const char* name, float value)
+    void gfx_shader_set_float(Shader* shader, const char* name, float value)
     {
         gfx_shader_use(shader);
         glUniform1f(gfx_uniform_map_get(shader->uniform_map, name), value);
     }
 
 
-    void gfx_shader_set_bool(shader_t* shader, const char* name, int value)
+    void gfx_shader_set_bool(Shader* shader, const char* name, int value)
     {
         gfx_shader_set_int(shader, name, value);
     }
 
 
-    void gfx_shader_set_matrix4fv(shader_t* shader, const char* name, mat4x4f_t* value)
+    void gfx_shader_set_matrix4fv(Shader* shader, const char* name, Matf4x4* value)
     {
         gfx_shader_use(shader);
         glUniformMatrix4fv(gfx_uniform_map_get(shader->uniform_map, name), 1, GL_TRUE, value->data);

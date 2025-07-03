@@ -9,14 +9,14 @@ typedef struct
     GLuint id;
     GLuint vertex_id;
     GLuint fragment_id;
-    map_t* uniform_map;
-} shader_t;
+    Map* uniform_map;
+} Shader;
 
-shader_t gfx_shader_init(const char* vertex_src, const char* fragment_src);
-void gfx_shader_use(shader_t* shader);
-void gfx_shader_free(shader_t* shader);
+Shader gfx_shader_init(const char* vertex_src, const char* fragment_src);
+void gfx_shader_use(Shader* shader);
+void gfx_shader_free(Shader* shader);
 
-void gfx_shader_set_int(shader_t* shader, const char* name, int value);
-void gfx_shader_set_float(shader_t* shader, const char* name, float value);
-void gfx_shader_set_bool(shader_t* shader, const char* name, int value);
-void gfx_shader_set_matrix4fv(shader_t* shader, const char* name, mat4x4f_t* value);
+void gfx_shader_set_int(Shader* shader, const char* name, int value);
+void gfx_shader_set_float(Shader* shader, const char* name, float value);
+void gfx_shader_set_bool(Shader* shader, const char* name, int value);
+void gfx_shader_set_matrix4fv(Shader* shader, const char* name, Matf4x4* value);
