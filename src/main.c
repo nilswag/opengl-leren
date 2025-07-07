@@ -27,6 +27,12 @@ unsigned int indices[] = {
 };
 
 
+static void _framebuffer_size_callback(GLFWwindow* window, int width, int height)
+{
+    glViewport(0, 0, width, height);
+}
+
+
 
 int main(void)
 {
@@ -50,6 +56,8 @@ int main(void)
     }
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
+
+    glfwSetFramebufferSizeCallback(window, _framebuffer_size_callback);
     
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
@@ -71,7 +79,7 @@ int main(void)
     free(fragment_src);
 
     Matf4x4 model = MATH_MATRIX_IDENTITY_4x4f;
-    Matf4x4 view = math_matrix_lookat((Vec3f) { 0.2f, -0.4f, 0.2f }, (Vec3f) { 0.0f, 0.0f, 0.0f });
+    Matf4x4 view = math_matrix_lookat((Vec3f) { 0.0f, 0.0f, 0.0f }, (Vec3f) { 0.0f, 0.0f, 0.0f });
 
     Mesh mesh = { 0 };
 
@@ -111,6 +119,10 @@ int main(void)
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         else if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_RELEASE)
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+		view = math_matrix_lookat((Vec3f) { 0.0f, 0.0f, 0.0f }, (Vec3f) { 0.0f, 0.0f, 0.0f });
+        float time = (float)glfwGetTime();
+        math_matrix_translate4x4_z(&view, sinf(time * delta));
 
         math_matrix_rotate4x4_z(&model, delta * 45.0f);
         gfx_shader_set_matrix4fv(&shader, "view", &view);

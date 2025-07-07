@@ -47,7 +47,7 @@ Map* gfx_uniform_map_init(void)
 
     map->size = 0;
     map->capacity = 100;
-    map->entries = calloc(map->capacity, sizeof(Entry));
+    map->entries = calloc(map->capacity, sizeof(Entry*));
 
     return map;
 }
@@ -83,7 +83,7 @@ void gfx_uniform_map_put(Map* map, const char* key, GLuint value)
 
 GLuint gfx_uniform_map_get(Map* map, const char* key)
 {
-    if (map->size < 1) return -1;
+    if (map->size < 1) return 0;
     unsigned long long hash = util_fnv1a_hash(key);
     size_t index = hash % map->capacity;
 
