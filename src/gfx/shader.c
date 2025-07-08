@@ -74,8 +74,9 @@
             glGetActiveUniform(s.id, i, uniform_max_length, NULL, &size, &type, name);
             GLint location = glGetUniformLocation(s.id, name);
             gfx_uniform_map_put(s.uniform_map, name, location);
-            // printf("name: %s\n", name);
+            printf("name: %s %d\n", name, location);
         }
+        free(name);
 
         return s;
     }

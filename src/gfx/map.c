@@ -72,7 +72,7 @@ void gfx_uniform_map_put(Map* map, const char* key, GLuint value)
         fputs("Failed to allocate memory for new map entry.", stderr);
         return;
     }
-    entry->key = key;
+    entry->key = _strdup(key);
     entry->value = value;
 
     entry->next = map->entries[index];
@@ -87,7 +87,7 @@ GLuint gfx_uniform_map_get(Map* map, const char* key)
     unsigned long long hash = util_fnv1a_hash(key);
     size_t index = hash % map->capacity;
 
-    Entry* current = map->entries[index];
+    Entry* current = map->entries[index];    
     while (current)
     {
         if (strcmp(current->key, key) == 0) return current->value;
