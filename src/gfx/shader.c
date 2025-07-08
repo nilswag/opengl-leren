@@ -74,7 +74,7 @@
             glGetActiveUniform(s.id, i, uniform_max_length, NULL, &size, &type, name);
             GLint location = glGetUniformLocation(s.id, name);
             gfx_uniform_map_put(s.uniform_map, name, location);
-            printf("name: %s %d\n", name, location);
+            // printf("name: %s %d\n", name, location);
         }
         free(name);
 
@@ -117,7 +117,7 @@
     }
 
 
-    void gfx_shader_set_matrix4fv(Shader* shader, const char* name, Matf4x4* value)
+    void gfx_shader_set_matrix4f(Shader* shader, const char* name, Matf4x4* value)
     {
         gfx_shader_use(shader);
         glUniformMatrix4fv(gfx_uniform_map_get(shader->uniform_map, name), 1, GL_TRUE, value->data);

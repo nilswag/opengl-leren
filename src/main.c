@@ -124,8 +124,8 @@ int main(void)
         math_matrix_translate4x4_x(&view, sinf(time));
 
         math_matrix_rotate4x4_z(&model, delta * 45.0f);
-        gfx_shader_set_matrix4fv(&shader, "view", &view);
-        gfx_shader_set_matrix4fv(&shader, "model", &model);
+        gfx_shader_set_matrix4f(&shader, "view", &view);
+        gfx_shader_set_matrix4f(&shader, "model", &model);
 
         glClearColor(0.2f, 0.2f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
