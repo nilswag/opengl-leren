@@ -145,7 +145,7 @@ int main(void)
             sprintf_s(buffer, sizeof(buffer), "%d FPS", fps);
             glfwSetWindowTitle(window, buffer);
         }
-
+        
         math_matrix_rotate4x4(&model, delta * 45.0f, delta * 45.0f, 0.0f);
         gfx_shader_set_matrix4f(&shader, "view", &view);
         gfx_shader_set_matrix4f(&shader, "model", &model);
