@@ -15,34 +15,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\main.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="deps\src\glad.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\util\io.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\gfx\shader.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\util\util.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\gfx\map.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\gfx\mesh.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="deps\src\stb_image.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\math\matrix.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\math\vector.c">
+    <ClCompile Include="src\main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

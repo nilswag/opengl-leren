@@ -21,14 +21,7 @@
   <ItemGroup>
     <ClCompile Include="deps\src\glad.c" />
     <ClCompile Include="deps\src\stb_image.c" />
-    <ClCompile Include="src\gfx\map.c" />
-    <ClCompile Include="src\gfx\mesh.c" />
-    <ClCompile Include="src\gfx\shader.c" />
     <ClCompile Include="src\main.c" />
-    <ClCompile Include="src\math\matrix.c" />
-    <ClCompile Include="src\math\vector.c" />
-    <ClCompile Include="src\util\io.c" />
-    <ClCompile Include="src\util\util.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="deps\include\stb_image.h" />
