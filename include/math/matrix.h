@@ -42,3 +42,4 @@ void math_matrix_scale4x4_z(Matf4x4* a, float z);
 void math_matrix_scale4x4(Matf4x4* a, float w);
 
 Matf4x4 math_matrix_lookat(Vec3f from, Vec3f to);
+Matf4x4 math_matrix_proj_pers(float fov, float aspect_ratio, float z_near, float z_far);

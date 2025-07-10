@@ -7,9 +7,10 @@ out vec3 _color;
 
 uniform mat4 model;
 uniform mat4 view;
+uniform mat4 proj;
 
 void main(void)
 {
-	gl_Position = view * model * vec4(pos, 1.0f);
+	gl_Position = proj * view * model * vec4(pos, 1.0f);
     _color = color;
 }

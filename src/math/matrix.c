@@ -240,3 +240,17 @@ Matf4x4 math_matrix_lookat(Vec3f from, Vec3f to)
         0,   0,   0,   1
     };
 }
+
+
+Matf4x4 math_matrix_proj_pers(float fov, float aspect_ratio, float z_near, float z_far)
+{
+    Matf4x4 mat = { 0 };
+    float t = tanf(MATH_DEGREE_TO_RADIAN(fov) / 2.0f);
+    mat.data[0 * 4 + 0] = 1 / (aspect_ratio * t);
+    mat.data[1 * 4 + 1] = 1 / t;
+    mat.data[2 * 4 + 2] = z_far / (z_far - z_near);
+    mat.data[2 * 4 + 3] = -(z_far * z_near) / (z_far - z_near);
+    mat.data[3 * 4 + 2] = 1.0f;
+
+    return mat;
+}
