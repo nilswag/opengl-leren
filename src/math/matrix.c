@@ -242,7 +242,6 @@ Matf4x4 math_matrix_lookat(Vec3f from, Vec3f to)
 }
 
 
-
 Matf4x4 math_matrix_proj_pers(float fov, float aspect, float z_near, float z_far)
 {
     Matf4x4 mat = { 0 };
