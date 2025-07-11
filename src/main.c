@@ -16,7 +16,7 @@ static void tick(float delta)
 
 static void render(void)
 {
-
+    
 }
 
 

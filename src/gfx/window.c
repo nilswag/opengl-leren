@@ -30,7 +30,7 @@ void gfx_window_init(window_t* window, window_callbacks_t callbacks)
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    GLFWwindow* handle = glfwCreateWindow(1000, 1000, "0 FPS", NULL, NULL);
+    GLFWwindow* handle = glfwCreateWindow(800, 800, "0 FPS", NULL, NULL);
     if (handle == NULL)
     {
         fputs("Failed to initialize GLFW window.", stderr);
@@ -51,6 +51,7 @@ void gfx_window_init(window_t* window, window_callbacks_t callbacks)
         fputs("Failed to initialize glad.", stderr);
         return;
     }
+    glViewport(0, 0, 800, 800);
 }
 
 
