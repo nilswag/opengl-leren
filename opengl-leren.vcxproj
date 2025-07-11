@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="deps\src\glad.c" />
     <ClCompile Include="deps\src\stb_image.c" />
+    <ClCompile Include="src\gfx\window.c" />
     <ClCompile Include="src\main.c" />
   </ItemGroup>
   <ItemGroup>
@@ -28,6 +29,7 @@
     <ClInclude Include="include\gfx\map.h" />
     <ClInclude Include="include\gfx\mesh.h" />
     <ClInclude Include="include\gfx\shader.h" />
+    <ClInclude Include="include\gfx\window.h" />
     <ClInclude Include="include\math\math.h" />
     <ClInclude Include="include\math\matrix.h" />
     <ClInclude Include="include\math\vector.h" />
