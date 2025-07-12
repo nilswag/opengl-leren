@@ -40,6 +40,9 @@
     <None Include="resources\shaders\basic\fragment.glsl" />
     <None Include="resources\shaders\basic\vertex.glsl" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="resources\test.txt" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

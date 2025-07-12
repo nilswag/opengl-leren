@@ -24,15 +24,18 @@
     <ClCompile Include="src\main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\gfx\window.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\util\io.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\util\io.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\gfx\shader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\util\util.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\gfx\map.h">
@@ -53,9 +56,15 @@
     <ClInclude Include="include\math\vector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\gfx\window.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\shaders\basic\vertex.glsl" />
     <None Include="resources\shaders\basic\fragment.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="resources\test.txt" />
   </ItemGroup>
 </Project>

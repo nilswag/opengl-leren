@@ -1,4 +1,7 @@
 #include <stdio.h>
+#include <stdlib.h>
+
+#include "util/io.h"
 #include "gfx/window.h"
 
 
