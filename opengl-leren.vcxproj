@@ -27,9 +27,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="deps\include\stb_image.h" />
+    <ClInclude Include="include\defines.h" />
     <ClInclude Include="include\gfx\map.h" />
     <ClInclude Include="include\gfx\mesh.h" />
-    <ClInclude Include="include\gfx\shader.h" />
     <ClInclude Include="include\gfx\window.h" />
     <ClInclude Include="include\math\math.h" />
     <ClInclude Include="include\math\matrix.h" />
