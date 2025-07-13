@@ -39,6 +39,7 @@
   <ItemGroup>
     <None Include="resources\shaders\basic\fragment.glsl" />
     <None Include="resources\shaders\basic\vertex.glsl" />
+    <None Include="resources\test.txt" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="resources\test.txt" />

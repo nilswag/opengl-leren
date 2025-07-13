@@ -1,6 +1,8 @@
 #pragma once
 #include <glfw/glfw3.h>
 
+#include "defines.h"
+
 
 typedef void (*gfx_window_on_init_fn)(void);
 typedef void (*gfx_window_on_tick_fn)(float delta);
@@ -18,9 +20,9 @@ typedef struct
 typedef struct
 {
     GLFWwindow* handle;
-    size_t width, height;
-    size_t ticks;
-    size_t fps;
+    u32 width, height;
+    u64 ticks;
+    u32 fps;
     window_callbacks_t callbacks;
 } window_t;
 

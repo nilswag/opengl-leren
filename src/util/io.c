@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "defines.h"
 #include "util/io.h"
 
 
@@ -15,7 +16,7 @@ char* util_io_read_file(const char* path)
     }
 
     fseek(f, 0, SEEK_END);
-    size_t length = ftell(f);
+    u64 length = ftell(f);
     rewind(f);
     
     char* buffer = calloc(1, length + 1);

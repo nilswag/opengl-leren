@@ -14,8 +14,8 @@ static void _framebuffer_size_callback(GLFWwindow* handle, int width, int height
         return;
     }
     glViewport(0, 0, width, height);
-    window->width = (size_t)width;
-    window->height = (size_t)height;
+    window->width = width;
+    window->height = height;
 }
 
 
@@ -39,7 +39,7 @@ void gfx_window_init(window_t* window, window_callbacks_t callbacks)
     glfwMakeContextCurrent(handle);
     glfwSwapInterval(1);
     window->handle = handle;
-    window->width = window->height = 1000;
+    window->width = window->height = 800;
     window->ticks = 0;
     window->fps = 0;
     window->callbacks = callbacks;
@@ -57,11 +57,10 @@ void gfx_window_init(window_t* window, window_callbacks_t callbacks)
 
 void gfx_window_loop(window_t* window)
 {
-    float frames = 0;
-    float last = (float)glfwGetTime();
-    float accum = 0.0f;
-    float accum_interval = 0.5f;
-    char title_buffer[100];
+    u64 frames = 0;
+    f32 last = (f32)glfwGetTime();
+    f32 accum = 0.0f;
+    f32 accum_interval = 0.5f;
 
     if (window->callbacks.on_init)
         window->callbacks.on_init();
@@ -70,8 +69,8 @@ void gfx_window_loop(window_t* window)
     { 
         glfwPollEvents();
 
-        float first = (float)glfwGetTime();
-        float delta = first - last;
+        f32 first = (f32)glfwGetTime();
+        f32 delta = first - last;
         last = first;
 
         accum += delta;
@@ -79,15 +78,14 @@ void gfx_window_loop(window_t* window)
 
         if (accum >= accum_interval)
         {
-            frames /= accum_interval;
-            snprintf(title_buffer, sizeof(title_buffer), "%.1f FPS", frames);
-            glfwSetWindowTitle(window->handle, title_buffer);
+            window->fps = (u32)(frames / accum_interval);
             frames = 0;
             accum = 0.0f;
         }
 
         if (window->callbacks.on_tick)
             window->callbacks.on_tick(delta);
+        window->ticks++;
 
         glClear(GL_COLOR_BUFFER_BIT);
         if (window->callbacks.on_render)
