@@ -59,13 +59,13 @@
     <ClInclude Include="include\defines.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\util\log.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\shaders\basic\vertex.glsl" />
     <None Include="resources\shaders\basic\fragment.glsl" />
     <None Include="resources\test.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="resources\test.txt" />
   </ItemGroup>
 </Project>

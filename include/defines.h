@@ -1,5 +1,6 @@
 #pragma once
 #include <stdbool.h>
+#include <string.h>
 
 typedef unsigned char u8;
 typedef unsigned short u16;
@@ -18,3 +19,5 @@ typedef long long i64;
 
 typedef float f32;
 typedef double f64;
+
+#define __FILENAME__ (strrchr(__FILE__, '\\') ? strrchr(__FILE__, '\\') + 1 : __FILE__)
