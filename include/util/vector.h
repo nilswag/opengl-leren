@@ -1,29 +1,25 @@
 #pragma once
 #include "defines.h"
 
-#define UTIL_VECTOR_MIN_CAPACITY 8
+#define UTIL_VECTOR_MIN_CAP 8
 
 typedef struct
 {
-    void* data;
     u64 size;
     u64 capacity;
-    u64 element_size;
-} vector_t;
+    u64 el_size;
+    void* data;
+} vec_t;
 
-vector_t util_vector_init_size(u64 initial_capacity, u64 element_size);
-vector_t util_vector_init(u64 element_size);
-void util_vector_free(vector_t* vec);
-void util_vector_clear(vector_t* vec);
+vec_t util_vec_init(u64 el_size);
+void util_vec_free(vec_t* vec);
+void util_vec_clear(vec_t* vec);
 
-void util_vector_insert(vector_t* vec, u64 index, void* element);
-void util_vector_push(vector_t* vec, void* element);
-void util_vector_push_first(vector_t* vec, void* element);
+void util_vec_insert(vec_t* vec, u64 index, void* element);
+void util_vec_push_back(vec_t* vec, void* element);
 
-void* util_vector_pop_at(vector_t* vec, u64 index);
-void* util_vector_pop(vector_t* vec);
-void* util_vector_pop_first(vector_t* vec);
+void* util_vec_pop_at(vec_t* vec, u64 index);
+void* util_vec_pop_back(vec_t* vec);
 
-void* util_vector_get_at(vector_t* vec, u64 index);
-void* util_vector_get_first(vector_t* vec);
-void* util_vector_get_last(vector_t* vec);
+void* util_vec_get_at(vec_t* vec, u64 index);
+void* util_vec_get_back(vec_t* vec);

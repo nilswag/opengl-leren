@@ -1,154 +1,94 @@
 #include <stdlib.h>
 #include <string.h>
-
-#include "defines.h"
-#include "util/log.h"
 #include "util/vector.h"
+#include <defines.h>
+#include <log.h>
 
-vector_t util_vector_init_size(u64 capacity, u64 element_size)
+vec_t util_vec_init(u64 el_size)
 {
-    vector_t self = { 0 };
+    vec_t v = { 0 };
+    v.size = 0;
+    v.capacity = UTIL_VECTOR_MIN_CAP;
+    v.el_size = el_size;
+    v.data = malloc(v.el_size * v.capacity);
+    if (!v.data) LOG_FATAL("Unable to allocate memory for vector.");
 
-    self.capacity = capacity;
-    self.element_size = element_size;
-    self.data = calloc(capacity, element_size);
-    if (!self.data) LOG_RETURN_VAL((vector_t) { 0 }, "Failed to allocate memory for vector data.");
-
-    return self;
+    return v;
 }
 
-vector_t util_vector_init(u64 element_size)
+void util_vec_free(vec_t* vec)
 {
-    vector_t self = { 0 };
-
-    self.capacity = UTIL_VECTOR_MIN_CAPACITY;
-    self.element_size = element_size;
-    self.data = calloc(UTIL_VECTOR_MIN_CAPACITY, element_size);
-    if (!self.data) LOG_RETURN_VAL((vector_t) { 0 }, "Failed to allocate memory for vector data.");
-
-    return self;
-}
-
-void util_vector_free(vector_t* vec)
-{
+    vec->size = 0;
+    vec->capacity = UTIL_VECTOR_MIN_CAP;
+    vec->el_size = 0;
     free(vec->data);
     vec->data = NULL;
-    vec->size = 0;
-    vec->capacity = 0;
-    vec->element_size = 0;
 }
 
-void util_vector_clear(vector_t* vec)
+void util_vec_clear(vec_t* vec)
 {
-    memset(vec->data, 0, vec->size * vec->element_size);
-    vec->size = 0;
-}
-
-static void _vector_resize(vector_t* vec, u64 new_size)
-{
-    void* new_data = calloc(new_size, vec->element_size);
-    if (!new_data) LOG_RETURN("Failed to allocate memory for vector data.");
-    memcpy(new_data, vec->data, vec->size * vec->element_size);
-    free(vec->data);
-    vec->data = new_data;
-    vec->capacity = new_size;
-}
-
-static void _vector_shift_right(vector_t* vec, u64 start)
-{
-    for (u64 i = vec->size; i > start; i--)
+    for (u64 i = 0; i < vec->size; i++)
     {
-        void* dest = (u8*)vec->data + i * vec->element_size;
-        void* src = (u8*)vec->data + (i - 1) * vec->element_size;
-        memcpy(dest, src, vec->element_size);
+        void* dest = (u8*)vec->data + i * vec->el_size;
+        memset(dest, 0, vec->el_size);
     }
 }
 
-static void _vector_shift_left(vector_t* vec, u64 start)
+static void _resize_vec(vec_t* vec, u64 new_cap)
 {
-    for (u64 i = start; i < vec->size - 1; i++)
+    void* new = realloc(vec->data, vec->el_size * new_cap);
+    if (!new) LOG_FATAL("Unable to allocate memory for vector.");
+    vec->data = new;
+    vec->capacity = new_cap;
+}
+
+static void _ensure_capacity(vec_t* vec)
+{
+    if (vec->size >= vec->capacity)
+        _resize_vec(vec, vec->capacity * 2);
+    else if ((f32)vec->size / vec->capacity < 0.25f && vec->capacity > UTIL_VECTOR_MIN_CAP)
+        _resize_vec(vec, MAX(vec->capacity / 2, 1));
+}
+
+void util_vec_insert(vec_t* vec, u64 index, void* element)
+{
+    if (index > vec->size) LOG_FATAL("Index out of bounds for %llu.", index);
+    _ensure_capacity(vec);
+
+    u64 to_move = (vec->size - index) * vec->el_size;
+    if (to_move > 0)
     {
-        void* dest = (u8*)vec->data + i * vec->element_size;
-        void* src = (u8*)vec->data + (i + 1) * vec->element_size;
-        memcpy(dest, src, vec->element_size);
+        void* dest = (u8*)vec->data + (index + 1) * vec->el_size;
+        void* src = (u8*)vec->data + index * vec->el_size;
+        memmove(dest, src, to_move);
     }
-}
-
-static void _vector_ensure_capacity(vector_t* vec)
-{
-    if (vec->size >= vec->capacity) _vector_resize(vec, vec->capacity * 2);
-    else if ((f32)vec->size / vec->capacity <= 0.25f && vec->capacity > UTIL_VECTOR_MIN_CAPACITY)
-        _vector_resize(vec, MAX(vec->capacity / 2, 1));
-}
-
-void util_vector_insert(vector_t* vec, u64 index, void* element)
-{
-    if (index > vec->size) LOG_RETURN("Index out of bounds for index: %llu", index);
-
-    _vector_ensure_capacity(vec);
-    _vector_shift_right(vec, index);
-
-    void* dest = (u8*)vec->data + index * vec->element_size;
-    memcpy(dest, element, vec->element_size);
+    void* dest = (u8*)vec->data + index * vec->el_size;
+    memcpy(dest, element, vec->el_size);
 
     vec->size++;
 }
 
-void util_vector_push(vector_t* vec, void* element)
+void util_vec_push_back(vec_t* vec, void* element)
 {
-    util_vector_insert(vec, vec->size, element);
+    util_vec_insert(vec, vec->size, element);
 }
 
-void util_vector_push_first(vector_t* vec, void* element)
+void* util_vec_pop_at(vec_t* vec, u64 index)
 {
-    util_vector_insert(vec, 0, element);
+
 }
 
-void* util_vector_pop_at(vector_t* vec, u64 index)
+void* util_vec_pop_back(vec_t* vec)
 {
-    if (index >= vec->size) LOG_RETURN_VAL(NULL, "Index out of bounds for index: %llu", index);
-    if (vec->size < 1) LOG_RETURN_VAL(NULL, "Unable to pop element since vector is empty.");
 
-    void* src = (u8*)vec->data + index * vec->element_size;
-    void* ret = malloc(vec->element_size);
-    if (!ret) LOG_RETURN_VAL(NULL, "Failed to allocate memory for return value.");
-    memcpy(ret, src, vec->element_size);
-    _vector_shift_left(vec, index);
-
-    vec->size--;
-    _vector_ensure_capacity(vec);
-    return ret;
 }
 
-void* util_vector_pop(vector_t* vec)
+void* util_vec_get_at(vec_t* vec, u64 index)
 {
-    return util_vector_pop_at(vec, vec->size - 1);
+
 }
 
-void* util_vector_pop_first(vector_t* vec)
+void* util_vec_get_back(vec_t* vec)
 {
-    return util_vector_pop_at(vec, 0);
-}
 
-void* util_vector_get_at(vector_t* vec, u64 index)
-{
-    if (index >= vec->size) LOG_RETURN_VAL(NULL, "Index out of bounds for index: %llu", index);
-    if (vec->size < 1) LOG_RETURN_VAL(NULL, "Unable to get element since vector is empty.");
-
-    void* src = (u8*)vec->data + index * vec->element_size;
-    void* ret = malloc(vec->element_size);
-    if (!ret) LOG_RETURN_VAL(NULL, "Failed to allocate memory for return value.");
-    memcpy(ret, src, vec->element_size);
-
-    return ret;
-}
-
-void* util_vector_get_first(vector_t* vec)
-{
-    return util_vector_get_at(vec, 0);
-}
-
-void* util_vector_get_last(vector_t* vec)
-{
-    return util_vector_get_at(vec, vec->size - 1);
 }

@@ -1,10 +1,9 @@
 #include <stdio.h>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-
 #include "gfx/window.h"
 #include "defines.h"
-#include "util/log.h"
+#include "log.h"
 
 static void _framebuffer_size_callback(GLFWwindow* handle, int width, int height)
 {
