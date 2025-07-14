@@ -5,7 +5,6 @@
 #include "defines.h"
 #include "util/io.h"
 
-
 char* util_io_read_file(const char* path)
 {
     FILE* f = fopen(path, "r");

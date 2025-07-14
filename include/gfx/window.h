@@ -3,11 +3,9 @@
 
 #include "defines.h"
 
-
 typedef void (*gfx_window_on_init_fn)(void);
 typedef void (*gfx_window_on_tick_fn)(f32 delta);
 typedef void (*gfx_window_on_render_fn)(void);
-
 
 typedef struct
 {
@@ -15,7 +13,6 @@ typedef struct
     gfx_window_on_tick_fn on_tick;
     gfx_window_on_render_fn on_render;
 } window_callbacks_t;
-
 
 typedef struct
 {
@@ -26,14 +23,7 @@ typedef struct
     window_callbacks_t callbacks;
 } window_t;
 
-
-void gfx_window_init(
-    window_t* window,
-    window_callbacks_t callbacks
-);
-
-
+void gfx_window_init(window_t* window, window_callbacks_t callbacks);
 void gfx_window_loop(window_t* window);
-
 
 extern window_t window;

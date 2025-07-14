@@ -6,7 +6,6 @@
 #include "defines.h"
 #include "util/log.h"
 
-
 static void _framebuffer_size_callback(GLFWwindow* handle, int width, int height)
 {
     window_t* _window = (window_t*)glfwGetWindowUserPointer(handle);
@@ -17,7 +16,6 @@ static void _framebuffer_size_callback(GLFWwindow* handle, int width, int height
     _window->width = width;
     _window->height = height;
 }
-
 
 void gfx_window_init(window_t* window, window_callbacks_t callbacks)
 {
@@ -41,7 +39,6 @@ void gfx_window_init(window_t* window, window_callbacks_t callbacks)
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) LOG_FATAL("Failed to initialize glad.");
     glViewport(0, 0, 800, 800);
 }
-
 
 void gfx_window_loop(window_t* window)
 {
