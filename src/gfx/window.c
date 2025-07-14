@@ -24,10 +24,10 @@ void gfx_window_init(window_t* window, window_callbacks_t callbacks)
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    GLFWwindow* handle = glfwCreateWindow(800, 800, "0 FPS", NULL, NULL);
+    GLFWwindow* handle = glfwCreateWindow(800, 800, "glfw window", NULL, NULL);
     if (handle == NULL) LOG_FATAL("Failed to initialize GLFW window.");
     glfwMakeContextCurrent(handle);
-    glfwSwapInterval(1);
+    glfwSwapInterval(0);
     window->handle = handle;
     window->width = window->height = 800;
     window->ticks = 0;

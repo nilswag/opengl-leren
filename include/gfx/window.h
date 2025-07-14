@@ -34,3 +34,6 @@ void gfx_window_init(
 
 
 void gfx_window_loop(window_t* window);
+
+
+extern window_t window;
