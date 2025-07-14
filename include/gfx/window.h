@@ -5,7 +5,7 @@
 
 
 typedef void (*gfx_window_on_init_fn)(void);
-typedef void (*gfx_window_on_tick_fn)(float delta);
+typedef void (*gfx_window_on_tick_fn)(f32 delta);
 typedef void (*gfx_window_on_render_fn)(void);
 
 

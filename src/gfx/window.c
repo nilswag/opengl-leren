@@ -9,11 +9,13 @@
 
 static void _framebuffer_size_callback(GLFWwindow* handle, int width, int height)
 {
-    window_t* window = (window_t*)glfwGetWindowUserPointer(handle);
-    if (!window) LOG_FATAL("Failed to retrieve GLFW window user pointer.");
+    window_t* _window = (window_t*)glfwGetWindowUserPointer(handle);
+    if (!_window) {
+        LOG_ERROR("Failed to retrieve GLFW window user pointer."); return;
+    }
     glViewport(0, 0, width, height);
-    window->width = width;
-    window->height = height;
+    _window->width = width;
+    _window->height = height;
 }
 
 
@@ -27,7 +29,7 @@ void gfx_window_init(window_t* window, window_callbacks_t callbacks)
     GLFWwindow* handle = glfwCreateWindow(800, 800, "glfw window", NULL, NULL);
     if (handle == NULL) LOG_FATAL("Failed to initialize GLFW window.");
     glfwMakeContextCurrent(handle);
-    glfwSwapInterval(0);
+    glfwSwapInterval(1);
     window->handle = handle;
     window->width = window->height = 800;
     window->ticks = 0;
