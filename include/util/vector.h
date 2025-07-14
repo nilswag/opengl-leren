@@ -14,8 +14,8 @@ typedef struct
 } vector_t;
 
 
-vector_t util_vector_init(u64 initial_capacity, u64 element_size);
-vector_t util_vector_init_default(u64 element_size);
+vector_t util_vector_init_size(u64 initial_capacity, u64 element_size);
+vector_t util_vector_init(u64 element_size);
 void util_vector_free(vector_t* vec);
 
 void util_vector_push(vector_t* vec, void* element);

@@ -6,7 +6,7 @@
 #include "util/vector.h"
 
 
-vector_t util_vector_init(u64 capacity, u64 element_size)
+vector_t util_vector_init_size(u64 capacity, u64 element_size)
 {
     vector_t self = { 0 };
     self.capacity = capacity;
@@ -17,7 +17,7 @@ vector_t util_vector_init(u64 capacity, u64 element_size)
 }
 
 
-vector_t util_vector_init_default(u64 element_size)
+vector_t util_vector_init(u64 element_size)
 {
     vector_t self = { 0 };
     self.capacity = UTIL_VECTOR_INITIAL_SIZE;
