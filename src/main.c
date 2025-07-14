@@ -17,7 +17,11 @@ static void init(void)
 static char title_buffer[100];
 static void tick(f32 delta)
 {
-    sprintf_s(title_buffer, sizeof(title_buffer), "ticks: %llu, fps: %u, frametime: %.2fms, size: %ux%u", window.ticks, window.fps, delta * 1e3, window.width, window.height);
+#ifdef _DEBUG
+    sprintf_s(title_buffer, sizeof(title_buffer), "ticks: %llu | fps: %u | frametime: %.2fms | size: %ux%u | [DEBUG MODE]", window.ticks, window.fps, delta * 1e3, window.width, window.height);
+#else
+    sprintf_s(title_buffer, sizeof(title_buffer), "ticks: %llu | fps: %u | frametime: %.2fms | size: %ux%u | [RELEASE MODE]", window.ticks, window.fps, delta * 1e3, window.width, window.height);
+#endif
     glfwSetWindowTitle(window.handle, title_buffer);
 }
 
