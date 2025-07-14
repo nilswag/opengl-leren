@@ -30,6 +30,9 @@
     <ClCompile Include="src\util\io.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\util\vector.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\util\io.h">
@@ -60,6 +63,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\util\log.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\vector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

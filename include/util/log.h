@@ -12,16 +12,16 @@
 } while (false)
 
 
-#define LOG_RETURN(format, ret, ...) do {                           \
-    LOG(format, __VA_ARGS__);                                       \
-    return ret;                                                     \
-} while (false)
-
-
 #define LOG_ERROR(format, ...) do {                                 \
     LOG_HELPER(stderr, "%s:%d Error: ", __FILENAME__, __LINE__);    \
     LOG_HELPER(stderr, format, __VA_ARGS__);                        \
     LOG_HELPER(stderr, "\n");                                       \
+} while (false)
+
+
+#define LOG_RETURN(format, ret, ...) do {                           \
+    LOG_ERROR(format, __VA_ARGS__);                                 \
+    return ret;                                                     \
 } while (false)
 
 

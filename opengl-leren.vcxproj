@@ -24,6 +24,7 @@
     <ClCompile Include="src\gfx\window.c" />
     <ClCompile Include="src\main.c" />
     <ClCompile Include="src\util\io.c" />
+    <ClCompile Include="src\util\vector.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="deps\include\stb_image.h" />
@@ -36,6 +37,7 @@
     <ClInclude Include="include\math\vector.h" />
     <ClInclude Include="include\util\io.h" />
     <ClInclude Include="include\util\log.h" />
+    <ClInclude Include="include\util\vector.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\shaders\basic\fragment.glsl" />
