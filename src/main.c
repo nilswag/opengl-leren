@@ -3,10 +3,9 @@
 #include <string.h>
 #include "util/log.h"
 #include "gfx/window.h"
-
+#include "util/vector.h"
 
 window_t window;
-
 
 static void init(void)
 {
@@ -16,20 +15,14 @@ static void init(void)
 static char title_buffer[100];
 static void tick(f32 delta)
 {
-#ifdef _DEBUG
-    sprintf_s(title_buffer, sizeof(title_buffer), "ticks: %llu | fps: %u | frametime: %.2fms | size: %ux%u | [DEBUG MODE]", window.ticks, window.fps, delta * 1e3, window.width, window.height);
-#else
-    sprintf_s(title_buffer, sizeof(title_buffer), "ticks: %llu | fps: %u | frametime: %.2fms | size: %ux%u | [RELEASE MODE]", window.ticks, window.fps, delta * 1e3, window.width, window.height);
-#endif
+    sprintf_s(title_buffer, sizeof(title_buffer), "ticks: %llu | fps: %u | frametime: %.2fms | size: %ux%u", window.ticks, window.fps, delta * 1e3, window.width, window.height);
     glfwSetWindowTitle(window.handle, title_buffer);
 }
-
 
 static void render(void)
 {
     
 }
-
 
 int main(void)
 {

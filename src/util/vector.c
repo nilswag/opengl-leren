@@ -21,9 +21,9 @@ vector_t util_vector_init(u64 element_size)
 {
     vector_t self = { 0 };
 
-    self.capacity = UTIL_VECTOR_INITIAL_SIZE;
+    self.capacity = UTIL_VECTOR_MIN_CAPACITY;
     self.element_size = element_size;
-    self.data = calloc(UTIL_VECTOR_INITIAL_SIZE, element_size);
+    self.data = calloc(UTIL_VECTOR_MIN_CAPACITY, element_size);
     if (!self.data) LOG_RETURN_VAL((vector_t) { 0 }, "Failed to allocate memory for vector data.");
 
     return self;
@@ -36,6 +36,12 @@ void util_vector_free(vector_t* vec)
     vec->size = 0;
     vec->capacity = 0;
     vec->element_size = 0;
+}
+
+void util_vector_clear(vector_t* vec)
+{
+    memset(vec->data, 0, vec->size * vec->element_size);
+    vec->size = 0;
 }
 
 static void _vector_resize(vector_t* vec, u64 new_size)
@@ -100,7 +106,7 @@ void util_vector_push_first(vector_t* vec, void* element)
 
 void* util_vector_pop_at(vector_t* vec, u64 index)
 {
-    if (index >= vec->size) LOG_RETURN("Index out of bounds for index: %llu", index);
+    if (index >= vec->size) LOG_RETURN_VAL(NULL, "Index out of bounds for index: %llu", index);
     if (vec->size < 1) LOG_RETURN_VAL(NULL, "Unable to pop element since vector is empty.");
 
     void* src = (u8*)vec->data + index * vec->element_size;
@@ -122,4 +128,27 @@ void* util_vector_pop(vector_t* vec)
 void* util_vector_pop_first(vector_t* vec)
 {
     return util_vector_pop_at(vec, 0);
+}
+
+void* util_vector_get_at(vector_t* vec, u64 index)
+{
+    if (index >= vec->size) LOG_RETURN_VAL(NULL, "Index out of bounds for index: %llu", index);
+    if (vec->size < 1) LOG_RETURN_VAL(NULL, "Unable to get element since vector is empty.");
+
+    void* src = (u8*)vec->data + index * vec->element_size;
+    void* ret = malloc(vec->element_size);
+    if (!ret) LOG_RETURN_VAL(NULL, "Failed to allocate memory for return value.");
+    memcpy(ret, src, vec->element_size);
+
+    return ret;
+}
+
+void* util_vector_get_first(vector_t* vec)
+{
+    return util_vector_get_at(vec, 0);
+}
+
+void* util_vector_get_last(vector_t* vec)
+{
+    return util_vector_get_at(vec, vec->size - 1);
 }
