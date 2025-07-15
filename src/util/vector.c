@@ -55,12 +55,12 @@ void util_vec_insert(vec_t* vec, u64 index, void* element)
     if (index > vec->size) LOG_FATAL("Index out of bounds for %llu.", index);
     _ensure_capacity(vec);
 
-    u64 to_move = (vec->size - index) * vec->el_size;
+    u64 to_move = vec->size - index;
     if (to_move > 0)
     {
         void* dest = (u8*)vec->data + (index + 1) * vec->el_size;
         void* src = (u8*)vec->data + index * vec->el_size;
-        memmove(dest, src, to_move);
+        memmove(dest, src, to_move * vec->el_size);
     }
     void* dest = (u8*)vec->data + index * vec->el_size;
     memcpy(dest, element, vec->el_size);
@@ -75,20 +75,41 @@ void util_vec_push_back(vec_t* vec, void* element)
 
 void* util_vec_pop_at(vec_t* vec, u64 index)
 {
+    if (vec->size < 1) LOG_FATAL("Unable to pop from vector since it is empty.");
+    if (index >= vec->size) LOG_FATAL("Index out of bounds for %llu.", index);
 
+    void* src = (u8*)vec->data + index * vec->el_size;
+    void* ret = malloc(vec->el_size);
+    if (!ret) LOG_FATAL("Unable to allocate memory for vector.");
+    memcpy(ret, src, vec->el_size);
+
+    u64 to_move = vec->size - index - 1;
+    if (to_move > 0)
+    {
+        void* dest = (u8*)vec->data + index * vec->el_size;
+        void* src = (u8*)vec->data + (index + 1) * vec->el_size;
+        memmove(dest, src, to_move * vec->el_size);
+    }
+
+    vec->size--;
+    _ensure_capacity(vec);
+    
+    return ret;
 }
 
 void* util_vec_pop_back(vec_t* vec)
 {
-
+    return util_vec_pop_at(vec, vec->size - 1);
 }
 
 void* util_vec_get_at(vec_t* vec, u64 index)
 {
-
+    if (vec->size < 1) LOG_FATAL("Unable to pop from vector since it is empty.");
+    if (index >= vec->size) LOG_FATAL("Index out of bounds for %llu.", index);
+    return (u8*)vec->data + index * vec->el_size;
 }
 
 void* util_vec_get_back(vec_t* vec)
 {
-
+    return util_vec_get_at(vec, vec->size - 1);
 }
