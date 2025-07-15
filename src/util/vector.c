@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "util/vector.h"
-#include <defines.h>
-#include <log.h>
+#include "defines.h"
+#include "log.h"
 
 vec_t util_vec_init(u64 el_size)
 {
