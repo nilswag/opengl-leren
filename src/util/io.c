@@ -10,7 +10,12 @@ char* read_file(const char* path)
     snprintf(full_path, sizeof(full_path), "%s%s", RESOURCES_PATH, path);
 
     FILE* file = fopen(full_path, "r");
-    ASSERT(file != NULL, "failed to open file with path %s\n", path);
+    // ASSERT(file != NULL, "failed to open file with path %s\n", path);
+    if (file == NULL)
+    {
+        LOG_WARN("failed to open file with path %s\n", path);
+        return NULL;
+    }
 
     fseek(file, 0, SEEK_END);
     size_t length = ftell(file);
@@ -23,5 +28,6 @@ char* read_file(const char* path)
     while ((c = fgetc(file)) != EOF) buf[i++] = c;
     buf[length] = '\0';
 
+    LOG_INFO("read file with path %s\n", path);
     return buf;
 }
