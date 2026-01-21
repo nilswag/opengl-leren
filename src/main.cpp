@@ -1,12 +1,9 @@
-#include <glad/glad.h>
-#include <glfw/glfw3.h>
+#include "util/log.h"
 
 int main()
 {
-    glfwInit();
-    GLFWwindow* window = glfwCreateWindow(1000, 1000, "test", nullptr, nullptr);
-    glfwMakeContextCurrent(window);
-    gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-    while (!glfwWindowShouldClose(window)) glfwPollEvents();
+    LOG_INFO("Hello %s!\n", "info");
+    LOG_WARN("Hello %s!\n", "warn");
+    LOG_ERROR("Hello %s!\n", "error");
     return 0;
 }
