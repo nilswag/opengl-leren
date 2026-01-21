@@ -2,7 +2,6 @@
 #include <glfw/glfw3.h>
 #include "util/log.h"
 #include "state.h"
-#include "util/io.h"
 
 State state = { 0 };
 
@@ -19,10 +18,6 @@ int main()
     ASSERT(glfwInit(), "failed to initialize glfw\n");
     LOG_INFO("glfw initialized\n");
 
-    char* test = read_file("test.txt");
-    LOG_INFO("%s\n", test);
-    free(test);
-    
     state.width = 800;
     state.height = 800;
     state.title = "test";
