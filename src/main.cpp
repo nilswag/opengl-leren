@@ -1,9 +1,9 @@
+#include <glad/glad.h>
+#include <glfw/glfw3.h>
 #include "util/log.h"
 
 int main()
 {
-    LOG_INFO("Hello %s!\n", "info");
-    LOG_WARN("Hello %s!\n", "warn");
-    LOG_ERROR("Hello %s!\n", "error");
-    return 0;
+    ASSERT(!glfwInit(), "Failed to initialize GLFW.\n");
+    LOG_INFO("Hello World!\n");
 }
