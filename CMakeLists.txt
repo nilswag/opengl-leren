@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_subdirectory(vendor/glfw)
 add_subdirectory(vendor/glad)
 
-file(GLOB_RECURSE SOURCES src/*.cpp)
+file(GLOB_RECURSE SOURCES src/*.c)
 add_executable(opengl-leren ${SOURCES})
 
 target_include_directories(opengl-leren

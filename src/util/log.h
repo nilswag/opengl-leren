@@ -1,32 +1,35 @@
 #pragma once
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdarg.h>
 
-enum LogLevel
+typedef enum
 {
     INFO,
     WARNING,
     ERROR,
     COUNT
-};
+} LogLevel;
 
-template<typename... Args>
-void _log(LogLevel level, const char* msg, Args... args)
+void _log(LogLevel level, const char* msg, ...)
 {
-    if (level < 0 || level >= LogLevel::COUNT) return; // out of bounds
+    if (level < 0 || level >= COUNT) return; // out of bounds
 
-    static const char* prefix[LogLevel::COUNT] = { "[INFO]", "[WARN]", "[ERROR]" };
+    static const char* prefix[COUNT] = { "[INFO]", "[WARN]", "[ERROR]" };
 
     char buf[1024];
-    int n = sprintf_s(buf, "%s %s", prefix[level], msg);
+    int n = sprintf(buf, "%s %s", prefix[level], msg);
     if (n < 0) return; // formatting error
     
-    printf(buf, args...);
-}
+    va_list args;
+    va_start(args, msg);
+    vprintf(buf, args);
+    va_end(args);
+}   
 
-#define LOG_INFO(msg, ...) do { _log(LogLevel::INFO, msg, ##__VA_ARGS__); } while(false)
-#define LOG_WARN(msg, ...) do { _log(LogLevel::WARNING, msg, ##__VA_ARGS__); } while(false)
-#define LOG_ERROR(msg, ...) do { _log(LogLevel::ERROR, msg, ##__VA_ARGS__); } while(false)
+#define LOG_INFO(msg, ...) do { _log(INFO, msg, ##__VA_ARGS__); } while(0)
+#define LOG_WARN(msg, ...) do { _log(WARNING, msg, ##__VA_ARGS__); } while(0)
+#define LOG_ERROR(msg, ...) do { _log(ERROR, msg, ##__VA_ARGS__); } while(0)
 
 #define ASSERT(condition, msg, ...) do {        \
     if (!condition)                             \
@@ -34,4 +37,4 @@ void _log(LogLevel level, const char* msg, Args... args)
         LOG_ERROR(msg, ##__VA_ARGS__);          \
         exit(-1);                               \
     }                                           \
-} while(false)
+} while(0)

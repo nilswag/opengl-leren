@@ -20,7 +20,7 @@ int main()
     state.width = 800;
     state.height = 800;
     state.title = "test";
-    state.window = glfwCreateWindow(state.width, state.height, state.title, nullptr, nullptr);
+    state.window = glfwCreateWindow(state.width, state.height, state.title, NULL, NULL);
     ASSERT(state.window, "failed to initialize glfw window\n");
     glfwMakeContextCurrent(state.window);
 
@@ -30,7 +30,7 @@ int main()
 
     double last = glfwGetTime();
 
-    state.running = true;
+    state.running = 1;
     while (state.running && !glfwWindowShouldClose(state.window))
     {
         double first = glfwGetTime();
