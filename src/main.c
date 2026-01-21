@@ -1,5 +1,6 @@
 #include <glad/glad.h>
 #include <glfw/glfw3.h>
+#include <stdbool.h>
 #include "util/log.h"
 #include "state.h"
 
@@ -33,7 +34,7 @@ int main()
 
     double last = glfwGetTime();
 
-    state.running = 1;
+    state.running = true;
     while (state.running && !glfwWindowShouldClose(state.window))
     {
         double first = glfwGetTime();

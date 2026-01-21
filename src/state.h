@@ -1,5 +1,6 @@
 #pragma once
 #include <GLFW/glfw3.h>
+#include <stdbool.h>
 
 typedef struct
 {
@@ -7,7 +8,7 @@ typedef struct
     int width, height;
     GLFWwindow* window;
 
-    int running;
+    bool running;
     size_t ticks;
     double dt;
 } State;

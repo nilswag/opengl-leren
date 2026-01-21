@@ -1,5 +1,6 @@
 #pragma once
 #include <stdlib.h>
+#include <stdbool.h>
 
 typedef enum
 {
@@ -11,9 +12,9 @@ typedef enum
 
 void _log(LogLevel level, const char* msg, ...);
 
-#define LOG_INFO(msg, ...) do { _log(INFO, msg, ##__VA_ARGS__); } while(0)
-#define LOG_WARN(msg, ...) do { _log(WARNING, msg, ##__VA_ARGS__); } while(0)
-#define LOG_ERROR(msg, ...) do { _log(ERROR, msg, ##__VA_ARGS__); } while(0)
+#define LOG_INFO(msg, ...) do { _log(INFO, msg, ##__VA_ARGS__); } while(false)
+#define LOG_WARN(msg, ...) do { _log(WARNING, msg, ##__VA_ARGS__); } while(false)
+#define LOG_ERROR(msg, ...) do { _log(ERROR, msg, ##__VA_ARGS__); } while(false)
 
 #define ASSERT(condition, msg, ...) do {        \
     if (!(condition))                           \
@@ -21,4 +22,4 @@ void _log(LogLevel level, const char* msg, ...);
         LOG_ERROR(msg, ##__VA_ARGS__);          \
         exit(-1);                               \
     }                                           \
-} while(0)
+} while(false)
