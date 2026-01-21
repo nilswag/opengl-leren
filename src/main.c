@@ -2,6 +2,7 @@
 #include <glfw/glfw3.h>
 #include "util/log.h"
 #include "state.h"
+#include "util/io.h"
 
 State state = { 0 };
 
@@ -16,15 +17,22 @@ static void _framebuffer_size_callback(GLFWwindow* window, int width, int height
 int main()
 {
     ASSERT(glfwInit(), "failed to initialize glfw\n");
+    LOG_INFO("glfw initialized\n");
+
+    char* test = read_file("test.txt");
+    LOG_INFO("%s\n", test);
+    free(test);
     
     state.width = 800;
     state.height = 800;
     state.title = "test";
     state.window = glfwCreateWindow(state.width, state.height, state.title, NULL, NULL);
     ASSERT(state.window, "failed to initialize glfw window\n");
+    LOG_INFO("glfw window initialized\n");
     glfwMakeContextCurrent(state.window);
 
     ASSERT(gladLoadGLLoader((GLADloadproc)glfwGetProcAddress), "failed to initialize glad\n");
+    LOG_INFO("glad initialized\n");
     glViewport(0, 0, state.width, state.height);
     glfwSetFramebufferSizeCallback(state.window, _framebuffer_size_callback);
 
