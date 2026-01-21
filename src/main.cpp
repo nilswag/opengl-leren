@@ -24,7 +24,7 @@ int main()
     ASSERT(state.window, "failed to initialize glfw window\n");
     glfwMakeContextCurrent(state.window);
 
-    ASSERT(gladLoadGLLoader((GLADloadproc)glfwGetProcAddress), "failed to initialize glad");
+    ASSERT(gladLoadGLLoader((GLADloadproc)glfwGetProcAddress), "failed to initialize glad\n");
     glViewport(0, 0, state.width, state.height);
     glfwSetFramebufferSizeCallback(state.window, _framebuffer_size_callback);
 
