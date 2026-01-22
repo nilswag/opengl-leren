@@ -1,6 +1,7 @@
 #include <glad/glad.h>
 #include "shader.h"
 #include "util/log.h"
+#include "util/io.h"
 
 static GLuint compile_shader(const char* path, GLenum type)
 {
@@ -31,8 +32,9 @@ GLuint create_shader(const char* vertex_path, const char* fragment_path)
     GLuint fragment_shader = compile_shader(fragment_path, GL_FRAGMENT_SHADER);
 
     GLuint id = glCreateProgram();
-    glAttachShader(vertex_shader, GL_VERTEX_SHADER);
-    glAttachShader(fragment_shader, GL_FRAGMENT_SHADER);
+
+    glAttachShader(id, vertex_shader);
+    glAttachShader(id, fragment_shader);
     glLinkProgram(id);
 
     int success;

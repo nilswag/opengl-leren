@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include "util/log.h"
 #include "state.h"
+#include "gfx/shader.h"
 
 State state = { 0 };
 
@@ -51,6 +52,9 @@ int main()
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
+    GLuint program = create_shader("vertex.glsl", "fragment.glsl");
+    glUseProgram(program);
+
     state.running = true;
     while (state.running && !glfwWindowShouldClose(state.window))
     {
@@ -66,6 +70,7 @@ int main()
         glfwSwapBuffers(state.window);
     }
 
+    glDeleteProgram(program);
     glfwDestroyWindow(state.window);
     glfwTerminate();
     return 0;
