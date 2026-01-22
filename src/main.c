@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include "util/log.h"
 #include "state.h"
+#include "util/io.h"
 
 State state = { 0 };
 
@@ -12,6 +13,35 @@ static void _framebuffer_size_callback(GLFWwindow* window, int width, int height
     state.height = height;
     glViewport(0, 0, width, height);
     // LOG_INFO("(%d, %d)\n", width, height);
+}
+
+float vertices[] = {
+    -0.5f, -0.5f, 0.0f,
+     0.0f,  0.5f, 0.0f,
+     0.5f, -0.5f, 0.0f
+};
+
+GLuint compile_shader(const char* path, GLenum type)
+{
+    GLuint id = glCreateShader(type);
+    const char* src = read_file(path);
+
+    glShaderSource(id, 1, &src, NULL);
+    LOG_INFO("compiling shader with path %s\n", path);
+    glCompileShader(id);
+
+    int success;
+    glGetShaderiv(id, GL_COMPILE_STATUS, &success);
+    if (!success)
+    {
+        int length = 512;
+        glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
+        char log[length];
+        glGetShaderInfoLog(id, length, NULL, log);
+        LOG_WARN("error during shader compilation with path %s: %s\n", path, log);
+    } else LOG_INFO("compiled shader with path %s\n", path);
+
+    return id;
 }
 
 int main()
@@ -34,6 +64,37 @@ int main()
 
     double last = glfwGetTime();
 
+    GLuint vao, vbo;
+    glGenVertexArrays(1, &vao);
+    glBindVertexArray(vao);
+
+    glGenBuffers(1, &vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+    GLuint vertex_shader = compile_shader("vertex.glsl", GL_VERTEX_SHADER);
+    GLuint fragment_shader = compile_shader("fragment.glsl", GL_FRAGMENT_SHADER);
+    GLuint program = glCreateProgram();
+    glAttachShader(program, vertex_shader);
+    glAttachShader(program, fragment_shader);
+    glLinkProgram(program);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+
+    int success;
+    glGetProgramiv(program, GL_LINK_STATUS, &success);
+    if (!success)
+    {
+        int length = 512;
+        glGetProgramiv(program, GL_INFO_LOG_LENGTH, &length);
+        char log[length];
+        glGetProgramInfoLog(program, length, NULL, log);
+        LOG_WARN("error during shader linking: %s\n", log);
+    } else LOG_INFO("linked shader\n");
+
+    glUseProgram(program);
+
     state.running = true;
     while (state.running && !glfwWindowShouldClose(state.window))
     {
@@ -45,7 +106,7 @@ int main()
 
         glClearColor(.0f, .0f, .0f, .0f);
         glClear(GL_COLOR_BUFFER_BIT);
-        // render stuff
+        glDrawArrays(GL_TRIANGLE_FAN, 0, 3);
         glfwSwapBuffers(state.window);
     }
 

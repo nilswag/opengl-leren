@@ -28,6 +28,6 @@ char* read_file(const char* path)
     while ((c = fgetc(file)) != EOF) buf[i++] = c;
     buf[length] = '\0';
 
-    LOG_INFO("read file with path %s\n", path);
+    // LOG_INFO("read file with path %s\n", path);
     return buf;
 }
