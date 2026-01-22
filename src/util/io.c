@@ -21,6 +21,8 @@ char* read_file(const char* path)
     size_t length = ftell(file);
     fseek(file, 0, SEEK_SET);
 
+    if (length == 0) LOG_WARN("file is empty with path %s\n", path);
+
     char* buf = (char*)malloc((length + 1) * sizeof(char));
 
     size_t i = 0;

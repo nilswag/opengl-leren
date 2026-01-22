@@ -26,8 +26,8 @@ int main()
     ASSERT(glfwInit(), "failed to initialize glfw\n");
     LOG_INFO("glfw initialized\n");
 
-    state.width = 800;
-    state.height = 800;
+    state.width = 1000;
+    state.height = 1000;
     state.title = "test";
     state.window = glfwCreateWindow(state.width, state.height, state.title, NULL, NULL);
     ASSERT(state.window, "failed to initialize glfw window\n");
@@ -58,11 +58,11 @@ int main()
     state.running = true;
     while (state.running && !glfwWindowShouldClose(state.window))
     {
+        glfwPollEvents();
+
         double first = glfwGetTime();
         state.dt = first - last;
         last = first;
-
-        glfwPollEvents();
 
         glClearColor(.0f, .0f, .0f, .0f);
         glClear(GL_COLOR_BUFFER_BIT);
