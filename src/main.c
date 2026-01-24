@@ -1,14 +1,13 @@
 #include <glad/glad.h>
 #include <glfw/glfw3.h>
-#include <stdbool.h>
+#include "util/defines.h"
 #include "util/log.h"
 #include "state.h"
 #include "gfx/shader.h"
-#include "util/defines.h"
 
 State state = { 0 };
 
-static void _framebuffer_size_callback(GLFWwindow* window, int width, int height)
+static void _framebuffer_size_callback(GLFWwindow* window, i32 width, i32 height)
 {
     state.width = width;
     state.height = height;
@@ -45,7 +44,7 @@ int main()
 
     f64 last = glfwGetTime();
 
-    GLuint vao, vbo;
+    u32 vao, vbo;
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
 
@@ -58,7 +57,7 @@ int main()
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(f32), (void*)(3 * sizeof(f32)));
     glEnableVertexAttribArray(1);
 
-    GLuint program = create_shader("vertex.glsl", "fragment.glsl");
+    u32 program = create_shader("vertex.glsl", "fragment.glsl");
     glUseProgram(program);
 
     state.running = true;
