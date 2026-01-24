@@ -3,6 +3,7 @@
 #include <string.h>
 #include "io.h"
 #include "log.h"
+#include "util/defines.h"
 
 char* read_file(const char* path)
 {
@@ -18,14 +19,14 @@ char* read_file(const char* path)
     }
 
     fseek(file, 0, SEEK_END);
-    size_t length = ftell(file);
+    u64 length = ftell(file);
     fseek(file, 0, SEEK_SET);
 
     if (length == 0) LOG_WARN("file is empty with path %s\n", path);
 
     char* buf = (char*)malloc((length + 1) * sizeof(char));
 
-    size_t i = 0;
+    u64 i = 0;
     char c;
     while ((c = fgetc(file)) != EOF) buf[i++] = c;
     buf[length] = '\0';

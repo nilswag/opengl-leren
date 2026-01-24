@@ -1,13 +1,13 @@
-#include <glad/glad.h>
 #include <stdlib.h>
+#include <glad/glad.h>
 #include "shader.h"
+#include "util/defines.h"
 #include "util/log.h"
 #include "util/file.h"
-#include "util/defines.h"
 
-static GLuint compile_shader(const char* path, GLenum type)
+static u32 compile_shader(const char* path, GLenum type)
 {
-    GLuint id = glCreateShader(type);
+    u32 id = glCreateShader(type);
     char* src = read_file(path);
     const char* gl_src = src;
 

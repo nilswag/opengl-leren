@@ -4,6 +4,7 @@
 #include "util/log.h"
 #include "state.h"
 #include "gfx/shader.h"
+#include "util/defines.h"
 
 State state = { 0 };
 
@@ -15,7 +16,7 @@ static void _framebuffer_size_callback(GLFWwindow* window, int width, int height
     // LOG_INFO("(%d, %d)\n", width, height);
 }
 
-float vertices[] = {
+f32 vertices[] = {
     -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
      0.0f,  0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
      0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f
@@ -42,7 +43,7 @@ int main()
     LOG_INFO("renderer: %s\n", glGetString(GL_RENDERER));
     LOG_INFO("opengl version: %s\n", glGetString(GL_VERSION));
 
-    double last = glfwGetTime();
+    f64 last = glfwGetTime();
 
     GLuint vao, vbo;
     glGenVertexArrays(1, &vao);
@@ -52,9 +53,9 @@ int main()
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(f32), (void*)0);
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(f32), (void*)(3 * sizeof(f32)));
     glEnableVertexAttribArray(1);
 
     GLuint program = create_shader("vertex.glsl", "fragment.glsl");
