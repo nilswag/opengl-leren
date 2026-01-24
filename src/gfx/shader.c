@@ -1,4 +1,5 @@
 #include <glad/glad.h>
+#include <stdlib.h>
 #include "shader.h"
 #include "util/log.h"
 #include "util/io.h"
@@ -6,11 +7,14 @@
 static GLuint compile_shader(const char* path, GLenum type)
 {
     GLuint id = glCreateShader(type);
-    const char* src = read_file(path);
+    char* src = read_file(path);
+    const char* gl_src = src;
 
-    glShaderSource(id, 1, &src, NULL);
+    glShaderSource(id, 1, &gl_src, NULL);
     LOG_INFO("compiling shader with path %s\n", path);
     glCompileShader(id);
+
+    free(src);
 
     int success;
     glGetShaderiv(id, GL_COMPILE_STATUS, &success);

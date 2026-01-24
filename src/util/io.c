@@ -9,7 +9,7 @@ char* read_file(const char* path)
     char full_path[512];
     snprintf(full_path, sizeof(full_path), "%s%s", RESOURCES_PATH, path);
 
-    FILE* file = fopen(full_path, "r");
+    FILE* file = fopen(full_path, "rb");
     // ASSERT(file != NULL, "failed to open file with path %s\n", path);
     if (file == NULL)
     {
@@ -29,6 +29,8 @@ char* read_file(const char* path)
     char c;
     while ((c = fgetc(file)) != EOF) buf[i++] = c;
     buf[length] = '\0';
+
+    fclose(file);
 
     // LOG_INFO("read file with path %s\n", path);
     return buf;
