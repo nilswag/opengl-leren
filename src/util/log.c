@@ -1,7 +1,7 @@
-#include <stdlib.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include "log.h"
+#include "util/defines.h"
 
 void _log(LogLevel level, const char* msg, ...)
 {
@@ -10,7 +10,7 @@ void _log(LogLevel level, const char* msg, ...)
     static const char* prefix[COUNT] = { "[INFO]", "[WARN]", "[ERROR]" };
 
     char buf[1024];
-    int n = sprintf(buf, "%s %s", prefix[level], msg);
+    i32 n = sprintf(buf, "%s %s", prefix[level], msg);
     if (n < 0) return; // formatting error
     
     va_list args;

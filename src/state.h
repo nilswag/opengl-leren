@@ -1,16 +1,16 @@
 #pragma once
 #include <GLFW/glfw3.h>
-#include <stdbool.h>
+#include "util/defines.h"
 
 typedef struct
 {
     const char* title;
-    int width, height;
+    i32 width, height;
     GLFWwindow* window;
 
     bool running;
-    size_t ticks;
-    double dt;
+    u64 ticks;
+    f64 dt;
 } State;
 
 extern State state;
