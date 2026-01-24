@@ -21,7 +21,7 @@ static GLuint compile_shader(const char* path, GLenum type)
     glGetShaderiv(id, GL_COMPILE_STATUS, &success);
     if (!success)
     {
-        u64 length = 512;
+        i32 length = 512;
         glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
         char log[length];
         glGetShaderInfoLog(id, length, NULL, log);
@@ -46,7 +46,7 @@ u32 create_shader(const char* vertex_path, const char* fragment_path)
     glGetProgramiv(id, GL_LINK_STATUS, &success);
     if (!success)
     {
-        u64 length = 512;
+        i32 length = 512;
         glGetProgramiv(id, GL_INFO_LOG_LENGTH, &length);
         char log[length];
         glGetProgramInfoLog(id, length, NULL, log);
