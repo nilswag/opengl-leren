@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "shader.h"
 #include "util/log.h"
-#include "util/io.h"
+#include "util/file.h"
 
 static GLuint compile_shader(const char* path, GLenum type)
 {
