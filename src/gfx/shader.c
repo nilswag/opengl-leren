@@ -3,6 +3,7 @@
 #include "shader.h"
 #include "util/log.h"
 #include "util/file.h"
+#include "util/defines.h"
 
 static GLuint compile_shader(const char* path, GLenum type)
 {
@@ -16,11 +17,11 @@ static GLuint compile_shader(const char* path, GLenum type)
 
     free(src);
 
-    int success;
+    i32 success;
     glGetShaderiv(id, GL_COMPILE_STATUS, &success);
     if (!success)
     {
-        int length = 512;
+        u64 length = 512;
         glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
         char log[length];
         glGetShaderInfoLog(id, length, NULL, log);
@@ -30,22 +31,22 @@ static GLuint compile_shader(const char* path, GLenum type)
     return id;
 }
 
-GLuint create_shader(const char* vertex_path, const char* fragment_path)
+u32 create_shader(const char* vertex_path, const char* fragment_path)
 {
-    GLuint vertex_shader = compile_shader(vertex_path, GL_VERTEX_SHADER);
-    GLuint fragment_shader = compile_shader(fragment_path, GL_FRAGMENT_SHADER);
+    u32 vertex_shader = compile_shader(vertex_path, GL_VERTEX_SHADER);
+    u32 fragment_shader = compile_shader(fragment_path, GL_FRAGMENT_SHADER);
 
-    GLuint id = glCreateProgram();
+    u32 id = glCreateProgram();
 
     glAttachShader(id, vertex_shader);
     glAttachShader(id, fragment_shader);
     glLinkProgram(id);
 
-    int success;
+    i32 success;
     glGetProgramiv(id, GL_LINK_STATUS, &success);
     if (!success)
     {
-        int length = 512;
+        u64 length = 512;
         glGetProgramiv(id, GL_INFO_LOG_LENGTH, &length);
         char log[length];
         glGetProgramInfoLog(id, length, NULL, log);
