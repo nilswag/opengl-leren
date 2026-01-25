@@ -1,3 +1,4 @@
+#include <math.h>
 #include "matrix.h"
 #include "util/defines.h"
 #include "util/log.h"
@@ -23,4 +24,14 @@ void matf_mult_dynamic(const Matf a, const Matf b, Matf c, u64 a_rows, u64 a_col
             c[i * b_cols + j] = sum;
         }
     }
+}
+
+void mat2f_transform(Mat3f a, f32 tx, f32 ty, f32 rot, f32 sx, f32 sy)
+{
+    f32 s = sin(rot);
+    f32 c = cos(rot);
+
+    a[0] = sx * s; a[1] = sy * -s; a[2] = tx;
+    a[3] = sx * s; a[4] = sy * c;  a[5] = ty;
+    a[6] = 0.0f;   a[7] = 0.0f;    a[8] = 1.0f;
 }
