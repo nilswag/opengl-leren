@@ -4,6 +4,7 @@ project(opengl-leren)
 set(CMAKE_C_STANDARD 17)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 
+# set(BUILD_SHARED_LIBS ON)
 add_subdirectory(vendor/glfw)
 add_subdirectory(vendor/glad)
 
