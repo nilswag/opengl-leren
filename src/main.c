@@ -4,7 +4,7 @@
 #include "util/log.h"
 #include "state.h"
 
-#include "math/matrix.h"
+#include "math/linmath.h"
 
 State state = { 0 };
 

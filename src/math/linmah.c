@@ -1,5 +1,5 @@
 #include <math.h>
-#include "matrix.h"
+#include "linmath.h"
 #include "util/defines.h"
 #include "util/log.h"
 
