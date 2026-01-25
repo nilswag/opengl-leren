@@ -37,9 +37,6 @@ int main()
     LOG_INFO("renderer: %s\n", glGetString(GL_RENDERER));
     LOG_INFO("opengl version: %s\n", glGetString(GL_VERSION));
 
-    Mat2x2f mat;
-    _mat_zero_dynamic(mat, 2, 2);
-
     f64 last = glfwGetTime();
 
     state.running = true;
