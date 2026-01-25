@@ -7,7 +7,7 @@ typedef f32 Mat4f[16];
 typedef f32 Matf[];
 
 void matf_identity_dynamic(Matf mat, u64 rows, u64 cols);
-void matf_mult_dynamic(const Matf a, const Matf b, const Matf c, u64 a_rows, u64 a_cols, u64 b_rows, u64 b_cols);
+void matf_mult_dynamic(const Matf a, const Matf b, Matf c, u64 a_rows, u64 a_cols, u64 b_rows, u64 b_cols);
 
 #define MAT2F_IDENTITY(mat) STMT(matf_identity_dynamic(mat, 2, 2);)
 #define MAT3F_IDENTITY(mat) STMT(matf_identity_dynamic(mat, 3, 3);)
