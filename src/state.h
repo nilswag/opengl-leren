@@ -1,6 +1,7 @@
 #pragma once
 #include <GLFW/glfw3.h>
 #include "util/defines.h"
+#include "gfx/renderer.h"
 
 typedef struct
 {
@@ -11,6 +12,8 @@ typedef struct
     bool running;
     u64 ticks;
     f64 dt;
+
+    Renderer renderer;
 } State;
 
 extern State state;

@@ -3,8 +3,8 @@
 #include "util/defines.h"
 #include "util/log.h"
 #include "state.h"
+#include "gfx/renderer.h"
 
-#include "math/linmath.h"
 
 State state = { 0 };
 
@@ -16,7 +16,7 @@ static void _framebuffer_size_callback(GLFWwindow* window, i32 width, i32 height
     // LOG_INFO("(%d, %d)\n", width, height);
 }
 
-int main()
+static void _init()
 {
     ASSERT(glfwInit(), "failed to initialize glfw\n");
     LOG_INFO("glfw initialized\n");
@@ -37,6 +37,20 @@ int main()
     LOG_INFO("renderer: %s\n", glGetString(GL_RENDERER));
     LOG_INFO("opengl version: %s\n", glGetString(GL_VERSION));
 
+    state.renderer = { 0 };
+    renderer_init(&state.renderer);
+}
+
+static void _deinit()
+{
+    glfwDestroyWindow(state.window);
+    glfwTerminate();
+}
+
+int main()
+{
+    _init();
+
     f64 last = glfwGetTime();
 
     state.running = true;
@@ -54,7 +68,7 @@ int main()
         glfwSwapBuffers(state.window);
     }
 
-    glfwDestroyWindow(state.window);
-    glfwTerminate();
+    _deinit();
+    
     return 0;
 }
