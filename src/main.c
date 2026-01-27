@@ -36,10 +36,14 @@ static void _init()
 
     LOG_INFO("renderer: %s\n", glGetString(GL_RENDERER));
     LOG_INFO("opengl version: %s\n", glGetString(GL_VERSION));
+
+    renderer_init(&state.renderer);
+
 }
 
 static void _deinit()
 {
+    renderer_deinit(&state.renderer);
     glfwDestroyWindow(state.window);
     glfwTerminate();
 }
