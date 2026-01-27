@@ -14,7 +14,8 @@ void renderer_init(struct renderer* r)
     };
 
     u32 indices[] = {
-        0, 1, 2, 3
+        0, 1, 2,
+        0, 2, 3
     };
 
     r->quad_shader = create_shader("quad.vert", "quad.frag");
@@ -26,9 +27,14 @@ void renderer_init(struct renderer* r)
     glGenBuffers(1, &r->quad_vbo);
     glBindBuffer(GL_ARRAY_BUFFER, r->quad_vbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(f32) * 3, (void*)0);
     glEnableVertexAttribArray(0);
+
+    // bind ebo
+    u32 ebo;
+    glGenBuffers(1, &ebo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
     // bind instance data, set attributes and allocate gpu memory
     glGenBuffers(1, &r->instance_vbo);
@@ -63,13 +69,18 @@ void render_pass_end(struct renderer* r)
 
 void renderer_flush(struct renderer* r)
 {
+    mat3f instances[MAX_QUADS];
+
     for (u64 i = 0; i < r->quad_count; i++)
     {
         struct quad q = r->render_queue[i];
-
-        mat3f transform;
-        mat2f_transform(transform, q.x, q.y, q.rotation, q.w, q.h);
+        mat2f_model(instances[i], q.x, q.y, q.rotation, q.w, q.h);
     }
+
+    glBindBuffer(GL_ARRAY_BUFFER, r->instance_vbo);
+    glBufferSubData(GL_ARRAY_BUFFER, 0, r->quad_count * sizeof(mat3f), instances);
+
+    glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, r->quad_count);
 
     r->quad_count = 0;
 }

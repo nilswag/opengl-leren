@@ -27,7 +27,7 @@ void matf_mult_dynamic(const matf a, const matf b, matf c, u64 a_rows, u64 a_col
 }
 
 // column major
-void mat2f_transform(mat3f a, f32 tx, f32 ty, f32 rot, f32 sx, f32 sy)
+void mat2f_model(mat3f a, f32 tx, f32 ty, f32 rot, f32 sx, f32 sy)
 {
     f32 s = sin(rot);
     f32 c = cos(rot);

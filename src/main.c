@@ -53,6 +53,8 @@ int main()
 
     f64 last = glfwGetTime();
 
+    f64 timer = 0.0;
+
     s.running = true;
     while (s.running && !glfwWindowShouldClose(s.window))
     {
@@ -67,7 +69,15 @@ int main()
 
         render_pass_begin(&s.renderer);
         render_quad(&s.renderer, (struct quad) { 0, 0, 1, 1, 0.0f });
+        renderer_flush(&s.renderer);
         render_pass_end(&s.renderer);
+
+        timer += s.dt;
+        if (timer >= 1.0)
+        {
+            timer = 0.0;
+            LOG_INFO("%d fps\n", (int)(1 / s.dt));
+        }
 
         glfwSwapBuffers(s.window);
     }
