@@ -68,7 +68,8 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT);
 
         render_pass_begin(&s.renderer);
-        render_quad(&s.renderer, (struct quad) { 0, 0, 1, 1, 0.0f });
+        render_quad(&s.renderer, (struct quad) { 0, 0, 1, 1, 0.5f });
+
         renderer_flush(&s.renderer);
         render_pass_end(&s.renderer);
 

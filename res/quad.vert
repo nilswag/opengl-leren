@@ -9,5 +9,5 @@ layout (location = 3) in vec3 col2;
 void main()
 {
     mat3 model = mat3(col0, col1, col2);
-    gl_Position = vec4(pos, 1.0);
+    gl_Position = vec4(model * pos, 1.0);
 }
