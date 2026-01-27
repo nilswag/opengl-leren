@@ -16,4 +16,4 @@ struct state
     struct renderer renderer;
 };
 
-extern struct state state;
+extern struct state s;
