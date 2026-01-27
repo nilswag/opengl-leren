@@ -3,14 +3,14 @@
 #include "util/defines.h"
 #include "util/log.h"
 
-void matf_identity_dynamic(Matf mat, u64 rows, u64 cols)
+void matf_identity_dynamic(matf mat, u64 rows, u64 cols)
 {
     for (u64 i = 0; i < rows; i++)
         for (u64 j = 0; j < cols; j++)
             mat[i * cols + j] = (i == j) ? 1.0f : 0.0f;
 }
 
-void matf_mult_dynamic(const Matf a, const Matf b, Matf c, u64 a_rows, u64 a_cols, u64 b_rows, u64 b_cols)
+void matf_mult_dynamic(const matf a, const matf b, matf c, u64 a_rows, u64 a_cols, u64 b_rows, u64 b_cols)
 {
     ASSERT(a_cols == b_rows, "matrices can not be multiplied\n");
 
@@ -26,7 +26,7 @@ void matf_mult_dynamic(const Matf a, const Matf b, Matf c, u64 a_rows, u64 a_col
     }
 }
 
-void mat2f_transform(Mat3f a, f32 tx, f32 ty, f32 rot, f32 sx, f32 sy)
+void mat2f_transform(mat3f a, f32 tx, f32 ty, f32 rot, f32 sx, f32 sy)
 {
     f32 s = sin(rot);
     f32 c = cos(rot);

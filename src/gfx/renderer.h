@@ -1,9 +1,9 @@
 #pragma once
 
-typedef struct
+struct renderer
 {
 
-} Renderer;
+};
 
-void renderer_init(Renderer* renderer);
-void renderer_deinit(Renderer* renderer);
+void renderer_init(struct renderer* renderer);
+void renderer_deinit(struct renderer* renderer);

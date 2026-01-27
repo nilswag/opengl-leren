@@ -6,7 +6,7 @@
 #include "gfx/renderer.h"
 
 
-State state = { 0 };
+struct state state = { 0 };
 
 static void _framebuffer_size_callback(GLFWwindow* window, i32 width, i32 height)
 {
@@ -36,9 +36,6 @@ static void _init()
 
     LOG_INFO("renderer: %s\n", glGetString(GL_RENDERER));
     LOG_INFO("opengl version: %s\n", glGetString(GL_VERSION));
-
-    state.renderer = { 0 };
-    renderer_init(&state.renderer);
 }
 
 static void _deinit()

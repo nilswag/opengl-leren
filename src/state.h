@@ -3,7 +3,7 @@
 #include "util/defines.h"
 #include "gfx/renderer.h"
 
-typedef struct
+struct state
 {
     const char* title;
     i32 width, height;
@@ -13,7 +13,7 @@ typedef struct
     u64 ticks;
     f64 dt;
 
-    Renderer renderer;
-} State;
+    struct renderer renderer;
+};
 
-extern State state;
+extern struct state state;
