@@ -3,7 +3,7 @@
 #include "log.h"
 #include "util/defines.h"
 
-void _log(LogLevel level, const char* msg, ...)
+void _log(enum level level, const char* msg, ...)
 {
     if (level < 0 || level >= COUNT) return; // out of bounds
 

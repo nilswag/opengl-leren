@@ -16,7 +16,7 @@ static void _framebuffer_size_callback(GLFWwindow* window, i32 width, i32 height
     // LOG_INFO("(%d, %d)\n", width, height);
 }
 
-static void _init()
+static void _init(void)
 {
     ASSERT(glfwInit(), "failed to initialize glfw\n");
     LOG_INFO("glfw initialized\n");
@@ -40,14 +40,14 @@ static void _init()
     renderer_init(&s.renderer);
 }
 
-static void _deinit()
+static void _deinit(void)
 {
     renderer_deinit(&s.renderer);
     glfwDestroyWindow(s.window);
     glfwTerminate();
 }
 
-int main()
+int main(void)
 {
     _init();
 
@@ -69,6 +69,7 @@ int main()
 
         render_pass_begin(&s.renderer);
         render_quad(&s.renderer, (struct quad) { 0, 0, 1, 1, 0.5f });
+        render_quad(&s.renderer, (struct quad) { 0, 0, 1, 1, 0.7f });
 
         renderer_flush(&s.renderer);
         render_pass_end(&s.renderer);
