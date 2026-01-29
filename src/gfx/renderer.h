@@ -5,8 +5,8 @@
 
 struct quad
 {
-    i32 x, y;
-    u32 w, h;
+    f32 x, y;
+    f32 w, h;
     f32 rotation;
 };
 

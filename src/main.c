@@ -55,6 +55,9 @@ int main(void)
 
     f64 timer = 0.0;
 
+    f32 pos[2] = { 0.0f, 0.0f};
+    f32 speed = 0.25f;
+
     s.running = true;
     while (s.running && !glfwWindowShouldClose(s.window))
     {
@@ -64,15 +67,12 @@ int main(void)
         s.dt = first - last;
         last = first;
 
-        glClearColor(.0f, .0f, .0f, .0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        if (glfwGetKey(s.window, GLFW_KEY_LEFT)) pos[0] -= speed * s.dt;
+        if (glfwGetKey(s.window, GLFW_KEY_RIGHT)) pos[0] += speed * s.dt;
+        if (glfwGetKey(s.window, GLFW_KEY_UP)) pos[1] += speed * s.dt;
+        if (glfwGetKey(s.window, GLFW_KEY_DOWN)) pos[1] -= speed * s.dt;
 
-        render_pass_begin(&s.renderer);
-        render_quad(&s.renderer, (struct quad) { 0, 0, 1, 1, 0.5f });
-        render_quad(&s.renderer, (struct quad) { 0, 0, 1, 1, 0.7f });
-
-        renderer_flush(&s.renderer);
-        render_pass_end(&s.renderer);
+        // LOG_INFO("%f: %f\n", pos[0], pos[1]);
 
         timer += s.dt;
         if (timer >= 1.0)
@@ -80,6 +80,15 @@ int main(void)
             timer = 0.0;
             LOG_INFO("%d fps\n", (int)(1 / s.dt));
         }
+
+        glClearColor(.0f, .0f, .0f, .0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        render_pass_begin(&s.renderer);
+        render_quad(&s.renderer, (struct quad) { pos[0], pos[1], 1.0f, 1.0f, 0.0f });
+        render_quad(&s.renderer, (struct quad) { -1.0f, -1.0f, 1.5f, 1.0f, 0.5f });
+        renderer_flush(&s.renderer);
+        render_pass_end(&s.renderer);
 
         glfwSwapBuffers(s.window);
     }
