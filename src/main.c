@@ -86,7 +86,7 @@ int main(void)
 
         render_pass_begin(&s.renderer);
         render_quad(&s.renderer, (struct quad) { pos[0], pos[1], 1.0f, 1.0f, 0.0f });
-        render_quad(&s.renderer, (struct quad) { -1.0f, -1.0f, 1.5f, 1.0f, 0.5f });
+        render_quad(&s.renderer, (struct quad) { -1.0f, -1.0f, 1.0f, 1.0f, 0.5f });
         renderer_flush(&s.renderer);
         render_pass_end(&s.renderer);
 

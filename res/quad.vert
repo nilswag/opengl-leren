@@ -8,6 +8,6 @@ layout(location = 3) in vec3 col2;
 
 void main()
 {
-    mat3 transform = mat3(col0, col1, col2);
-    gl_Position = vec4(transform * vec3(pos.xy, 1.0), 1.0);
+    mat3 model = mat3(col0, col1, col2);
+    gl_Position = vec4(model * vec3(pos.xy, 1.0), 1.0);
 }

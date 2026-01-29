@@ -75,7 +75,7 @@ void renderer_flush(struct renderer* r)
     for (u64 i = 0; i < r->quad_count; i++)
     {
         struct quad q = r->render_queue[i];
-        mat2f_transform(instances[i], q.x, q.y, q.rotation, q.w, q.h);
+        mat2f_model(instances[i], q.x, q.y, q.rotation, q.w, q.h);
     }
 
     glBindBuffer(GL_ARRAY_BUFFER, r->instance_vbo);
