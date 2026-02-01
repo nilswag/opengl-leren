@@ -21,8 +21,8 @@ static void _init(void)
     ASSERT(glfwInit(), "failed to initialize glfw\n");
     LOG_INFO("glfw initialized\n");
 
-    s.width = 1000;
-    s.height = 1000;
+    s.width = 800;
+    s.height = 800;
     s.title = "test";
     s.window = glfwCreateWindow(s.width, s.height, s.title, NULL, NULL);
     ASSERT(s.window, "failed to initialize glfw window\n");
@@ -86,7 +86,6 @@ int main(void)
 
         render_pass_begin(&s.renderer);
         render_quad(&s.renderer, (struct quad) { pos[0], pos[1], 1.0f, 1.0f, 0.0f });
-        render_quad(&s.renderer, (struct quad) { -1.0f, -1.0f, 1.0f, 1.0f, 0.5f });
         renderer_flush(&s.renderer);
         render_pass_end(&s.renderer);
 
