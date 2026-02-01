@@ -31,7 +31,10 @@ static void _init(void)
 
     ASSERT(gladLoadGLLoader((GLADloadproc)glfwGetProcAddress), "failed to initialize glad\n");
     LOG_INFO("glad initialized\n");
-    glViewport(0, 0, s.width, s.height);
+
+    i32 fbw, fbh;
+    glfwGetFramebufferSize(s.window, &fbw, &fbh);
+    glViewport(0, 0, fbw, fbh);
     glfwSetFramebufferSizeCallback(s.window, _framebuffer_size_callback);
 
     LOG_INFO("renderer: %s\n", glGetString(GL_RENDERER));
