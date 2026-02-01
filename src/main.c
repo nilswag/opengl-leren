@@ -5,6 +5,7 @@
 #include "state.h"
 #include "gfx/renderer.h"
 #include "math/linmath.h"
+#include <math.h>
 
 
 struct state s = { 0 };
@@ -73,7 +74,7 @@ int main(void)
         s.dt = first - last;
         last = first;
 
-        f32 speed = 100.0f * s.dt;
+        f32 speed = 800.0f * s.dt;
         if (glfwGetKey(s.window, GLFW_KEY_LEFT)) pos[0] -= speed;
         if (glfwGetKey(s.window, GLFW_KEY_RIGHT)) pos[0] += speed;
         if (glfwGetKey(s.window, GLFW_KEY_UP)) pos[1] += speed;
@@ -93,9 +94,11 @@ int main(void)
 
         render_pass_begin(&s.renderer);
 
+        mat3f_ortho(s.proj, 0 + sin(glfwGetTime()) * 800.0f, s.width + sin(glfwGetTime()) * 800.0f, 0, s.height);
         glUniformMatrix3fv(s.proj_location, 1, GL_FALSE, s.proj);
 
         render_quad(&s.renderer, (struct quad) { pos[0], pos[1], 100.0f, 100.0f, 0.0f });
+        render_quad(&s.renderer, (struct quad) { 250.0f, 400.0f, 100.0f, 100.0f, 0.0f });
 
         renderer_flush(&s.renderer);
         render_pass_end(&s.renderer);
