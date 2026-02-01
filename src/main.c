@@ -5,8 +5,6 @@
 #include "state.h"
 #include "gfx/renderer.h"
 #include "math/linmath.h"
-#include <math.h>
-
 
 struct state s = { 0 };
 
