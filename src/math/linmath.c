@@ -3,7 +3,7 @@
 #include "util/defines.h"
 
 // column major
-void mat2f_model(mat3f a, f32 tx, f32 ty, f32 rot, f32 sx, f32 sy)
+void mat3f_model(mat3f a, f32 tx, f32 ty, f32 rot, f32 sx, f32 sy)
 {
     f32 s = sin(rot);
     f32 c = cos(rot);

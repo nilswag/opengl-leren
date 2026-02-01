@@ -59,7 +59,6 @@ int main(void)
     f64 timer = 0.0;
 
     f32 pos[2] = { 0.0f, 0.0f};
-    f32 speed = 0.25f;
 
     s.running = true;
     while (s.running && !glfwWindowShouldClose(s.window))
@@ -70,10 +69,11 @@ int main(void)
         s.dt = first - last;
         last = first;
 
-        if (glfwGetKey(s.window, GLFW_KEY_LEFT)) pos[0] -= speed * s.dt;
-        if (glfwGetKey(s.window, GLFW_KEY_RIGHT)) pos[0] += speed * s.dt;
-        if (glfwGetKey(s.window, GLFW_KEY_UP)) pos[1] += speed * s.dt;
-        if (glfwGetKey(s.window, GLFW_KEY_DOWN)) pos[1] -= speed * s.dt;
+        f32 speed = 0.25f * s.dt;
+        if (glfwGetKey(s.window, GLFW_KEY_LEFT)) pos[0] -= speed;
+        if (glfwGetKey(s.window, GLFW_KEY_RIGHT)) pos[0] += speed;
+        if (glfwGetKey(s.window, GLFW_KEY_UP)) pos[1] += speed;
+        if (glfwGetKey(s.window, GLFW_KEY_DOWN)) pos[1] -= speed;
 
         // LOG_INFO("%f: %f\n", pos[0], pos[1]);
 
