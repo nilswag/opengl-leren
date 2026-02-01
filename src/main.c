@@ -89,13 +89,13 @@ int main(void)
 
         render_pass_begin(&s.renderer);
 
-        u64 n = 1000;
+        u64 n = 10000;
         for (u64 r = 0; r < n; r++)
         {
             for (u64 c = 0; c < n; c++)
             {
-                f32 x = -1.0f + r * (2.0 / n);
-                f32 y = -1.0f + c * (2.0 / n);
+                f32 x = -1.0f + r * (2.0 / n) + pos[0];
+                f32 y = -1.0f + c * (2.0 / n) + pos[1];
                 render_quad(&s.renderer, (struct quad) { x, y, 1.0f / n, 1.0f / n, 0.0f });
             }
         }

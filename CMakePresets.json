@@ -50,9 +50,20 @@
         },
 
         {
-            "name": "release",
+            "name": "release-mingw",
             "displayName": "Build Release",
             "configurePreset": "release"
+        },
+        {
+            "name": "debug-mingw",
+            "displayName": "Build Debug (MinGW)",
+            "configurePreset": "debug-mingw"
+        },
+
+        {
+            "name": "release",
+            "displayName": "Build Release (MinGW)",
+            "configurePreset": "release-mingw"
         }
     ]
 }
