@@ -88,7 +88,18 @@ int main(void)
         glClear(GL_COLOR_BUFFER_BIT);
 
         render_pass_begin(&s.renderer);
-        render_quad(&s.renderer, (struct quad) { pos[0], pos[1], 1.0f, 1.0f, 0.0f });
+
+        u64 n = 1000;
+        for (u64 r = 0; r < n; r++)
+        {
+            for (u64 c = 0; c < n; c++)
+            {
+                f32 x = -1.0f + r * (2.0 / n);
+                f32 y = -1.0f + c * (2.0 / n);
+                render_quad(&s.renderer, (struct quad) { x, y, 1.0f / n, 1.0f / n, 0.0f });
+            }
+        }
+
         renderer_flush(&s.renderer);
         render_pass_end(&s.renderer);
 
