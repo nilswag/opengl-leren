@@ -9,4 +9,5 @@ typedef f32 vec3f[3];
 typedef f32 vecf[];
 
 void mat3f_model(mat3f a, f32 tx, f32 ty, f32 rot, f32 sx, f32 sy);
-void mat3f_ortho();
+
+void mat3f_ortho(mat3f a, f32 l, f32 r, f32 b, f32 t);

@@ -4,6 +4,7 @@
 #include "util/log.h"
 #include "state.h"
 #include "gfx/renderer.h"
+#include "math/linmath.h"
 
 
 struct state s = { 0 };
@@ -14,6 +15,8 @@ static void _framebuffer_size_callback(GLFWwindow* window, i32 width, i32 height
     s.height = height;
     glViewport(0, 0, width, height);
     // LOG_INFO("(%d, %d)\n", width, height);
+
+    mat3f_ortho(s.proj, 0, width, 0, height);
 }
 
 static void _init(void)
@@ -41,6 +44,8 @@ static void _init(void)
     LOG_INFO("opengl version: %s\n", glGetString(GL_VERSION));
 
     renderer_init(&s.renderer);
+    s.proj_location = glGetUniformLocation(s.renderer.quad_shader, "proj");
+    mat3f_ortho(s.proj, 0, s.width, 0, s.height);
 }
 
 static void _deinit(void)
@@ -57,7 +62,6 @@ int main(void)
     f64 last = glfwGetTime();
 
     f64 timer = 0.0;
-
     f32 pos[2] = { 0.0f, 0.0f};
 
     s.running = true;
@@ -69,7 +73,7 @@ int main(void)
         s.dt = first - last;
         last = first;
 
-        f32 speed = 0.25f * s.dt;
+        f32 speed = 100.0f * s.dt;
         if (glfwGetKey(s.window, GLFW_KEY_LEFT)) pos[0] -= speed;
         if (glfwGetKey(s.window, GLFW_KEY_RIGHT)) pos[0] += speed;
         if (glfwGetKey(s.window, GLFW_KEY_UP)) pos[1] += speed;
@@ -89,16 +93,9 @@ int main(void)
 
         render_pass_begin(&s.renderer);
 
-        u64 n = 10;
-        for (u64 r = 0; r < n; r++)
-        {
-            for (u64 c = 0; c < n; c++)
-            {
-                f32 x = -1.0f + r * (2.0 / n) + pos[0];
-                f32 y = -1.0f + c * (2.0 / n) + pos[1];
-                render_quad(&s.renderer, (struct quad) { x, y, 1.0f / n, 1.0f / n, glfwGetTime() });
-            }
-        }
+        glUniformMatrix3fv(s.proj_location, 1, GL_FALSE, s.proj);
+
+        render_quad(&s.renderer, (struct quad) { pos[0], pos[1], 100.0f, 100.0f, 0.0f });
 
         renderer_flush(&s.renderer);
         render_pass_end(&s.renderer);
