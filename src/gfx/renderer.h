@@ -5,9 +5,16 @@
 
 #define MAX_QUADS 2048
 
+enum shader_types
+{
+    SHADER_QUAD,
+    N_SHADERS
+};
+
 struct renderer
 {
-    u32 quad_shader;
+    u32 shaders[N_SHADERS];
+    enum shader_types active_shader;
     u32 quad_vao, quad_vbo, instance_vbo;
 
     struct quad render_queue[MAX_QUADS];

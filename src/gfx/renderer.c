@@ -19,7 +19,8 @@ void renderer_init(struct renderer* r)
         0, 2, 3
     };
 
-    r->quad_shader = create_shader("quad.vert", "quad.frag");
+    r->shaders[SHADER_QUAD] = create_shader("quad.vert", "quad.frag");
+    r->active_shader = SHADER_QUAD;
 
     glGenVertexArrays(1, &r->quad_vao);
     glBindVertexArray(r->quad_vao);
@@ -53,14 +54,15 @@ void renderer_init(struct renderer* r)
 
 void renderer_deinit(struct renderer* r)
 {
-    glDeleteShader(r->quad_shader);
+    for (u64 i = 0; i < N_SHADERS; i++)
+        glDeleteShader(r->shaders[i]);
 }
 
 void render_pass_begin(struct renderer* r)
 {
     glClearColor(.0f, .0f, .0f, .0f);
     glClear(GL_COLOR_BUFFER_BIT);
-    glUseProgram(r->quad_shader);
+    glUseProgram(r->shaders[r->active_shader]);
     glBindVertexArray(r->quad_vao);
 }
 
