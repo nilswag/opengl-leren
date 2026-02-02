@@ -58,6 +58,8 @@ void renderer_deinit(struct renderer* r)
 
 void render_pass_begin(struct renderer* r)
 {
+    glClearColor(.0f, .0f, .0f, .0f);
+    glClear(GL_COLOR_BUFFER_BIT);
     glUseProgram(r->quad_shader);
     glBindVertexArray(r->quad_vao);
 }
@@ -75,7 +77,7 @@ void renderer_flush(struct renderer* r)
     for (u64 i = 0; i < r->quad_count; i++)
     {
         struct quad q = r->render_queue[i];
-        mat3f_model(instances[i], q.x, q.y, q.rotation, q.w, q.h);
+        mat3f_model(instances[i], q.pos, q.size, q.rotation);
     }
 
     glBindBuffer(GL_ARRAY_BUFFER, r->instance_vbo);
@@ -86,10 +88,17 @@ void renderer_flush(struct renderer* r)
     r->quad_count = 0;
 }
 
-void render_quad(struct renderer* r, struct quad quad)
+void render_quad(struct renderer* r, struct quad q)
 {
     if (r->quad_count >= MAX_QUADS) renderer_flush(r);
 
-    r->render_queue[r->quad_count] = quad;
+    r->render_queue[r->quad_count] = q;
     r->quad_count++;
+}
+
+void renderer_set_camera(struct renderer* r, struct camera* c)
+{
+    glUseProgram(r->quad_shader);
+    glUniformMatrix3fv(glGetUniformLocation(r->quad_shader, "proj"), 1, GL_FALSE, c->proj);
+    glUniformMatrix3fv(glGetUniformLocation(r->quad_shader, "view"), 1, GL_FALSE, c->view);
 }

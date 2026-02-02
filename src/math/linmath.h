@@ -12,11 +12,11 @@ typedef i32 vec2[2];
 typedef i32 vec3[3];
 typedef i32 vec[];
 
-void mat3f_transform(mat3f a, f32 tx, f32 ty, f32 rot, f32 sx, f32 sy);
+void mat3f_transform(mat3f a, vec2f pos, vec2f scale, f32 rot);
 
-static inline void mat3f_model(mat3f a, f32 tx, f32 ty, f32 rot, f32 sx, f32 sy)
+static inline void mat3f_model(mat3f a, vec2f pos, vec2f scale, f32 rot)
 {
-    mat3f_transform(a, tx, ty, rot, sx, sy);
+    mat3f_transform(a, pos, scale, rot);
 }
 
 void mat3f_ortho(mat3f a, f32 l, f32 r, f32 b, f32 t);
