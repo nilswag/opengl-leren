@@ -1,12 +1,12 @@
 #pragma once
 #include "util/defines.h"
 
-#define MAX_QUADS 1024
+#define MAX_QUADS 2048
 
 struct quad
 {
-    f32 x, y;
-    f32 w, h;
+    i32 x, y;
+    i32 w, h;
     f32 rotation;
 };
 
