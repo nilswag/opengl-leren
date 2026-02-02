@@ -9,18 +9,17 @@ struct window w = { 0 };
 static void _init(void)
 {
     window_init(&w);
+    camera_init(&s.camera, (vec2) { 400, 400 });
     renderer_init(&s.renderer);
-    camera_init(&s.camera, w.size);
 }
 
 static void _deinit(void)
 {
-    renderer_deinit(&s.renderer);
     window_deinit(&w);
 }
 
 int main(void)
-{
+{   
     _init();
 
     f64 last = glfwGetTime();
@@ -46,11 +45,13 @@ int main(void)
         }
         
         // rendering logic
-        render_pass_begin(&s.renderer);
-        renderer_set_camera(&s.renderer, &s.camera);
-        // actual rendering stuff
+        renderer_begin(&s.renderer);
+        camera_update(&s.camera);
+        renderer_set_camera(&s.renderer, PASS_WORLD, &s.camera);
+        renderer_submit(&s.renderer, PASS_WORLD, (struct quad) { 
+            .pos = { 0.0f, 100.0f }, .size = { 100.0f, 100.0f }, .rot = 0.0f, .color = { 1.0f, 0.0f, 0.0f, 1.0f }
+        });
         renderer_flush(&s.renderer);
-        render_pass_end(&s.renderer);
         window_update(&w);
     }
 

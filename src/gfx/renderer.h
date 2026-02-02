@@ -1,34 +1,42 @@
 #pragma once
 #include "util/defines.h"
 #include "camera.h"
-#include "quad.h"
 
-#define MAX_QUADS 2048
+#define MAX_QUADS 256
+#define INSTANCE_SIZE 13
 
-enum shader_types
+enum pass_type
 {
-    SHADER_QUAD,
-    N_SHADERS
+    PASS_WORLD,
+    N_PASSES
+};
+
+struct quad
+{
+    vec2f pos;
+    vec2f size;
+    f32 rot;
+    vec4f color;
+};
+
+struct render_pass
+{
+    u32 shader;
+    u32 vao, instance_vbo;
+    u64 count;
+    f32 queue[MAX_QUADS][INSTANCE_SIZE];
 };
 
 struct renderer
 {
-    u32 shaders[N_SHADERS];
-    enum shader_types active_shader;
-    u32 quad_vao, quad_vbo, instance_vbo;
-
-    struct quad render_queue[MAX_QUADS];
-    u64 quad_count;
+    struct render_pass passes[N_PASSES];
 };
 
 void renderer_init(struct renderer* r);
-void renderer_deinit(struct renderer* r);
 
-void render_pass_begin(struct renderer* r);
-void render_pass_end(struct renderer* r);
-
+void renderer_begin(struct renderer* r);
+void renderer_submit(struct renderer* r, enum pass_type pass, struct quad instance);
+void renderer_flush_pass(struct renderer* r, enum pass_type pass);
 void renderer_flush(struct renderer* r);
 
-void render_quad(struct renderer* r, struct quad q);
-
-void renderer_set_camera(struct renderer* r, struct camera* c);
+void renderer_set_camera(struct renderer* r, enum pass_type pass, struct camera* camera);

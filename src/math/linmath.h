@@ -6,6 +6,7 @@ typedef f32 matf[];
 
 typedef f32 vec2f[2];
 typedef f32 vec3f[3];
+typedef f32 vec4f[4];
 typedef f32 vecf[];
 
 typedef i32 vec2[2];
