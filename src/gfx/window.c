@@ -36,14 +36,14 @@ void window_init(struct window* w)
     LOG_INFO("glfw window initialized\n");
     glfwMakeContextCurrent(w->handle);
 
+    ASSERT(gladLoadGLLoader((GLADloadproc)glfwGetProcAddress), "failed to initialize glad\n");
+    LOG_INFO("glad initialized\n");
+
     glfwSetFramebufferSizeCallback(w->handle, _framebuffer_size_callback);
     // i don't completely understand why but this fixed fractional scaling issues on wayland
     i32 fbw, fbh;
     glfwGetFramebufferSize(w->handle, &fbw, &fbh);
     glViewport(0, 0, fbw, fbh);
-
-    ASSERT(gladLoadGLLoader((GLADloadproc)glfwGetProcAddress), "failed to initialize glad\n");
-    LOG_INFO("glad initialized\n");
 
     LOG_INFO("renderer: %s\n", glGetString(GL_RENDERER));
     LOG_INFO("opengl version: %s\n", glGetString(GL_VERSION));

@@ -10,6 +10,7 @@ static void _init(void)
 {
     window_init(&w);
     renderer_init(&s.renderer);
+    camera_init(&s.camera, w.size);
 }
 
 static void _deinit(void)
@@ -46,6 +47,8 @@ int main(void)
         
         // rendering logic
         render_pass_begin(&s.renderer);
+        renderer_set_camera(&s.renderer, &s.camera);
+        // actual rendering stuff
         renderer_flush(&s.renderer);
         render_pass_end(&s.renderer);
         window_update(&w);
