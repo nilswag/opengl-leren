@@ -14,8 +14,8 @@ struct state
     u64 ticks;
     f64 dt;
 
-    i32 proj_location;
-    mat3f proj;
+    i32 view_location;
+    mat3f view;
 
     struct renderer renderer;
 };

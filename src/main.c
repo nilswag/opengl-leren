@@ -14,8 +14,6 @@ static void _framebuffer_size_callback(GLFWwindow* window, i32 width, i32 height
     s.height = height;
     glViewport(0, 0, width, height);
     // LOG_INFO("(%d, %d)\n", width, height);
-
-    mat3f_ortho(s.proj, 0, width, 0, height);
 }
 
 static void _init(void)
@@ -43,8 +41,16 @@ static void _init(void)
     LOG_INFO("opengl version: %s\n", glGetString(GL_VERSION));
 
     renderer_init(&s.renderer);
-    s.proj_location = glGetUniformLocation(s.renderer.quad_shader, "proj");
-    mat3f_ortho(s.proj, 0, s.width, 0, s.height);
+
+    glUseProgram(s.renderer.quad_shader);
+    i32 proj_location = glGetUniformLocation(s.renderer.quad_shader, "proj");
+    mat3f proj;
+    mat3f_ortho(proj, 0, s.width, 0, s.height);
+    glUniformMatrix3fv(proj_location, 1, GL_FALSE, proj);
+
+    s.view_location = glGetUniformLocation(s.renderer.quad_shader, "view");
+    mat3f_identity(s.view);
+    glUseProgram(0);
 }
 
 static void _deinit(void)
@@ -62,6 +68,7 @@ int main(void)
 
     f64 timer = 0.0;
     f32 pos[2] = { 0.0f, 0.0f};
+    f32 zoom = 1.0f;
 
     s.running = true;
     while (s.running && !glfwWindowShouldClose(s.window))
@@ -73,12 +80,16 @@ int main(void)
         last = first;
 
         i32 speed = (int)(400.0f * s.dt);
-        if (glfwGetKey(s.window, GLFW_KEY_LEFT)) pos[0] -= speed;
-        if (glfwGetKey(s.window, GLFW_KEY_RIGHT)) pos[0] += speed;
-        if (glfwGetKey(s.window, GLFW_KEY_UP)) pos[1] += speed;
-        if (glfwGetKey(s.window, GLFW_KEY_DOWN)) pos[1] -= speed;
+        if (glfwGetKey(s.window, GLFW_KEY_A)) pos[0] -= speed;
+        if (glfwGetKey(s.window, GLFW_KEY_D)) pos[0] += speed;
+        if (glfwGetKey(s.window, GLFW_KEY_W)) pos[1] += speed;
+        if (glfwGetKey(s.window, GLFW_KEY_S)) pos[1] -= speed;
+        if (glfwGetKey(s.window, GLFW_KEY_UP)) zoom += 0.5f * s.dt;
+        if (glfwGetKey(s.window, GLFW_KEY_DOWN)) zoom -= 0.5f * s.dt;
 
-        // LOG_INFO("%f: %f\n", pos[0], pos[1]);
+        mat3f_transform(s.view, 0.0f, 0.0f, 0.0f, zoom, zoom);
+
+        LOG_INFO("%f\n", zoom);
 
         timer += s.dt;
         if (timer >= 1.0)
@@ -92,10 +103,9 @@ int main(void)
 
         render_pass_begin(&s.renderer);
 
-        mat3f_ortho(s.proj, 0, s.width, 0, s.height);
-        glUniformMatrix3fv(s.proj_location, 1, GL_FALSE, s.proj);
+        glUniformMatrix3fv(s.view_location, 1, GL_FALSE, s.view);
 
-        render_quad(&s.renderer, (struct quad) { pos[0], pos[1], 500, 500, 0.0f });
+        render_quad(&s.renderer, (struct quad) { pos[0], pos[1], 100, 100, 0.0f });
 
         renderer_flush(&s.renderer);
         render_pass_end(&s.renderer);
