@@ -83,6 +83,13 @@ int main(void)
             .color = { color[0], color[1], color[2], color[3] }
         });
 
+        renderer_submit(&s.renderer, PASS_WORLD, (struct quad) {
+            .pos   = { 120.0f, 250.0f },
+            .size  = { 120.0f, 40.0f },
+            .rot   = 0.0f,
+            .color = { 1.0f, 0.0f, 0.0f, 1.0f }
+        });
+
         renderer_flush(&s.renderer);
         window_update(&w);
     }
