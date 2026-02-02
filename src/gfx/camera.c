@@ -10,5 +10,5 @@ void camera_init(struct camera* c, vec2 screen_size)
 
 void camera_update(struct camera* c)
 {
-    mat3f_transform(c->view, c->position, (vec2f) { c->zoom, c->zoom }, 0.0f);
+    mat3f_transform(c->view, (vec2f) { -c->position[0], -c->position[1] }, (vec2f) { c->zoom, c->zoom }, 0.0f);
 }
