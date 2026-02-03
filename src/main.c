@@ -84,7 +84,7 @@ int main(void)
         });
 
         renderer_submit(&s.renderer, PASS_WORLD, (struct quad) {
-            .pos   = { 120.0f, 250.0f },
+            .pos   = { 120.0f, 25.0f },
             .size  = { 120.0f, 40.0f },
             .rot   = 0.0f,
             .color = { 1.0f, 0.0f, 0.0f, 1.0f }
