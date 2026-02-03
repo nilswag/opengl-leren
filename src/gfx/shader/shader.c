@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <glad/glad.h>
+
 #include "shader.h"
 #include "util/core/defines.h"
 #include "util/log/log.h"
