@@ -2,8 +2,9 @@
 #include <string.h>
 #include <glad/glad.h>
 
-#include "gfx/core/renderer.h"
-#include "gfx/camera/camera.h"
+#include "renderer.h"
+#include "../camera/camera.h"
+#include "../shader/shader.h"
 
 static f32 vertices[] = {
     0.0f, 0.0f,     // top left

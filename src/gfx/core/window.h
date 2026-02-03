@@ -1,10 +1,11 @@
 #pragma once
+#include <GLFW/glfw3.h>
+
 #include "math/linmath.h"
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 800
 
-typedef struct GLFWwindow; // forward declaration
 typedef struct
 {
     vec2 size;
