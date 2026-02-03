@@ -3,17 +3,14 @@
 #include "gfx/core/renderer.h"
 #include "gfx/camera/camera.h"
 
-struct renderer;
-struct camera;
-
-struct state
+typedef struct
 {
     bool running;
     u64 ticks;
     f64 dt;
 
-    struct renderer renderer;
-    struct camera camera;
-};
+    Renderer renderer;
+    Camera camera;
+} State;
 
-extern struct state s;
+extern State s;

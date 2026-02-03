@@ -1,17 +1,17 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+
 #include "window.h"
 #include "util/log/log.h"
 
-static void _framebuffer_size_callback(GLFWwindow* window, i32 width, i32 height)
+static void _framebuffer_size_callback(GLFWwindow* handle, i32 width, i32 height)
 {
     w.size[0] = width;
     w.size[1] = height;
     glViewport(0, 0, width, height);
-    // LOG_INFO("(%d, %d)\n", width, height);
 }
 
-void window_init(struct window* w)
+void window_init(Window* w)
 {
     ASSERT(glfwInit(), "failed to initialize glfw\n");
     LOG_INFO("glfw initialized\n");
@@ -49,13 +49,13 @@ void window_init(struct window* w)
     LOG_INFO("opengl version: %s\n", glGetString(GL_VERSION));
 }
 
-void window_deinit(struct window* w)
+void window_deinit(Window* w)
 {
     glfwDestroyWindow(w->handle);
     glfwTerminate();
 }
 
-void window_update(struct window* w)
+void window_update(Window* w)
 {
     glfwSwapBuffers(w->handle);
 }

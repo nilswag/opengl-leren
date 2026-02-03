@@ -1,4 +1,5 @@
 #include <math.h>
+#include <GLFW/glfw3.h>
 
 #include "state.h"
 #include "gfx/core/window.h"
@@ -6,8 +7,8 @@
 #include "gfx/camera/camera.h"
 #include "util/log/log.h"
 
-struct state s = { 0 };
-struct window w = { 0 };
+State s = { 0 };
+Window w = { 0 };
 
 static void _init(void)
 {
@@ -77,14 +78,14 @@ int main(void)
             1.0f
         };
 
-        renderer_submit(&s.renderer, PASS_WORLD, (struct quad) {
+        renderer_submit(&s.renderer, PASS_WORLD, (Quad) {
             .pos   = { pos[0], pos[1] },
             .size  = { 100.0f, 100.0f },
             .rot   = 0.0f,
             .color = { color[0], color[1], color[2], color[3] }
         });
 
-        renderer_submit(&s.renderer, PASS_WORLD, (struct quad) {
+        renderer_submit(&s.renderer, PASS_WORLD, (Quad) {
             .pos   = { 120.0f, 25.0f },
             .size  = { 120.0f, 40.0f },
             .rot   = 0.0f,
