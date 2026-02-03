@@ -1,4 +1,3 @@
-#include <math.h>
 #include <GLFW/glfw3.h>
 
 #include "state.h"
@@ -29,8 +28,6 @@ int main(void)
     f64 last = glfwGetTime();
     f64 timer = 0.0;
 
-    vec2f pos = { 0.0f, 0.0f };
-
     s.running = true;
     while (s.running && !glfwWindowShouldClose(w.handle))
     {
@@ -50,40 +47,10 @@ int main(void)
             LOG_INFO("%d fps\n", (int)(1 / s.dt));
         }
 
-        f32 speed = 250.0f * s.dt;
-        f32 zoom  = 0.25f * s.dt;
-        if (glfwGetKey(w.handle, GLFW_KEY_A)) pos[0] -= speed;
-        if (glfwGetKey(w.handle, GLFW_KEY_D)) pos[0] += speed;
-        if (glfwGetKey(w.handle, GLFW_KEY_W)) pos[1] += speed;
-        if (glfwGetKey(w.handle, GLFW_KEY_S)) pos[1] -= speed;  
-
-        if (glfwGetKey(w.handle, GLFW_KEY_LEFT)) s.camera.position[0] -= speed;
-        if (glfwGetKey(w.handle, GLFW_KEY_RIGHT)) s.camera.position[0] += speed;
-        if (glfwGetKey(w.handle, GLFW_KEY_UP)) s.camera.position[1] += speed;
-        if (glfwGetKey(w.handle, GLFW_KEY_DOWN)) s.camera.position[1] -= speed;
-
-        if (glfwGetKey(w.handle, GLFW_KEY_EQUAL)) s.camera.zoom += zoom;
-        if (glfwGetKey(w.handle, GLFW_KEY_MINUS)) s.camera.zoom -= zoom;
-
         // rendering logic
         renderer_begin(&s.renderer);
         camera_update(&s.camera);
         renderer_set_camera(&s.renderer, PASS_WORLD, &s.camera);
-        float t = (float)glfwGetTime() * 0.5f;
-
-        vec4f color = {
-            0.5f + 0.5f * sinf(t),
-            0.5f + 0.5f * sinf(t + 2.0f),
-            0.5f + 0.5f * sinf(t + 4.0f),
-            1.0f
-        };
-
-        renderer_submit(&s.renderer, PASS_WORLD, (Quad) {
-            .pos   = { pos[0], pos[1] },
-            .size  = { 100.0f, 100.0f },
-            .rot   = 0.0f,
-            .color = { color[0], color[1], color[2], color[3] }
-        });
 
         renderer_submit(&s.renderer, PASS_WORLD, (Quad) {
             .pos   = { 120.0f, 25.0f },
