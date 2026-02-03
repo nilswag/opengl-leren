@@ -1,9 +1,10 @@
 #include <stdarg.h>
 #include <stdio.h>
+
 #include "log.h"
 #include "util/core/defines.h"
 
-void _log(enum level level, const char* msg, ...)
+void _log(Level level, const char* msg, ...)
 {
     if (level < 0 || level >= COUNT) return; // out of bounds
 

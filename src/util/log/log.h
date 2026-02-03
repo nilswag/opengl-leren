@@ -1,16 +1,15 @@
 #pragma once
 #include <stdlib.h>
-#include "util/core/defines.h"
 
-enum level
+typedef enum
 {
     INFO,
     WARNING,
     ERROR,
     COUNT
-};
+} Level;
 
-void _log(enum level level, const char* msg, ...);
+void _log(Level level, const char* msg, ...);
 
 #define LOG_INFO(msg, ...) STMT(_log(INFO, msg, ##__VA_ARGS__);)
 #define LOG_WARN(msg, ...) STMT(_log(WARNING, msg, ##__VA_ARGS__);)
