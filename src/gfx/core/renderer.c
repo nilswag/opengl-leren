@@ -2,10 +2,7 @@
 #include <string.h>
 #include <glad/glad.h>
 
-#include "renderer.h"
-#include "util/core/defines.h"
-#include "math/linmath.h"
-#include "gfx/shader/shader.h"
+#include "gfx/core/renderer.h"
 #include "gfx/camera/camera.h"
 
 static f32 vertices[] = {
@@ -45,7 +42,7 @@ static u32 _create_instance_vbo()
     return vbo;
 }
 
-void renderer_init(struct renderer* r)
+void renderer_init(Renderer* r)
 {
     glGenVertexArrays(1, &quad_vao);
     glBindVertexArray(quad_vao);
@@ -60,7 +57,7 @@ void renderer_init(struct renderer* r)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, quad_ebo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-    r->passes[PASS_WORLD] = (struct render_pass) {
+    r->passes[PASS_WORLD] = (RenderPass) {
         .shader = create_shader("quad.vert", "quad.frag"),
         .vao = quad_vao,
         .instance_vbo = _create_instance_vbo(),
@@ -70,15 +67,15 @@ void renderer_init(struct renderer* r)
     glBindVertexArray(0);
 }
 
-void renderer_begin(struct renderer* r)
+void renderer_begin(Renderer* r)
 {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 }
 
-void renderer_submit(struct renderer* r, enum pass_type pass, struct quad instance)
+void renderer_submit(Renderer* r, PassType pass, Quad instance)
 {
-    struct render_pass* p = &r->passes[pass];
+    RenderPass* p = &r->passes[pass];
     if (p->count >= MAX_QUADS) renderer_flush_pass(r, pass);
 
     f32* dst = p->queue[p->count++];
@@ -90,9 +87,9 @@ void renderer_submit(struct renderer* r, enum pass_type pass, struct quad instan
     memcpy(dst + 9, instance.color, sizeof(vec4f));
 }
 
-void renderer_flush_pass(struct renderer* r, enum pass_type pass)
+void renderer_flush_pass(Renderer* r, PassType pass)
 {
-    struct render_pass* p = &r->passes[pass];
+    RenderPass* p = &r->passes[pass];
     if (p->count == 0) return; // queue is empty
 
     glBindBuffer(GL_ARRAY_BUFFER, p->instance_vbo);
@@ -109,15 +106,15 @@ void renderer_flush_pass(struct renderer* r, enum pass_type pass)
     p->count = 0;   
 }
 
-void renderer_end(struct renderer* r)
+void renderer_end(Renderer* r)
 {
     for (u64 i = 0; i < N_PASSES; i++)
         renderer_flush_pass(r, i);
 }
 
-void renderer_set_camera(struct renderer* r, enum pass_type pass, struct camera* camera)
+void renderer_set_camera(Renderer* r, PassType pass, Camera* camera)
 {
-    struct render_pass* p = &r->passes[pass];
+    RenderPass* p = &r->passes[pass];
     glUseProgram(p->shader);
     glUniformMatrix3fv(glGetUniformLocation(p->shader, "view"), 1, GL_FALSE, camera->view);
     glUniformMatrix3fv(glGetUniformLocation(p->shader, "proj"), 1, GL_FALSE, camera->proj);
