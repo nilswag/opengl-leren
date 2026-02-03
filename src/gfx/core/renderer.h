@@ -1,6 +1,6 @@
 #pragma once
 #include "util/defines.h"
-#include "camera.h"
+#include "../camera/camera.h"
 
 #define MAX_QUADS 256
 #define INSTANCE_SIZE 13

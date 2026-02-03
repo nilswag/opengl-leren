@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include "renderer.h"
-#include "camera.h"
+#include "../camera/camera.h"
 #include "math/linmath.h"
-#include "shader.h"
+#include "../shader/shader.h"
 
 static f32 vertices[] = {
     0.0f, 0.0f,     // top left

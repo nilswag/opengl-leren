@@ -1,6 +1,6 @@
 #include <GLFW/glfw3.h>
 #include "state.h"
-#include "gfx/window.h"
+#include "gfx/core/window.h"
 #include "util/defines.h"
 #include "util/log.h"
 #include <math.h>
