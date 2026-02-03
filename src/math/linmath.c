@@ -1,6 +1,6 @@
 #include <math.h>
 #include "linmath.h"
-#include "util/defines.h"
+#include "util/core/defines.h"
 
 // column major
 void mat3f_transform(mat3f a, vec2f pos, vec2f scale, f32 rot)

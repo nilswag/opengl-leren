@@ -1,10 +1,12 @@
-#include <glad/glad.h>
 #include <stdlib.h>
 #include <string.h>
+#include <glad/glad.h>
+
 #include "renderer.h"
-#include "../camera/camera.h"
+#include "util/core/defines.h"
 #include "math/linmath.h"
-#include "../shader/shader.h"
+#include "gfx/shader/shader.h"
+#include "gfx/camera/camera.h"
 
 static f32 vertices[] = {
     0.0f, 0.0f,     // top left
@@ -107,7 +109,7 @@ void renderer_flush_pass(struct renderer* r, enum pass_type pass)
     p->count = 0;   
 }
 
-void renderer_flush(struct renderer* r)
+void renderer_end(struct renderer* r)
 {
     for (u64 i = 0; i < N_PASSES; i++)
         renderer_flush_pass(r, i);

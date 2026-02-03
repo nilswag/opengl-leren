@@ -1,8 +1,10 @@
 #pragma once
-#include <GLFW/glfw3.h>
-#include "util/defines.h"
+#include "util/core/defines.h"
 #include "gfx/core/renderer.h"
 #include "gfx/camera/camera.h"
+
+struct renderer;
+struct camera;
 
 struct state
 {

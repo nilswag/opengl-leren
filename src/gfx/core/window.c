@@ -1,7 +1,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include "window.h"
-#include "util/log.h"
+#include "util/log/log.h"
 
 static void _framebuffer_size_callback(GLFWwindow* window, i32 width, i32 height)
 {

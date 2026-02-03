@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "file.h"
-#include "util/defines.h"
-#include "log.h"
+#include "util/core/defines.h"
+#include "../log/log.h"
 
 char* read_file(const char* path)
 {

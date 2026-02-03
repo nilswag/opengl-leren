@@ -1,6 +1,6 @@
 #pragma once
-#include "util/defines.h"
-#include "../camera/camera.h"
+#include "util/core/defines.h"
+#include "math/linmath.h"
 
 #define MAX_QUADS 256
 #define INSTANCE_SIZE 13
@@ -33,10 +33,13 @@ struct renderer
 };
 
 void renderer_init(struct renderer* r);
+void renderer_deinit(struct renderer* r);
 
 void renderer_begin(struct renderer* r);
 void renderer_submit(struct renderer* r, enum pass_type pass, struct quad instance);
 void renderer_flush_pass(struct renderer* r, enum pass_type pass);
-void renderer_flush(struct renderer* r);
+void renderer_end(struct renderer* r);
+
+struct camera;
 
 void renderer_set_camera(struct renderer* r, enum pass_type pass, struct camera* camera);

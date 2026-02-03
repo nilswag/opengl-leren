@@ -1,7 +1,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include "log.h"
-#include "util/defines.h"
+#include "util/core/defines.h"
 
 void _log(enum level level, const char* msg, ...)
 {

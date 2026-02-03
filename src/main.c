@@ -1,9 +1,10 @@
-#include <GLFW/glfw3.h>
+#include <math.h>
+
 #include "state.h"
 #include "gfx/core/window.h"
-#include "util/defines.h"
-#include "util/log.h"
-#include <math.h>
+#include "gfx/core/renderer.h"
+#include "gfx/camera/camera.h"
+#include "util/log/log.h"
 
 struct state s = { 0 };
 struct window w = { 0 };
@@ -90,7 +91,7 @@ int main(void)
             .color = { 1.0f, 0.0f, 0.0f, 1.0f }
         });
 
-        renderer_flush(&s.renderer);
+        renderer_end(&s.renderer);
         window_update(&w);
     }
 

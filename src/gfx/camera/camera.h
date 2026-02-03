@@ -1,6 +1,6 @@
 #pragma once
 #include "math/linmath.h"
-#include "util/defines.h"
+#include "util/core/defines.h"
 
 struct camera
 {
@@ -11,4 +11,5 @@ struct camera
 };
 
 void camera_init(struct camera* c, vec2 window_size);
+
 void camera_update(struct camera* c);
