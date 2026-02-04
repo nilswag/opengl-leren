@@ -8,7 +8,7 @@ void _log(Level level, const char* msg, ...)
 {
     if (level < 0 || level >= COUNT) return; // out of bounds
 
-    static const char* prefix[COUNT] = { "[INFO]", "[WARN]", "[ERROR]" };
+    static const char* prefix[COUNT] = { "", "[INFO]", "[WARN]", "[ERROR]" };
 
     char buf[1024];
     i32 n = sprintf(buf, "%s %s", prefix[level], msg);

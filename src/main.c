@@ -11,6 +11,8 @@ Window w = { 0 };
 
 static void _init(void)
 {
+    srand(0xDEADBEEF);
+
     window_init(&w);
     camera_init(&s.camera, w.size);
     renderer_init(&s.renderer);
@@ -27,7 +29,7 @@ int main(void)
 
     f64 last = glfwGetTime();
     f64 timer = 0.0;
-
+ 
     s.running = true;
     while (s.running && !glfwWindowShouldClose(w.handle))
     {
@@ -49,6 +51,7 @@ int main(void)
 
         // rendering logic
         renderer_begin(&s.renderer);
+        
         camera_update(&s.camera);
         renderer_set_camera(&s.renderer, PASS_WORLD, &s.camera);
 
