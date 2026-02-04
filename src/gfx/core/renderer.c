@@ -43,7 +43,7 @@ static u32 _create_instance_vbo()
     return vbo;
 }
 
-void renderer_init(Renderer* r)
+void renderer_init(renderer* r)
 {
     glGenVertexArrays(1, &quad_vao);
     glBindVertexArray(quad_vao);
@@ -58,7 +58,7 @@ void renderer_init(Renderer* r)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, quad_ebo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-    r->passes[PASS_WORLD] = (RenderPass) {
+    r->passes[PASS_WORLD] = (render_pass) {
         .shader = create_shader("quad.vert", "quad.frag"),
         .vao = quad_vao,
         .instance_vbo = _create_instance_vbo(),
@@ -68,15 +68,15 @@ void renderer_init(Renderer* r)
     glBindVertexArray(0);
 }
 
-void renderer_begin(Renderer* r)
+void renderer_begin(renderer* r)
 {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 }
 
-void renderer_submit(Renderer* r, PassType pass, Quad instance)
+void renderer_submit(renderer* r, pass_type pass, quad instance)
 {
-    RenderPass* p = &r->passes[pass];
+    render_pass* p = &r->passes[pass];
     if (p->count >= MAX_QUADS) renderer_flush_pass(r, pass);
 
     f32* dst = p->queue[p->count++];
@@ -88,9 +88,9 @@ void renderer_submit(Renderer* r, PassType pass, Quad instance)
     memcpy(dst + 9, instance.color, sizeof(vec4f));
 }
 
-void renderer_flush_pass(Renderer* r, PassType pass)
+void renderer_flush_pass(renderer* r, pass_type pass)
 {
-    RenderPass* p = &r->passes[pass];
+    render_pass* p = &r->passes[pass];
     if (p->count == 0) return; // queue is empty
 
     glBindBuffer(GL_ARRAY_BUFFER, p->instance_vbo);
@@ -107,15 +107,15 @@ void renderer_flush_pass(Renderer* r, PassType pass)
     p->count = 0;   
 }
 
-void renderer_end(Renderer* r)
+void renderer_end(renderer* r)
 {
     for (u64 i = 0; i < N_PASSES; i++)
         renderer_flush_pass(r, i);
 }
 
-void renderer_set_camera(Renderer* r, PassType pass, Camera* camera)
+void renderer_set_camera(renderer* r, pass_type pass, camera* camera)
 {
-    RenderPass* p = &r->passes[pass];
+    render_pass* p = &r->passes[pass];
     glUseProgram(p->shader);
     glUniformMatrix3fv(glGetUniformLocation(p->shader, "view"), 1, GL_FALSE, camera->view);
     glUniformMatrix3fv(glGetUniformLocation(p->shader, "proj"), 1, GL_FALSE, camera->proj);

@@ -2,14 +2,14 @@
 #include "math/linmath.h"
 #include "util/core/defines.h"
 
-typedef struct
+typedef struct camera
 {
     vec2f position;
     f32 zoom;
     mat3f view;
     mat3f proj;
-} Camera;
+} camera;
 
-void camera_init(Camera* c, vec2 window_size);
+void camera_init(camera* c, vec2 window_size);
 
-void camera_update(Camera* c);
+void camera_update(camera* c);

@@ -6,16 +6,16 @@
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 800
 
-typedef struct
+typedef struct window
 {
     vec2 size;
     const char* title;
     GLFWwindow* handle;
-} Window;
+} window;
 
-extern Window w;
+extern window w;
 
-void window_init(Window* w);
-void window_deinit(Window* w);
+void window_init(window* w);
+void window_deinit(window* w);
 
-void window_update(Window* w);
+void window_update(window* w);

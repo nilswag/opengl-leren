@@ -10,7 +10,7 @@ static void _framebuffer_size_callback(GLFWwindow* handle, i32 width, i32 height
     glViewport(0, 0, width, height);
 }
 
-void window_init(Window* w)
+void window_init(window* w)
 {
     ASSERT(glfwInit(), "failed to initialize glfw\n");
     LOG_INFO("glfw initialized\n");
@@ -48,13 +48,13 @@ void window_init(Window* w)
     LOG_INFO("opengl version: %s\n", glGetString(GL_VERSION));
 }
 
-void window_deinit(Window* w)
+void window_deinit(window* w)
 {
     glfwDestroyWindow(w->handle);
     glfwTerminate();
 }
 
-void window_update(Window* w)
+void window_update(window* w)
 {
     glfwSwapBuffers(w->handle);
 }

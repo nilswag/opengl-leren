@@ -1,13 +1,14 @@
 #include <stdlib.h>
+#include <string.h>
 
 #include "generator.h"
 
-static void _split_room(vec2 room, vec2* dest)
+static void _split_room(vec2 room, vec2* rooms, bool h)
 {
-    bool v = rand() % 2 == 0;
+
 }
 
-void generate_rooms(vec2* rooms, u64 count)
+void generate_rooms(void)
 {
-
+    room rooms[MIN_ROOMS + (rand() % (MAX_ROOMS - MIN_ROOMS + 1))];
 }

@@ -6,8 +6,10 @@
 #include "gfx/camera/camera.h"
 #include "util/log/log.h"
 
-State s = { 0 };
-Window w = { 0 };
+#include "game/level/generator.h"
+
+state s = { 0 };
+window w = { 0 };
 
 static void _init(void)
 {
@@ -18,15 +20,8 @@ static void _init(void)
     renderer_init(&s.renderer);
 }
 
-static void _deinit(void)
+static void _loop(void)
 {
-    window_deinit(&w);
-}
-
-int main(void)
-{   
-    _init();
-
     f64 last = glfwGetTime();
     f64 timer = 0.0;
  
@@ -55,7 +50,7 @@ int main(void)
         camera_update(&s.camera);
         renderer_set_camera(&s.renderer, PASS_WORLD, &s.camera);
 
-        renderer_submit(&s.renderer, PASS_WORLD, (Quad) {
+        renderer_submit(&s.renderer, PASS_WORLD, (quad) {
             .pos   = { 120.0f, 25.0f },
             .size  = { 120.0f, 40.0f },
             .rot   = 0.0f,
@@ -65,8 +60,20 @@ int main(void)
         renderer_end(&s.renderer);
         window_update(&w);
     }
+}
 
-    _deinit();
+static void _deinit(void)
+{
+    window_deinit(&w);
+}
+
+int main(void)
+{   
+    // _init();
+    // _loop();
+    // _deinit();
+
+    generate_rooms();
     
     return 0;
 }

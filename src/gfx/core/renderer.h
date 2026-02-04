@@ -6,38 +6,38 @@
 #define MAX_QUADS 256
 #define INSTANCE_SIZE 13
 
-typedef enum
+typedef enum pass_type
 {
     PASS_WORLD,
     N_PASSES
-} PassType;
+} pass_type;
 
-typedef struct
+typedef struct quad
 {
     vec2f pos;
     vec2f size;
     f32 rot;
     vec4f color;
-} Quad;
+} quad;
 
-typedef struct
+typedef struct render_pass
 {
     u32 shader;
     u32 vao, instance_vbo;
     u64 count;
     f32 queue[MAX_QUADS][INSTANCE_SIZE];
-} RenderPass;
+} render_pass;
 
-typedef struct
+typedef struct renderer
 {
-    RenderPass passes[N_PASSES];
-} Renderer;
+    render_pass passes[N_PASSES];
+} renderer;
 
-void renderer_init(Renderer* r);
+void renderer_init(renderer* r);
 
-void renderer_begin(Renderer* r);
-void renderer_submit(Renderer* r, PassType pass, Quad instance);
-void renderer_flush_pass(Renderer* r, PassType pass);
-void renderer_end(Renderer* r);
+void renderer_begin(renderer* r);
+void renderer_submit(renderer* r, pass_type pass, quad instance);
+void renderer_flush_pass(renderer* r, pass_type pass);
+void renderer_end(renderer* r);
 
-void renderer_set_camera(Renderer* r, PassType pass, Camera* camera);
+void renderer_set_camera(renderer* r, pass_type pass, camera* camera);
