@@ -69,9 +69,9 @@ static void _deinit(void)
 
 int main(void)
 {   
-    // _init();
-    // _loop();
-    // _deinit();
+    _init();
+    _loop();
+    _deinit();
 
     generate_rooms();
     
